@@ -1,11 +1,9 @@
-
 package Model;
 
 import java.util.Date;
 
-
 public class Bill {
-    
+
     private int billId;
     private int userId;
     private int phoneId;
@@ -36,8 +34,14 @@ public class Bill {
         this.billDate = billDate;
     }
 
-    
-    
+    public Bill(int userId, int phoneId, int quantity, double price, Date billDate) {
+        this.userId = userId;
+        this.phoneId = phoneId;
+        this.quantity = quantity;
+        this.price = price;
+        this.billDate = billDate;
+    }
+
     public Bill() {
     }
 
@@ -57,12 +61,12 @@ public class Bill {
         this.userId = userId;
     }
 
-    public int getProductId() {
+    public int getPhoneId() {
         return phoneId;
     }
 
-    public void setProductId(int productId) {
-        this.phoneId = productId;
+    public void setPhoneId(int phoneId) {
+        this.phoneId = phoneId;
     }
 
     public int getQuantity() {
@@ -96,4 +100,8 @@ public class Bill {
     public void setBillDate(Date billDate) {
         this.billDate = billDate;
     }
+
+
+
+    
 }

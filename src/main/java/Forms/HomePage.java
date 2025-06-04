@@ -2,20 +2,23 @@ package Forms;
 
 import Controllers.PhoneController;
 import Forms.Components.EffectComponents;
+import Main.Run;
 import Model.Account;
-import Model.Phone;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
 
 public class HomePage extends javax.swing.JFrame {
 
-    private PanelAccount panelAccount;
-    private PanelProduct panelProduct;
+    private PanelManagerAccount panelManagerAccount;
+    private PanelPhone panelPhone;
     private PanelHome panelHome;
+    private PanelManagerPhone panelManagerPhone;
+    private PanelManagerBill panelManagerBill;
+    private PanelProfile panelProfile;
+    
     private Account currentAccount;
 
     private int quantityAvailableBill;
@@ -40,47 +43,70 @@ public class HomePage extends javax.swing.JFrame {
 
     public HomePage() {
         initComponents();
+    }
+
+    public HomePage(Account account) {
+        initComponents();
         PhoneController.init();
         EffectComponents.init();
-        panelAccount = new PanelAccount();
-        panelHome = new PanelHome();
-        this.jPanel2.add(panelAccount);
-        this.jPanel2.add(panelHome);
-        panelAccount.setVisible(false);
+        this.currentAccount = account;
+
+        panelManagerAccount = new PanelManagerAccount();
+        panelPhone = new PanelPhone(currentAccount);
+
+        // TẠM thời gán null
+        panelManagerBill = new PanelManagerBill(panelPhone, account, null);
+        panelHome = new PanelHome(currentAccount, panelManagerBill);
+
+        // GÁN lại panelHome cho panelManagerBill
+        panelManagerBill.setPanelHome(panelHome);
+        panelManagerPhone = new PanelManagerPhone(panelHome);
+        panelProfile = new PanelProfile();
+
+        if (account.getUserName().equalsIgnoreCase("admin")) {
+            this.jPanel2.add(panelManagerAccount);
+            this.jPanel2.add(panelProfile);
+            this.jPanel2.add(panelManagerBill);
+            this.jPanel2.add(panelManagerPhone);
+            this.jPanel2.add(panelHome);
+        } else {
+            this.jPanel2.add(panelProfile);
+            this.jPanel2.add(panelManagerBill);
+            this.jPanel2.add(panelHome);
+            btnMenuPhone.setVisible(false);
+            btnMenuAccount.setVisible(false);
+        }
+        panelProfile.setVisible(false);
+        panelManagerBill.setVisible(false);
+        panelManagerPhone.setVisible(false);
+        panelManagerAccount.setVisible(false);
         panelHome.setVisible(true);
+
         this.jPanel2.revalidate();
         this.jPanel2.repaint();
+
         styleButton();
-        setLocationRelativeTo(null);
-//        EffectComponents.instance.scaleImage(jLabel3, "/Image/Header.png");
+        setupWindow();
+        EffectComponents.instance.scaleImage(jLabel2, "/Image/LogoShopIcon.png");
+
     }
-    
 
     private void styleButton() {
 //        btnUploadAvatar.setBackgroundColor(Color.ORANGE);
         btnProfle.setBackgroundColor(Color.GRAY);
-        btnHomePage.setBackgroundColor(Color.GRAY);
+        btnHomePage.setForeground(new Color(0, 0, 0));
+        btnHomePage.setBackgroundColor(new Color(204, 255, 255));
         btnLogOut.setBackgroundColor(Color.GRAY);
-        btnManagerAccounts.setBackgroundColor(Color.GRAY);
-        btnManagerProducts.setBackgroundColor(Color.GRAY);
-        btnUserBill.setBackgroundColor(Color.GRAY);
-//        btnEditProfile.setBackgroundColor(Color.GREEN);
-//        btnCancelProfile.setBackgroundColor(Color.lightGray);
-//        btnSaveEditProfile.setBackgroundColor(Color.GREEN);
-//        btnUploadImageProduct.setBackgroundColor(Color.ORANGE);
-//        btnAddProduct.setBackgroundColor(Color.lightGray);
-//        btnUpdateProduct.setBackgroundColor(Color.GREEN);
-//        btnDeleteProduct.setBackgroundColor(Color.RED);
-//        btnCancelProduct.setBackgroundColor(Color.BLUE);
-//        btnUploadAvatarUser.setBackgroundColor(Color.ORANGE);
-//        btnPushProductToHome.setBackgroundColor(Color.RED);
-//        btnUpdateUser.setBackgroundColor(Color.ORANGE);
-//        btnAddUser.setBackgroundColor(Color.RED);
-//        btnDeleteUser.setBackgroundColor(Color.GREEN);
-//        btnCancelUser.setBackgroundColor(Color.BLUE);
-//        btnRefreshBill.setBackgroundColor(Color.RED);
-//    btnSearch.setBackgroundColor(Color.LIGHT_GRAY);
-//       btnSaveEditProfile.setVisible(false);
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+        btnMenuPhone.setBackgroundColor(Color.GRAY);
+        btnMenuBill.setBackgroundColor(Color.GRAY);
+    }
+
+    private void setupWindow() {
+        setLocationRelativeTo(null);
+        setTitle("PRIMA MOBILES ,  SHOP FOR YOU ");
+        String iconPath = "E:\\Image\\LogoShopIcon.png";
+        setIconImage(Toolkit.getDefaultToolkit().getImage(new File(iconPath).getAbsolutePath()));
     }
 
     @SuppressWarnings("unchecked")
@@ -90,19 +116,21 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         PanelHeader = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         PanelMenu = new javax.swing.JPanel();
         btnProfle = new Forms.Components.HeaderButton();
         btnHomePage = new Forms.Components.HeaderButton();
         btnLogOut = new Forms.Components.HeaderButton();
-        btnUserBill = new Forms.Components.HeaderButton();
-        btnManagerProducts = new Forms.Components.HeaderButton();
-        btnManagerAccounts = new Forms.Components.HeaderButton();
+        btnMenuBill = new Forms.Components.HeaderButton();
+        btnMenuPhone = new Forms.Components.HeaderButton();
+        btnMenuAccount = new Forms.Components.HeaderButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 600));
 
+        jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel1.setMinimumSize(new java.awt.Dimension(700, 700));
         jPanel1.setName(""); // NOI18N
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -112,16 +140,25 @@ public class HomePage extends javax.swing.JFrame {
         PanelHeader.setPreferredSize(new java.awt.Dimension(1293, 80));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Header.png"))); // NOI18N
+        jLabel3.setMaximumSize(new java.awt.Dimension(1700, 140));
+        jLabel3.setMinimumSize(new java.awt.Dimension(1550, 130));
 
         javax.swing.GroupLayout PanelHeaderLayout = new javax.swing.GroupLayout(PanelHeader);
         PanelHeader.setLayout(PanelHeaderLayout);
         PanelHeaderLayout.setHorizontalGroup(
             PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1492, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHeaderLayout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1363, Short.MAX_VALUE))
         );
         PanelHeaderLayout.setVerticalGroup(
             PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, Short.MAX_VALUE)
+            .addGroup(PanelHeaderLayout.createSequentialGroup()
+                .addGroup(PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel1.add(PanelHeader, java.awt.BorderLayout.PAGE_START);
@@ -131,7 +168,7 @@ public class HomePage extends javax.swing.JFrame {
         PanelMenu.setPreferredSize(new java.awt.Dimension(137, 720));
         PanelMenu.setRequestFocusEnabled(false);
 
-        btnProfle.setForeground(new java.awt.Color(204, 255, 255));
+        btnProfle.setForeground(new java.awt.Color(204, 204, 204));
         btnProfle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountIcon.png"))); // NOI18N
         btnProfle.setText("Profile");
         btnProfle.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -145,16 +182,16 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        btnHomePage.setForeground(new java.awt.Color(204, 255, 255));
         btnHomePage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/HomeIcon.png"))); // NOI18N
         btnHomePage.setText("Home");
+        btnHomePage.setVerifyInputWhenFocusTarget(false);
         btnHomePage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnHomePageMouseClicked(evt);
             }
         });
 
-        btnLogOut.setForeground(new java.awt.Color(204, 255, 255));
+        btnLogOut.setForeground(new java.awt.Color(204, 204, 204));
         btnLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/LogOutIcon.png"))); // NOI18N
         btnLogOut.setText("Sign Out");
         btnLogOut.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -164,41 +201,35 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        btnUserBill.setForeground(new java.awt.Color(204, 255, 255));
-        btnUserBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/BillIcon.png"))); // NOI18N
-        btnUserBill.setText("Bill");
-        btnUserBill.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btnUserBill.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnUserBill.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnUserBill.setIconTextGap(5);
-        btnUserBill.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnMenuBill.setForeground(new java.awt.Color(204, 204, 204));
+        btnMenuBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/BillIcon.png"))); // NOI18N
+        btnMenuBill.setText("  Bill");
+        btnMenuBill.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMenuBill.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnMenuBill.setIconTextGap(5);
+        btnMenuBill.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnUserBillMouseClicked(evt);
+                btnMenuBillMouseClicked(evt);
             }
         });
 
-        btnManagerProducts.setForeground(new java.awt.Color(204, 255, 255));
-        btnManagerProducts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ProductManagerIcon.png"))); // NOI18N
-        btnManagerProducts.setText("Products");
-        btnManagerProducts.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        btnManagerProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnMenuPhone.setForeground(new java.awt.Color(204, 204, 204));
+        btnMenuPhone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ProductManagerIcon.png"))); // NOI18N
+        btnMenuPhone.setText("Products");
+        btnMenuPhone.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        btnMenuPhone.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnManagerProductsMouseClicked(evt);
-            }
-        });
-        btnManagerProducts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManagerProductsActionPerformed(evt);
+                btnMenuPhoneMouseClicked(evt);
             }
         });
 
-        btnManagerAccounts.setForeground(new java.awt.Color(204, 255, 255));
-        btnManagerAccounts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountManagerIcon.png"))); // NOI18N
-        btnManagerAccounts.setText("Accounts");
-        btnManagerAccounts.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnManagerAccounts.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnMenuAccount.setForeground(new java.awt.Color(204, 204, 204));
+        btnMenuAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountManagerIcon.png"))); // NOI18N
+        btnMenuAccount.setText("Accounts");
+        btnMenuAccount.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnMenuAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnManagerAccountsMouseClicked(evt);
+                btnMenuAccountMouseClicked(evt);
             }
         });
 
@@ -209,31 +240,29 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(PanelMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMenuBill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProfle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMenuPhone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMenuAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelMenuLayout.createSequentialGroup()
-                        .addComponent(btnHomePage, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMenuLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnUserBill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProfle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnManagerProducts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnManagerAccounts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnHomePage, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMenuLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(15, 15, 15)
                 .addComponent(btnHomePage, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(btnUserBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(btnManagerProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(btnManagerAccounts, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
+                .addComponent(btnMenuBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(btnMenuPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(btnMenuAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                 .addComponent(btnProfle, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -243,7 +272,11 @@ public class HomePage extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("© PRIMAMOBILES 2025. Redistribution or reproduction is strictly prohibited. ");
+        jLabel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(51, 255, 255)));
+        jLabel1.setMaximumSize(new java.awt.Dimension(550, 30));
+        jLabel1.setMinimumSize(new java.awt.Dimension(500, 15));
         jPanel1.add(jLabel1, java.awt.BorderLayout.PAGE_END);
 
         jPanel2.setLayout(new java.awt.CardLayout());
@@ -264,11 +297,32 @@ public class HomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProfleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfleMouseClicked
-//        PanelProfile.setVisible(true);
-//        PanelHomePage.setVisible(false);
-//        PanelBill.setVisible(false);
-//        PanelProducts.setVisible(false);
-//        PanelAccount.setVisible(false);
+        panelHome.setVisible(false);
+        panelManagerAccount.setVisible(false);
+        panelManagerPhone.setVisible(false);
+        panelManagerBill.setVisible(false);
+        panelProfile.setVisible(true);
+
+        btnProfle.setForeground(new Color(0, 0, 0));
+        btnProfle.setBackgroundColor(new Color(204, 255, 255));
+
+        btnMenuAccount.setForeground(new Color(204, 204, 204));
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+
+        btnMenuBill.setForeground(new Color(204, 204, 204));
+        btnMenuBill.setBackgroundColor(Color.GRAY);
+
+        btnMenuPhone.setForeground(new Color(204, 204, 204));
+        btnMenuPhone.setBackgroundColor(Color.GRAY);
+
+        btnMenuAccount.setForeground(new Color(204, 204, 204));
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+
+        btnHomePage.setForeground(new Color(204, 204, 204));
+        btnHomePage.setBackgroundColor(Color.GRAY);
+
+        btnLogOut.setForeground(new Color(204, 204, 204));
+        btnLogOut.setBackgroundColor(Color.GRAY);
     }//GEN-LAST:event_btnProfleMouseClicked
 
     private void btnProfleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfleActionPerformed
@@ -280,13 +334,33 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProfleActionPerformed
 
     private void btnHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomePageMouseClicked
-//        PanelProfile.setVisible(false);
-//        PanelHomePage.setVisible(true);
-//        PanelBill.setVisible(false);
-//        PanelProducts.setVisible(false);
-//        PanelAccount.setVisible(false);
+
         panelHome.setVisible(true);
-        panelAccount.setVisible(false);
+        panelManagerAccount.setVisible(false);
+        panelManagerPhone.setVisible(false);
+        panelManagerBill.setVisible(false);
+        panelProfile.setVisible(false);
+
+        btnHomePage.setForeground(new Color(0, 0, 0));
+        btnHomePage.setBackgroundColor(new Color(204, 255, 255));
+
+        btnMenuAccount.setForeground(new Color(204, 204, 204));
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+
+        btnMenuBill.setForeground(new Color(204, 204, 204));
+        btnMenuBill.setBackgroundColor(Color.GRAY);
+
+        btnMenuPhone.setForeground(new Color(204, 204, 204));
+        btnMenuPhone.setBackgroundColor(Color.GRAY);
+
+        btnMenuAccount.setForeground(new Color(204, 204, 204));
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+
+        btnProfle.setForeground(new Color(204, 204, 204));
+        btnProfle.setBackgroundColor(Color.GRAY);
+
+        btnLogOut.setForeground(new Color(204, 204, 204));
+        btnLogOut.setBackgroundColor(Color.GRAY);
     }//GEN-LAST:event_btnHomePageMouseClicked
 
     private void btnLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogOutMouseClicked
@@ -298,37 +372,98 @@ public class HomePage extends javax.swing.JFrame {
 //            RunAdmin.runApp();
 //            dispose();
 //        }
+        int check = JOptionPane.showConfirmDialog(this, "DO YOU WANT TO LOG OUT OF YOUR CURRENT ACCOUNT ?", "CONFIRM", JOptionPane.YES_NO_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            Run.runApp();
+            dispose();
+        } else {
+            return;
+        }
+
     }//GEN-LAST:event_btnLogOutMouseClicked
 
-    private void btnUserBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUserBillMouseClicked
-//        PanelBill.setVisible(true);
-//        PanelHomePage.setVisible(false);
-//        PanelProfile.setVisible(false);
-//          panelHome.setVisible(false);
-//          panelAccount.setVisible(true);
-    }//GEN-LAST:event_btnUserBillMouseClicked
+    private void btnMenuBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuBillMouseClicked
 
-    private void btnManagerProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagerProductsMouseClicked
-//        PanelBill.setVisible(false);
-//        PanelHomePage.setVisible(false);
-//        PanelProfile.setVisible(false);
-//        PanelProducts.setVisible(true);
-//        PanelAccount.setVisible(false);
-    }//GEN-LAST:event_btnManagerProductsMouseClicked
-
-    private void btnManagerProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerProductsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnManagerProductsActionPerformed
-
-    private void btnManagerAccountsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManagerAccountsMouseClicked
-//        PanelBill.setVisible(false);
-//        PanelHomePage.setVisible(false);
-//        PanelProfile.setVisible(false);
-//        PanelProducts.setVisible(false);
-//        PanelAccount.setVisible(true);
+        panelProfile.setVisible(false);
         panelHome.setVisible(false);
-        panelAccount.setVisible(true);
-    }//GEN-LAST:event_btnManagerAccountsMouseClicked
+        panelManagerAccount.setVisible(false);
+        panelManagerPhone.setVisible(false);
+        panelManagerBill.setVisible(true);
+        btnMenuBill.setForeground(new Color(0, 0, 0));
+        btnMenuBill.setBackgroundColor(new Color(204, 255, 255));
+
+        btnMenuAccount.setForeground(new Color(204, 204, 204));
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+
+        btnHomePage.setForeground(new Color(204, 204, 204));
+        btnHomePage.setBackgroundColor(Color.GRAY);
+
+        btnMenuPhone.setForeground(new Color(204, 204, 204));
+        btnMenuPhone.setBackgroundColor(Color.GRAY);
+
+        btnMenuAccount.setForeground(new Color(204, 204, 204));
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+
+        btnProfle.setForeground(new Color(204, 204, 204));
+        btnProfle.setBackgroundColor(Color.GRAY);
+
+        btnLogOut.setForeground(new Color(204, 204, 204));
+        btnLogOut.setBackgroundColor(Color.GRAY);
+    }//GEN-LAST:event_btnMenuBillMouseClicked
+
+    private void btnMenuPhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuPhoneMouseClicked
+
+        panelProfile.setVisible(false);
+        panelHome.setVisible(false);
+        panelManagerAccount.setVisible(false);
+        panelManagerBill.setVisible(false);
+        panelManagerPhone.setVisible(true);
+
+        btnMenuPhone.setForeground(new Color(0, 0, 0));
+        btnMenuPhone.setBackgroundColor(new Color(204, 255, 255));
+
+        btnMenuAccount.setForeground(new Color(204, 204, 204));
+        btnMenuAccount.setBackgroundColor(Color.GRAY);
+
+        btnHomePage.setForeground(new Color(204, 204, 204));
+        btnHomePage.setBackgroundColor(Color.GRAY);
+
+        btnProfle.setForeground(new Color(204, 204, 204));
+        btnProfle.setBackgroundColor(Color.GRAY);
+
+        btnMenuBill.setForeground(new Color(204, 204, 204));
+        btnMenuBill.setBackgroundColor(Color.GRAY);
+
+        btnLogOut.setForeground(new Color(204, 204, 204));
+        btnLogOut.setBackgroundColor(Color.GRAY);
+    }//GEN-LAST:event_btnMenuPhoneMouseClicked
+
+    private void btnMenuAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuAccountMouseClicked
+
+        panelProfile.setVisible(false);
+        panelHome.setVisible(false);
+        panelManagerBill.setVisible(false);
+        panelManagerPhone.setVisible(false);
+        panelManagerAccount.setVisible(true);
+        btnMenuAccount.setForeground(new Color(0, 0, 0));
+        btnMenuAccount.setBackgroundColor(new Color(204, 255, 255));
+
+        btnHomePage.setForeground(new Color(204, 204, 204));
+        btnHomePage.setBackgroundColor(Color.GRAY);
+
+        btnMenuPhone.setForeground(new Color(204, 204, 204));
+        btnMenuPhone.setBackgroundColor(Color.GRAY);
+
+        btnProfle.setForeground(new Color(204, 204, 204));
+        btnProfle.setBackgroundColor(Color.GRAY);
+
+        btnMenuBill.setForeground(new Color(204, 204, 204));
+        btnMenuBill.setBackgroundColor(Color.GRAY);
+
+        btnLogOut.setForeground(new Color(204, 204, 204));
+        btnLogOut.setBackgroundColor(Color.GRAY);
+
+    }//GEN-LAST:event_btnMenuAccountMouseClicked
 
     public static void main(String args[]) {
 
@@ -344,11 +479,12 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel PanelMenu;
     private Forms.Components.HeaderButton btnHomePage;
     private Forms.Components.HeaderButton btnLogOut;
-    private Forms.Components.HeaderButton btnManagerAccounts;
-    private Forms.Components.HeaderButton btnManagerProducts;
+    private Forms.Components.HeaderButton btnMenuAccount;
+    private Forms.Components.HeaderButton btnMenuBill;
+    private Forms.Components.HeaderButton btnMenuPhone;
     private Forms.Components.HeaderButton btnProfle;
-    private Forms.Components.HeaderButton btnUserBill;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

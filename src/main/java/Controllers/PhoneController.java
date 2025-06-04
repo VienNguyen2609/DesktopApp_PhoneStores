@@ -59,7 +59,8 @@ public class PhoneController {
                 String operating = rs.getString("operatingSystem");
                 byte[] image = rs.getBytes("imagePhone");
                 String descriptionPhone = rs.getString("descriptionPhone");
-                Phone _phone = new Phone(id, name, brand, price, quantity, operating, image, descriptionPhone);
+                boolean status = rs.getBoolean("statusPhone");
+                Phone _phone = new Phone(id, name, brand, price, quantity, operating, image, descriptionPhone, status);
                 listPhones.add(_phone);
             }
             rs.close();
@@ -85,20 +86,33 @@ public class PhoneController {
         model.setNumRows(0);
         loadDataProducts();
         int n = 0;
+        String status = "";
         for (Phone phone : listPhones) {
-            model.addRow(new Object[]{n++, phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
-                phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(), phone.getImagePhone(), phone.getDescription()});
+            if (phone.isStatusPhone() == false) {
+                status = "Unavailable"; 
+                model.addRow(new Object[]{n++,
+                 phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
+                 phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),
+                 phone.getImagePhone(), phone.getDescription()  ,status});
+            }
+            else{
+                 status = "Availabel" ;
+                 model.addRow(new Object[]{n++,
+                 phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
+                 phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),
+                 phone.getImagePhone(), phone.getDescription()  ,status});
+            }
         }
     }
 
-    public boolean addProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone) {
+    public boolean addProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone , boolean status) {
         if (image == null) {
             JOptionPane.showMessageDialog(null, "PRODUCT IMAGE MUST NOT BE EMPTY!");
             return false;
         }
         boolean check = false;
         try {
-            setupDatabaseCommand("INSERT INTO Phones (namePhone, brandPhone, pricePhone, quantity , operatingSystem ,imagePhone,descriptionPhone ) VALUES (?,?,?,?,?,?,?)");
+            setupDatabaseCommand("INSERT INTO Phones (namePhone, brandPhone, pricePhone, quantity , operatingSystem ,imagePhone,descriptionPhone , statusPhone) VALUES (?,?,?,?,?,?,?,?)");
             ps.setString(1, name);
             ps.setString(2, brand);
             ps.setDouble(3, price);
@@ -106,10 +120,11 @@ public class PhoneController {
             ps.setString(5, operatingSystem);
             ps.setBytes(6, image);
             ps.setString(7, descriptionPhone);
+            ps.setBoolean(8, status);
             int n = ps.executeUpdate();
 
             if (n > 0) {
-                Phone _phone = new Phone( name, brand, price, quantity, operatingSystem , image, descriptionPhone);
+                Phone _phone = new Phone(name, brand, price, quantity, operatingSystem, image, descriptionPhone ,status);
                 listPhones.add(_phone);
                 check = true;
             }
@@ -124,41 +139,45 @@ public class PhoneController {
         return check;
     }
 
-//    public boolean updateProduct(String name, int size, int quantity, float price, String color, byte[] image, int idProduct) {
-//        boolean check = false;
-//
-//        try {
-//            setupDatabaseCommand("UPDATE Products SET ProductName =? , ProductSize =? , ProductPrice = ?, ProductQuantity = ?, ProductColor = ? , ProductImage =? WHERE ProductId  = ?");
-//            ps.setString(1, name);
-//            ps.setInt(2, size);
-//            ps.setFloat(3, price);
-//            ps.setInt(4, quantity);
-//            ps.setString(5, color);
-//            ps.setBytes(6, image);
-//            ps.setInt(7, idProduct);
-//            int rowsAffected = ps.executeUpdate();
-//            if (rowsAffected > 0) {
-//                for (Shoes shoes : listPhones) {
-//                    if (shoes.getProductId() == idProduct) {
-//                        shoes.setProductName(name);
-//                        shoes.setProductSize(size);
-//                        shoes.setProductQuantity(quantity);
-//                        shoes.setProductPrice(price);
-//                        shoes.setProductColor(color);
-//                        shoes.setProductAvatar(image);
-//                        check = true;
-//                        break;
-//                    }
-//                }
-//            }
-//            conn.close();
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-//        }
-//        return check;
-//    }
+    public boolean updateProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone, boolean  status , int idProduct) {
+        
+
+        try {
+            setupDatabaseCommand("UPDATE Phones SET namePhone =? , brandPhone =? , pricePhone = ?, "
+                    + "quantity = ?, operatingSystem = ? , imagePhone =? , descriptionPhone=?  , statusPhone = ?  WHERE idPhone  = ?");
+            ps.setString(1, name);
+            ps.setString(2, brand);
+            ps.setDouble(3, price);
+            ps.setInt(4, quantity);
+            ps.setString(5, operatingSystem);
+            ps.setBytes(6, image);
+            ps.setString(7, descriptionPhone);
+            ps.setBoolean(8, status);
+            ps.setInt(9, idProduct);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                for (Phone phone : listPhones) {
+                    if (phone.getPhoneId() == idProduct) {
+                        phone.setNamePhone(name);
+                        phone.setBrandPhone(brand);
+                        phone.setPricePhone(price);
+                        phone.setQuantityPhone(quantity);
+                        phone.setOperatingSystem(operatingSystem);
+                        phone.setImagePhone(image);
+                        phone.setDescription(descriptionPhone);
+                        phone.setStatusPhone(status);
+                        return true;
+                    }
+                }
+            }
+            conn.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
 
 //    public boolean Find(String name) {
 //        boolean check = false;
@@ -192,27 +211,27 @@ public class PhoneController {
 //            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-//    public boolean deleteProduct(String ProductName) {
-//        boolean check = false;
-//        try {
-//            setupDatabaseCommand("delete from Products where ProductName = ?");
-//            ps.setString(1, ProductName);
-//            int rowsAffected = ps.executeUpdate();
-//            if (rowsAffected > 0) {
-//                for (Shoes shoes : listPhones) {
-//                    if (shoes.getProductName().equalsIgnoreCase(ProductName)) {
-//                        listPhones.remove(shoes);
-//                        check = true;
-//                        break;
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-//        }
-//        return check;
-//    }
-//
+    public boolean deleteProduct(int id) {
+        boolean check = false;
+        try {
+            setupDatabaseCommand("delete from Phones where idPhone = ?");
+            ps.setInt(1, id);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                for (Phone phone : listPhones) {
+                    if (phone.getPhoneId() == id) {
+                        listPhones.remove(phone);
+                        check = true;
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return check;
+    }
+
     public ArrayList<Phone> getDataProduct() {
         return listPhones;
     }

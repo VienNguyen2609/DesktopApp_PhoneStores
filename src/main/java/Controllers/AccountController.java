@@ -1,6 +1,4 @@
-
 package Controllers;
-
 
 import Model.Account;
 import DatabaseConnection.SQLConnector;
@@ -88,20 +86,21 @@ public class AccountController {
         loadDataAccounts();
         int n = 0;
         for (Account account : listAccount) {
-            model.addRow(new Object[]{n++, account.getUserId(), account.getUserName(), account.getUserPassword(), account.getUserGmail(), account.getAvatarUser()});
+            model.addRow(new Object[]{n++, account.getUserId(), account.getUserName(),
+                 account.getUserPassword(), account.getUserGmail(), account.getAvatarUser()});
         }
     }
 
     public boolean checkLogin(String name, String pass) {
         try {
+            
             if (name.isEmpty() || pass.isEmpty()) {
                 return false;// JOptionPane.showMessageDialog(null, "INFORMATION CAN NOT BE EMPTY", "ERROR", JOptionPane.CANCEL_OPTION);
-            } else if (name.equalsIgnoreCase("admin")) {
-                return false;
+
             } else {
                 for (Account account : this.listAccount) {
                     if (account.getUserName().equalsIgnoreCase(name) && (String.valueOf(account.getUserPassword()).equalsIgnoreCase(pass))) {
-                       return true;
+                        return true;
                     }
                 }
             }
@@ -134,7 +133,7 @@ public class AccountController {
                     _account = new Account(name, pass, gmail);
                 }
                 this.listAccount.add(_account);
-               return true;
+                return true;
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: NAME IS EXIST!");

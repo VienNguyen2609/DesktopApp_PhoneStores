@@ -27,7 +27,8 @@ CREATE TABLE Phones
    quantity INT,
    operatingSystem VARCHAR(30),
    imagePhone VARBINARY(MAX),
-   descriptionPhone NVARCHAR(50)
+   descriptionPhone NVARCHAR(50), 
+   statusPhone BIT not null
 )
 
 
@@ -39,6 +40,7 @@ CREATE TABLE Bills
     BillDate DATETIME DEFAULT GETDATE(),
     Quantity INT,
     Price MONEY,
+    PaymentStatus BIT DEFAULT 0 , 
     TotalAmount AS (Quantity * Price) PERSISTED,
     
     CONSTRAINT FK_Bill_User FOREIGN KEY (UserId) REFERENCES Accounts(UserId),
@@ -53,10 +55,25 @@ select * From Phones
 select * From Bills 
 
 
+INSERT INTO Phones (namePhone, brandPhone, pricePhone, quantity , operatingSystem ,descriptionPhone , statusPhone )
+values ('IPhone12' , 'VietNam' , 400000 , 10 , 'IOS', '12GB'  , 1 )
 
-INSERT INTO Phones (namePhone, brandPhone, pricePhone, quantity , operatingSystem ,descriptionPhone )
-values ('ViV1o1211' , 'VietNam' , 400000 , 10 , 'Android', '12GB' )
 
 
 INSERT INTO Accounts (UserName, UserPassword, UserGmail  )
-values ('vien' , 'vien' , 'vien@gmail.com')
+values ('admin' , 'admin' , 'admin@gmail.com')
+
+UPDATE Accounts SET UserName = 'viendeptrai' WHERE UserName = 'viennguyen'
+
+INSERT INTO Bills (UserId, idPhone, BillDate ,Quantity  , Price  , PaymentStatus  )
+values (3 , 6, '6-2-2025' , 2 , 400000 , 1 )
+
+
+delete from Bills
+
+SELECT idPhone, Quantity FROM Bills
+
+SELECT b.BillId, u.UserName, p.namePhone, b.Quantity, b.Price, b.TotalAmount, b.BillDate , b.PaymentStatus
+                FROM Bills b
+                JOIN Accounts u ON b.UserId = u.UserId
+                JOIN Phones p ON b.idPhone = p.idPhone

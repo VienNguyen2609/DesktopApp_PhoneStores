@@ -12,8 +12,9 @@ public class Phone {
     private String operatingSystem;
     private byte[] imagePhone;
     private String description; 
-
-    public Phone(String namePhone, String brandPhone, double pricePhone, int quantityPhone, String operatingSystem, byte[] imagePhone, String description) {
+    private boolean statusPhone;
+    
+    public Phone(String namePhone, String brandPhone, double pricePhone, int quantityPhone, String operatingSystem, byte[] imagePhone, String description , boolean statusPhone) {
         this.namePhone = namePhone;
         this.brandPhone = brandPhone;
         this.pricePhone = pricePhone;
@@ -21,11 +22,12 @@ public class Phone {
         this.operatingSystem = operatingSystem;
         this.imagePhone = imagePhone;
         this.description = description;
+        this.statusPhone = statusPhone ; 
     }
 
     
     
-    public Phone(int phoneId, String namePhone, String brandPhone, double pricePhone, int quantityPhone, String operatingSystem, byte[] imagePhone, String description) {
+    public Phone(int phoneId, String namePhone, String brandPhone, double pricePhone, int quantityPhone, String operatingSystem, byte[] imagePhone, String description , boolean statusPhone) {
         this.phoneId = phoneId;
         this.namePhone = namePhone;
         this.brandPhone = brandPhone;
@@ -34,6 +36,7 @@ public class Phone {
         this.operatingSystem = operatingSystem;
         this.imagePhone = imagePhone;
         this.description = description;
+        this.statusPhone = statusPhone ;
     }
 
     public int getPhoneId() {
@@ -99,4 +102,15 @@ public class Phone {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean isStatusPhone() {
+        return statusPhone;
+    }
+
+    public void setStatusPhone(boolean statusPhone) {
+        this.statusPhone = statusPhone;
+    }
+    
+    
+    
  }
