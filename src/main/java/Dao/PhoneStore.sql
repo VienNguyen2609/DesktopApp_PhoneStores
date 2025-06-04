@@ -21,13 +21,13 @@ CREATE TABLE Accounts
 CREATE TABLE Phones 
 (
    idPhone INT IDENTITY(1,1) PRIMARY KEY,
-   namePhone VARCHAR(30) UNIQUE not null ,
+   namePhone VARCHAR(30) not null ,
    brandPhone VARCHAR(30),
-   pricePhone MONEY, 
-   quantity INT,
-   operatingSystem VARCHAR(30),
-   imagePhone VARBINARY(MAX),
-   descriptionPhone NVARCHAR(50), 
+   pricePhone MONEY , 
+   quantity INT ,
+   operatingSystem VARCHAR(30) ,
+   imagePhone VARBINARY(MAX) ,
+   descriptionPhone NVARCHAR(50) , 
    statusPhone BIT not null
 )
 
