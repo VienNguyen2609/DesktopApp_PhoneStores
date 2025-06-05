@@ -1,10 +1,20 @@
 
 package Forms;
 
+import Controllers.AccountController;
+import Forms.Components.RoundedBorder;
 import Forms.Components.RoundedPanel;
+import Model.Account;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,10 +23,16 @@ import javax.swing.JLabel;
 public class PanelProfile extends javax.swing.JPanel {
 
     private JLabel label;
-
-    public PanelProfile() {
+    private Account account ; 
+    private File selectedFile ; 
+    private Icon icon ;
+    private Account currentAccount ; 
+    
+    public PanelProfile(Account account) {
         initComponents();
-        RoundedPanel panel = new RoundedPanel(200);
+        this.account = account ; 
+        currentAccount = account;
+        RoundedPanel panel = new RoundedPanel(200 , Color.BLUE);
         panel.setBackground(Color.CYAN);
         panel.setLayout(null);
         panel.setBounds(20, 20, 300, 200);
@@ -27,7 +43,35 @@ public class PanelProfile extends javax.swing.JPanel {
         label.setBounds(100, 60, 100, 70);
         label.setForeground(Color.BLACK);
         panel.add(label);
-        jPanel1.add(panel);
+        add(panel);
+        txtName.setCustomBorder(new RoundedBorder(20, Color.BLACK));
+        txtPass.setCustomBorder(new RoundedBorder(20, Color.BLACK));
+        txtGmail.setCustomBorder(new RoundedBorder(20, Color.BLACK));
+        txtPass.setBackground(null);
+        txtName.setText(account.getUserName());
+        txtPass.setText(account.getUserPassword());
+        txtGmail.setText(account.getUserGmail());
+        setAvatar(account.getAvatarUser());
+        btnUploadAvatar2.setForeground(new Color(0, 0, 0));
+        btnEditProfile.setForeground(new Color(0, 0, 0));
+        dEdit.setSize(new Dimension(600, 600));
+        dEdit.setLocation(400, 100);
+        dEdit.setTitle("EDIT YOUR PROFILE");
+        dEdit.setVisible(false);
+        dEdit.setResizable(false);
+    }
+    
+    private void setAvatar(byte[] avatarBytes) {
+
+        if (avatarBytes != null) {
+            ImageIcon icon = new ImageIcon(avatarBytes);
+            Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            LabelAvatar5.setIcon(new ImageIcon(img));
+        }
+        if (avatarBytes == null) {
+            LabelAvatar5.setIcon(new ImageIcon(getClass().getResource("/Image/cat.png")));
+        }
+        LabelAvatar5.setBorder(null);
     }
 
    
@@ -35,85 +79,242 @@ public class PanelProfile extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dEdit = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        LabelAvatar = new Forms.Components.ProfilePhoto();
-        jLabel2 = new javax.swing.JLabel();
+        LabelAvatar5 = new Forms.Components.ProfilePhoto();
+        txtName = new Forms.Components.TextFieldController();
         jLabel1 = new javax.swing.JLabel();
+        txtGmail = new Forms.Components.TextFieldController();
+        txtPass = new Forms.Components.PasswordField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnUploadAvatar2 = new Forms.Components.HeaderButton();
+        cbPassword = new javax.swing.JCheckBox();
+        btnEditProfile = new Forms.Components.HeaderButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        LabelAvatar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        LabelAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/cat.png"))); // NOI18N
-        LabelAvatar.setMaximumSize(new java.awt.Dimension(230, 230));
-        LabelAvatar.setMinimumSize(new java.awt.Dimension(200, 200));
-
-        javax.swing.GroupLayout LabelAvatarLayout = new javax.swing.GroupLayout(LabelAvatar);
-        LabelAvatar.setLayout(LabelAvatarLayout);
-        LabelAvatarLayout.setHorizontalGroup(
-            LabelAvatarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
-        );
-        LabelAvatarLayout.setVerticalGroup(
-            LabelAvatarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 267, Short.MAX_VALUE)
-        );
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountNameIcon.png"))); // NOI18N
-        jLabel2.setText("Name:");
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ProfileIcon.png"))); // NOI18N
-        jLabel1.setMaximumSize(new java.awt.Dimension(600, 600));
-        jLabel1.setMinimumSize(new java.awt.Dimension(500, 500));
-        jLabel1.setPreferredSize(new java.awt.Dimension(550, 550));
+        dEdit.setBackground(new java.awt.Color(204, 204, 204));
+        dEdit.setModal(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(LabelAvatar, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                .addGap(9, 9, 9)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(227, 227, 227))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(243, 243, 243))
+            .addGap(0, 703, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(LabelAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel2))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(0, 508, Short.MAX_VALUE)
         );
+
+        javax.swing.GroupLayout dEditLayout = new javax.swing.GroupLayout(dEdit.getContentPane());
+        dEdit.getContentPane().setLayout(dEditLayout);
+        dEditLayout.setHorizontalGroup(
+            dEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        dEditLayout.setVerticalGroup(
+            dEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        setBackground(new java.awt.Color(204, 204, 204));
+
+        LabelAvatar5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        LabelAvatar5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/cat.png"))); // NOI18N
+        LabelAvatar5.setMaximumSize(new java.awt.Dimension(230, 230));
+        LabelAvatar5.setMinimumSize(new java.awt.Dimension(200, 200));
+
+        javax.swing.GroupLayout LabelAvatar5Layout = new javax.swing.GroupLayout(LabelAvatar5);
+        LabelAvatar5.setLayout(LabelAvatar5Layout);
+        LabelAvatar5Layout.setHorizontalGroup(
+            LabelAvatar5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 239, Short.MAX_VALUE)
+        );
+        LabelAvatar5Layout.setVerticalGroup(
+            LabelAvatar5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 251, Short.MAX_VALUE)
+        );
+
+        txtName.setForeground(new java.awt.Color(255, 255, 255));
+        txtName.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        txtName.setMaximumSize(new java.awt.Dimension(90, 33));
+        txtName.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountNameIcon.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Name ");
+
+        txtGmail.setForeground(new java.awt.Color(255, 255, 255));
+        txtGmail.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        txtGmail.setMaximumSize(new java.awt.Dimension(90, 33));
+        txtGmail.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/GmailIcon.png"))); // NOI18N
+        txtGmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGmailActionPerformed(evt);
+            }
+        });
+
+        txtPass.setBackground(new java.awt.Color(0, 0, 0));
+        txtPass.setForeground(new java.awt.Color(255, 255, 255));
+        txtPass.setText("passwordField1");
+        txtPass.setEchoChar('\u002A');
+        txtPass.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        txtPass.setMaximumSize(new java.awt.Dimension(90, 33));
+        txtPass.setMinimumSize(new java.awt.Dimension(64, 35));
+        txtPass.setOpaque(true);
+        txtPass.setPreferredSize(new java.awt.Dimension(64, 35));
+        txtPass.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/PassIcon.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Password");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Gmail");
+
+        btnUploadAvatar2.setBackground(new java.awt.Color(153, 153, 255));
+        btnUploadAvatar2.setForeground(new java.awt.Color(255, 255, 255));
+        btnUploadAvatar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/UploadImageIcon.png"))); // NOI18N
+        btnUploadAvatar2.setText("Upload Avatar");
+        btnUploadAvatar2.setMaximumSize(new java.awt.Dimension(70, 38));
+        btnUploadAvatar2.setMinimumSize(new java.awt.Dimension(40, 38));
+        btnUploadAvatar2.setPreferredSize(new java.awt.Dimension(60, 38));
+        btnUploadAvatar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUploadAvatar2MouseClicked(evt);
+            }
+        });
+
+        cbPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        cbPassword.setForeground(new java.awt.Color(255, 255, 255));
+        cbPassword.setText("Show Password");
+        cbPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbPasswordMouseClicked(evt);
+            }
+        });
+
+        btnEditProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/EditProfileIcon.png"))); // NOI18N
+        btnEditProfile.setText("Edit Profile");
+        btnEditProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditProfileMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(LabelAvatar5, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addGap(129, 129, 129)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                        .addGap(477, 477, 477))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                            .addComponent(txtGmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbPassword)
+                        .addGap(306, 306, 306))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(207, 207, 207)
+                .addComponent(btnUploadAvatar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(882, 882, 882))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEditProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(229, 229, 229)
+                .addComponent(LabelAvatar5, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnUploadAvatar2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnEditProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(135, 135, 135)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbPassword))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtGmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGmailActionPerformed
+
+    private void btnUploadAvatar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadAvatar2MouseClicked
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            selectedFile = chooser.getSelectedFile();
+            icon = new ImageIcon(new ImageIcon(selectedFile.getAbsolutePath())
+                .getImage().getScaledInstance(LabelAvatar5.getWidth(), LabelAvatar5.getHeight(), Image.SCALE_SMOOTH));
+            LabelAvatar5.setIcon(icon);
+        }
+
+        if (selectedFile == null) {
+            JOptionPane.showMessageDialog(this, "PHOTO NOT UPDATE YET!");
+            return;
+        }
+        AccountController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getUserName());
+        
+    }//GEN-LAST:event_btnUploadAvatar2MouseClicked
+
+    private void cbPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbPasswordMouseClicked
+       if(cbPassword.isSelected()){
+           txtPass.setEchoChar((char) 0 );
+       }
+       else{
+           txtPass.setEchoChar('*');
+       }
+    }//GEN-LAST:event_cbPasswordMouseClicked
+
+    private void btnEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditProfileMouseClicked
+        dEdit.setVisible(true);
+    }//GEN-LAST:event_btnEditProfileMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private Forms.Components.ProfilePhoto LabelAvatar;
+    private Forms.Components.ProfilePhoto LabelAvatar5;
+    private Forms.Components.HeaderButton btnEditProfile;
+    private Forms.Components.HeaderButton btnUploadAvatar2;
+    private javax.swing.JCheckBox cbPassword;
+    private javax.swing.JDialog dEdit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private Forms.Components.TextFieldController txtGmail;
+    private Forms.Components.TextFieldController txtName;
+    private Forms.Components.PasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 }

@@ -61,7 +61,7 @@ public class HomePage extends javax.swing.JFrame {
         // GÁN lại panelHome cho panelManagerBill
         panelManagerBill.setPanelHome(panelHome);
         panelManagerPhone = new PanelManagerPhone(panelHome);
-        panelProfile = new PanelProfile();
+        panelProfile = new PanelProfile(account);
 
         if (account.getUserName().equalsIgnoreCase("admin")) {
             this.jPanel2.add(panelManagerAccount);
@@ -73,7 +73,8 @@ public class HomePage extends javax.swing.JFrame {
             this.jPanel2.add(panelProfile);
             this.jPanel2.add(panelManagerBill);
             this.jPanel2.add(panelHome);
-            btnMenuPhone.setVisible(false);
+            this.jPanel2.add(panelManagerPhone);
+            btnMenuPhone.setVisible(true);
             btnMenuAccount.setVisible(false);
         }
         panelProfile.setVisible(false);

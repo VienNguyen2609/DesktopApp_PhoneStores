@@ -1,9 +1,11 @@
 Forms\HomePage$6.class
 Forms\PanelPhone$2.class
+Forms\PanelManagerAccount$9.class
 Forms\Components\RippleEffect$1.class
 Forms\CreateAccount$1.class
 Forms\Components\EffectComponents$2.class
 Forms\Components\SetThemFlatLaf$1.class
+Forms\PanelHome$1.class
 Model\Bill.class
 Controllers\BillController.class
 Forms\Components\HeaderButton.class
@@ -39,13 +41,16 @@ Forms\CreateAccount$2.class
 Model\BillDisplay.class
 Forms\PanelPhone$6.class
 Forms\Components\EffectComponents$1.class
+Forms\PanelHome$2.class
 Forms\HomePage$3.class
 Forms\Login.class
 Forms\Components\EffectComponents.class
 Forms\PanelManagerAccount$2.class
 Forms\PanelManagerPhone$2.class
+Forms\PanelProfile$1.class
 Forms\TestHome.class
 Forms\PanelManagerPhone.class
+Forms\PanelProfile$4.class
 Forms\PanelManagerBill$3.class
 Forms\PanelProfile.class
 Forms\PanelManagerAccount$5.class
@@ -66,6 +71,7 @@ Controllers\PhoneController.class
 Forms\HomePage$1.class
 Forms\PanelPhone$4.class
 Forms\PanelManagerAccount$4.class
+Forms\PanelProfile$3.class
 Forms\Components\PasswordField.class
 Forms\PanelPhone.class
 Forms\PanelManagerBill$1.class
@@ -76,4 +82,5 @@ Model\Phone.class
 Forms\PanelManagerPhone$1.class
 Forms\PanelManagerBill$2.class
 Forms\Components\RippleEffect$Effect$1.class
+Forms\PanelProfile$2.class
 Forms\PanelPhone$3.class

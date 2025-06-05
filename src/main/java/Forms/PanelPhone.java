@@ -49,11 +49,14 @@ public class PanelPhone extends javax.swing.JPanel {
         this.panelHome = panelHome;
         this.currentAccount = account;
         this.panelManagerBill = panelManagerBill;
+        
         PanelBill.setSize(new Dimension(600, 700));
         PanelBill.setLocation(400, 100);
         PanelBill.setVisible(false);
         PanelBill.setTitle("CONFIRM BILL");
-
+        PanelBill.setResizable(false);
+        
+        
         productIdCurrent = phone.getPhoneId();
         txtName.setText(phone.getNamePhone());
         txtBrand.setText(String.valueOf(phone.getBrandPhone()));
@@ -167,6 +170,7 @@ public class PanelPhone extends javax.swing.JPanel {
         txtDescription = new Forms.Components.TextFieldController();
         txtOS = new Forms.Components.TextFieldController();
         jLabel2 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         PanelBill.setModal(true);
 
@@ -356,7 +360,7 @@ public class PanelPhone extends javax.swing.JPanel {
                 btnPurchaseMouseClicked(evt);
             }
         });
-        jPanel16.add(btnPurchase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 250, 40));
+        jPanel16.add(btnPurchase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, 250, 40));
 
         txtName.setEditable(false);
         txtName.setForeground(new java.awt.Color(255, 255, 255));
@@ -424,6 +428,9 @@ public class PanelPhone extends javax.swing.JPanel {
         jPanel16.add(txtOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 150, 30));
         jPanel16.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 600));
 
+        jCheckBox1.setText("jCheckBox1");
+        jPanel16.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -434,7 +441,9 @@ public class PanelPhone extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -516,8 +525,8 @@ public class PanelPhone extends javax.swing.JPanel {
     private void btnPurchaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPurchaseMouseClicked
 
         getTextBill(productIdCurrent, txtName.getText().trim(), txtBrand.getText(),
-                    txtPrice.getText(), txtOS.getText(), txtDescription.getText(), quantityAvailable, icon);
-        
+            txtPrice.getText(), txtOS.getText(), txtDescription.getText(), quantityAvailable, icon);
+
     }//GEN-LAST:event_btnPurchaseMouseClicked
 
 
@@ -528,7 +537,7 @@ public class PanelPhone extends javax.swing.JPanel {
     private javax.swing.JButton btnBuy;
     private javax.swing.JButton btnCanelBuy;
     private Forms.Components.HeaderButton btnPurchase;
-    private Forms.Components.HeaderButton headerButton1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;

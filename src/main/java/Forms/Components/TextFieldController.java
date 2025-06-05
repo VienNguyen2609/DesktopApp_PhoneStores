@@ -1,18 +1,19 @@
-
 package Forms.Components;
-
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 public class TextFieldController extends JTextField {
 
     private Icon prefixIcon;
     private Icon suffixIcon;
+    private Border customBorder;
 
     public Icon getPrefixIcon() {
         return prefixIcon;
@@ -23,7 +24,7 @@ public class TextFieldController extends JTextField {
         initBorder();
 
     }
-   
+
     @Override
     public void addNotify() {
         super.addNotify();
@@ -32,7 +33,7 @@ public class TextFieldController extends JTextField {
 
     private void applyDefaults() {
         setOpaque(false);
-        setBackground(new java.awt.Color(0, 0, 0, 0));        
+        setBackground(new java.awt.Color(0, 0, 0, 0));
     }
 
     public Icon getSuffixIcon() {
@@ -45,7 +46,7 @@ public class TextFieldController extends JTextField {
     }
 
     public TextFieldController() {
-         super();
+        super();
         applyDefaults();
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
@@ -74,15 +75,32 @@ public class TextFieldController extends JTextField {
     private void initBorder() {
         int left = 5;
         int right = 5;
-        // 5 is default 
+
         if (prefixIcon != null) {
-            // prefix is lest 
-            left = prefixIcon.getIconWidth();
+            left += prefixIcon.getIconWidth() + 4;  // +5 padding giữa icon và text
         }
         if (suffixIcon != null) {
-            // suffix is right 
-            right = suffixIcon.getIconWidth();
+            right += suffixIcon.getIconWidth() + 4;
         }
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, left, 5, right));
+
+        Border iconPadding = BorderFactory.createEmptyBorder(4, left, 4, right);
+
+        if (customBorder != null) {
+            // Gộp custom border + padding icon
+            setBorder(BorderFactory.createCompoundBorder(customBorder, iconPadding));
+        } else {
+            // Không có custom => chỉ padding icon
+            setBorder(iconPadding);
+        }
     }
+
+    public Border getCustomBorder() {
+        return customBorder;
+    }
+
+    public void setCustomBorder(Border customBorder) {
+        this.customBorder = customBorder;
+        initBorder(); // cập nhật lại border
+    }
+
 }

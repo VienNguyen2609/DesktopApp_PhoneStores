@@ -35,6 +35,17 @@ public class PhoneController {
         }
     }
 
+    private final String selectPhoneSQL = "SELECT * FROM Phones";
+    private final String selectPhoneSQLByName = "SELECT * FROM Phones WHERE namePhone LIKE ?";
+
+    private final String insertPhoneSQL = "INSERT INTO Phones (namePhone, brandPhone, pricePhone"
+            + ", quantity , operatingSystem ,imagePhone,descriptionPhone , statusPhone) VALUES (?,?,?,?,?,?,?,?)";
+
+    private final String updatePhoneById = "UPDATE Phones SET namePhone =? , brandPhone =? , pricePhone = ?, "
+            + "quantity = ?, operatingSystem = ? , imagePhone =? , descriptionPhone=?  , statusPhone = ?  WHERE idPhone  = ?";
+
+    private final String deletePhoneById = "delete from Phones where idPhone = ?";
+
     private void setupDatabaseCommand(String sql) throws SQLException {
         try {
             SQLConnector.getForName();
@@ -48,7 +59,8 @@ public class PhoneController {
     public void loadDataProducts() {
         listPhones.clear();
         try {
-            setupDatabaseCommand("SELECT * FROM Phones");
+
+            setupDatabaseCommand(selectPhoneSQL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("idPhone");
@@ -61,6 +73,37 @@ public class PhoneController {
                 String descriptionPhone = rs.getString("descriptionPhone");
                 boolean status = rs.getBoolean("statusPhone");
                 Phone _phone = new Phone(id, name, brand, price, quantity, operating, image, descriptionPhone, status);
+                listPhones.add(_phone);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unexpected error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void searchByName(String name) {
+        listPhones.clear();
+        try {
+
+            setupDatabaseCommand(selectPhoneSQLByName);
+            ps.setString(1, "%" + name + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("idPhone");
+                String _name = rs.getString("namePhone");
+                String brand = rs.getString("brandPhone");
+                double price = rs.getDouble("pricePhone");
+                int quantity = rs.getInt("quantity");
+                String operating = rs.getString("operatingSystem");
+                byte[] image = rs.getBytes("imagePhone");
+                String descriptionPhone = rs.getString("descriptionPhone");
+                boolean status = rs.getBoolean("statusPhone");
+                Phone _phone = new Phone(id, _name, brand, price, quantity, operating, image, descriptionPhone, status);
                 listPhones.add(_phone);
             }
             rs.close();
@@ -89,30 +132,30 @@ public class PhoneController {
         String status = "";
         for (Phone phone : listPhones) {
             if (phone.isStatusPhone() == false) {
-                status = "Unavailable"; 
+                status = "Unavailable";
                 model.addRow(new Object[]{n++,
-                 phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
-                 phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),
-                 phone.getImagePhone(), phone.getDescription()  ,status});
-            }
-            else{
-                 status = "Availabel" ;
-                 model.addRow(new Object[]{n++,
-                 phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
-                 phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),
-                 phone.getImagePhone(), phone.getDescription()  ,status});
+                    phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
+                    phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),
+                    phone.getImagePhone(), phone.getDescription(), status});
+            } else {
+                status = "Availabel";
+                model.addRow(new Object[]{n++,
+                    phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
+                    phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),
+                    phone.getImagePhone(), phone.getDescription(), status});
             }
         }
     }
 
-    public boolean addProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone , boolean status) {
+    public boolean addProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone, boolean status) {
         if (image == null) {
-            JOptionPane.showMessageDialog(null, "PRODUCT IMAGE MUST NOT BE EMPTY!");
+            JOptionPane.showMessageDialog(null, "PRODUCT IMAGE CAN NOT BE EMPTY!");
             return false;
         }
         boolean check = false;
         try {
-            setupDatabaseCommand("INSERT INTO Phones (namePhone, brandPhone, pricePhone, quantity , operatingSystem ,imagePhone,descriptionPhone , statusPhone) VALUES (?,?,?,?,?,?,?,?)");
+
+            setupDatabaseCommand(insertPhoneSQL);
             ps.setString(1, name);
             ps.setString(2, brand);
             ps.setDouble(3, price);
@@ -124,7 +167,7 @@ public class PhoneController {
             int n = ps.executeUpdate();
 
             if (n > 0) {
-                Phone _phone = new Phone(name, brand, price, quantity, operatingSystem, image, descriptionPhone ,status);
+                Phone _phone = new Phone(name, brand, price, quantity, operatingSystem, image, descriptionPhone, status);
                 listPhones.add(_phone);
                 check = true;
             }
@@ -139,12 +182,10 @@ public class PhoneController {
         return check;
     }
 
-    public boolean updateProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone, boolean  status , int idProduct) {
-        
+    public boolean updateProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone, boolean status, int idProduct) {
 
         try {
-            setupDatabaseCommand("UPDATE Phones SET namePhone =? , brandPhone =? , pricePhone = ?, "
-                    + "quantity = ?, operatingSystem = ? , imagePhone =? , descriptionPhone=?  , statusPhone = ?  WHERE idPhone  = ?");
+            setupDatabaseCommand(updatePhoneById);
             ps.setString(1, name);
             ps.setString(2, brand);
             ps.setDouble(3, price);
@@ -214,7 +255,8 @@ public class PhoneController {
     public boolean deleteProduct(int id) {
         boolean check = false;
         try {
-            setupDatabaseCommand("delete from Phones where idPhone = ?");
+
+            setupDatabaseCommand(deletePhoneById);
             ps.setInt(1, id);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {

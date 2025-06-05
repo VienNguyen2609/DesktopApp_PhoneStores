@@ -1,4 +1,3 @@
-
 package Forms.Components;
 
 /**
@@ -11,11 +10,13 @@ import java.awt.*;
 public class RoundedPanel extends JPanel {
 
     private int radius;
+    private Color color;
 
-    public RoundedPanel(int radius) {
+    public RoundedPanel(int radius, Color color) {
         this.radius = radius;
+        this.color = color;
         setOpaque(false); // Không vẽ nền vuông
-        setBorder(new RoundedBorder(radius)); // Thêm viền đã bo tròn
+        setBorder(new RoundedBorder(radius, color)); // Thêm viền đã bo tròn
     }
 
     @Override
@@ -30,6 +31,3 @@ public class RoundedPanel extends JPanel {
         super.paintComponent(g);
     }
 }
-
-
-

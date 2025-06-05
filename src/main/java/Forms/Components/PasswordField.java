@@ -1,17 +1,19 @@
-
 package Forms.Components;
-    
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
+import javax.swing.border.Border;
 
 public class PasswordField extends JPasswordField {
 
-    Icon prefixIcon;
-    Icon suffixIcon;
+    private Icon prefixIcon;
+    private Icon suffixIcon;
+    private Border customBorder;
 
     public Icon getPrefixIcon() {
         return prefixIcon;
@@ -29,7 +31,7 @@ public class PasswordField extends JPasswordField {
     public void setSuffixIcon(Icon suffixIcon) {
         this.suffixIcon = suffixIcon;
         initBorder();
-       // setOpaque(false);
+        // setOpaque(false);
     }
 
     public PasswordField() {
@@ -63,12 +65,28 @@ public class PasswordField extends JPasswordField {
         // 5 is default 
         if (prefixIcon != null) {
             // prefix is lest 
-            left = prefixIcon.getIconWidth();
+            left += prefixIcon.getIconWidth() + 4 ;
         }
         if (suffixIcon != null) {
             // suffix is right 
-            right = suffixIcon.getIconWidth();
+            right = suffixIcon.getIconWidth() + 4 ;
         }
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, left, 5, right));
+        Border iconPadding = BorderFactory.createEmptyBorder(4, left, 4, right);
+        if (customBorder != null) {
+            // Gộp custom border + padding icon
+            setBorder(BorderFactory.createCompoundBorder(customBorder, iconPadding));
+        } else {
+            // Không có custom => chỉ padding icon
+            setBorder(iconPadding);
+        }
+    }
+    
+    public Border getCustomBorder() {
+        return customBorder;
+    }
+
+    public void setCustomBorder(Border customBorder) {
+        this.customBorder = customBorder;
+        initBorder(); // cập nhật lại border
     }
 }

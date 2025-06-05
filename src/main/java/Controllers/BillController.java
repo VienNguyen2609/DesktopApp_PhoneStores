@@ -44,6 +44,20 @@ public class BillController {
         }
     }
 
+    private final String insertBillSQL = "INSERT INTO Bills ( UserId, idPhone  , BillDate ,Quantity ,Price) VALUES (?,?,?,?,?)";
+    private final String updateQuantitySQL = "UPDATE Phones SET Quantity = Quantity - ? WHERE idPhone = ?";
+    private final String updatePhoneByNameSQL = "UPDATE Phones SET Quantity = Quantity + ? WHERE namePhone = ?";
+    private final String deleteBillByIdSQL = "DELETE FROM Bills WHERE BillId = ?";
+    private final String getPhoneQtySql = "SELECT idPhone, Quantity FROM Bills";
+    private final String updateQuantityPhoneByIdSQL = "UPDATE Phones SET Quantity = Quantity + ? WHERE idPhone = ?";
+    private final String deleteBillSQL = "DELETE FROM Bills";
+    private final String getUserIdByUserNamSQL = "SELECT UserId FROM Accounts WHERE UserName = ?";
+    private final String getIdQuantityBillByIdSQL = "SELECT idPhone, Quantity FROM Bills WHERE UserId = ?";
+    private final String updateQuantityPhoneById = "UPDATE Phones SET Quantity = Quantity + ? WHERE idPhone = ?";
+    private final String deleteBillById = "DELETE FROM Bills WHERE UserId = ?";
+    
+    
+    
     private void setupDatabaseCommand(String sql) throws SQLException {
         try {
             SQLConnector.getForName();
@@ -54,7 +68,8 @@ public class BillController {
         }
 
     }
-
+    
+    
 //    public void loadBills(JTable table, String name) {
 //        listBill.clear();
 //        model = (DefaultTableModel) table.getModel();
@@ -100,10 +115,11 @@ public class BillController {
 //            e.printStackTrace();
 //        }
 //    }
+
     public boolean addBill(int userId, int idPhone, Date billDate, int quantity, double price) {
 
         try {
-            setupDatabaseCommand("INSERT INTO Bills ( UserId, idPhone  , BillDate ,Quantity ,Price) VALUES (?,?,?,?,?)");
+            setupDatabaseCommand(insertBillSQL);
             ps.setInt(1, userId);
             ps.setInt(2, idPhone);
             ps.setDate(3, new java.sql.Date(billDate.getTime()));
@@ -115,7 +131,7 @@ public class BillController {
             if (n > 0) {
 
                 // Nếu thêm thành công, cập nhật số lượng sản phẩm
-                setupDatabaseCommand("UPDATE Phones SET Quantity = Quantity - ? WHERE idPhone = ?");
+                setupDatabaseCommand(updateQuantitySQL);
                 ps.setInt(1, quantity);
                 ps.setInt(2, idPhone);
                 int m = ps.executeUpdate(); // Thực thi UPDATE
@@ -138,15 +154,15 @@ public class BillController {
         return false;
     }
 
-    public boolean deleteBill(int billId, String namePhone, int quantity ) {
+    public boolean deleteBill(int billId, String namePhone, int quantity) {
         try {
-            setupDatabaseCommand("UPDATE Phones SET Quantity = Quantity + ? WHERE namePhone = ?");
+            setupDatabaseCommand(updatePhoneByNameSQL);
             ps.setInt(1, quantity);
             ps.setString(2, namePhone);
             ps.executeUpdate();
             ps.close();
 
-            setupDatabaseCommand("DELETE FROM Bills WHERE BillId = ?");
+            setupDatabaseCommand(deleteBillByIdSQL);
             ps.setInt(1, billId);
             int n = ps.executeUpdate();
             ps.close();
@@ -164,7 +180,8 @@ public class BillController {
     public boolean deleteAllBills() {
         try {
             // 1. Lấy tất cả hóa đơn để phục hồi số lượng về Phones
-            setupDatabaseCommand("SELECT idPhone, Quantity FROM Bills");
+
+            setupDatabaseCommand(getPhoneQtySql);
             ResultSet rs = ps.executeQuery();
 
             // Tạm lưu số lượng cần cộng lại vào Phones
@@ -179,7 +196,7 @@ public class BillController {
 
             // 2. Cập nhật số lượng hàng tồn kho cho từng idPhone
             for (Map.Entry<Integer, Integer> entry : phoneUpdateMap.entrySet()) {
-                setupDatabaseCommand("UPDATE Phones SET Quantity = Quantity + ? WHERE idPhone = ?");
+                setupDatabaseCommand(updateQuantityPhoneByIdSQL);
                 ps.setInt(1, entry.getValue());
                 ps.setInt(2, entry.getKey());
                 ps.executeUpdate();
@@ -187,7 +204,7 @@ public class BillController {
             }
 
             // 3. Xóa toàn bộ bill
-            setupDatabaseCommand("DELETE FROM Bills");
+            setupDatabaseCommand(deleteBillSQL);
             int rows = ps.executeUpdate();
             ps.close();
 
@@ -205,12 +222,12 @@ public class BillController {
     public boolean deleteAllBillsByUserName(String nameUser) {
         try {
             // 1. Tìm UserId theo tên người dùng
-            setupDatabaseCommand("SELECT UserId FROM Accounts WHERE UserName = ?");
+            setupDatabaseCommand(getUserIdByUserNamSQL);
             ps.setString(1, nameUser);
             rs = ps.executeQuery();
 
             if (!rs.next()) {
-                System.out.println("Không tìm thấy user có tên: " + nameUser);
+                System.out.println("User Name Not Found: " + nameUser);
                 return false;
             }
 
@@ -219,7 +236,7 @@ public class BillController {
             ps.close();
 
             // 2. Lấy các bill của user này
-            setupDatabaseCommand("SELECT idPhone, Quantity FROM Bills WHERE UserId = ?");
+            setupDatabaseCommand(getIdQuantityBillByIdSQL);
             ps.setInt(1, userId);
             rs = ps.executeQuery();
 
@@ -234,15 +251,15 @@ public class BillController {
 
             // 3. Cập nhật lại tồn kho trong Phones
             for (Map.Entry<Integer, Integer> entry : phoneUpdateMap.entrySet()) {
-                setupDatabaseCommand("UPDATE Phones SET Quantity = Quantity + ? WHERE idPhone = ?");
+                setupDatabaseCommand(updateQuantityPhoneById);
                 ps.setInt(1, entry.getValue());
                 ps.setInt(2, entry.getKey());
                 ps.executeUpdate();
                 ps.close();
             }
 
-            // 4. Xóa bills của user
-            setupDatabaseCommand("DELETE FROM Bills WHERE UserId = ?");
+            // 4. Xóa bills của user 
+            setupDatabaseCommand(deleteBillById);
             ps.setInt(1, userId);
             int rows = ps.executeUpdate();
             ps.close();
@@ -283,7 +300,7 @@ public class BillController {
         ArrayList<BillDisplay> list = new ArrayList<>();
 
         try {
-            String sql;
+            final String sql;
             if (name.equalsIgnoreCase("admin")) {
                 sql = """
                 SELECT b.BillId, u.UserName, p.namePhone, b.Quantity, b.Price, b.TotalAmount, b.BillDate , b.PaymentStatus

@@ -20,9 +20,7 @@ public class PanelManagerAccount extends javax.swing.JPanel {
     private File selectedFile;
     private Icon icon;
     private byte[] imageUser = null;
-    
-    
-    
+
     public PanelManagerAccount() {
         initComponents();
         AccountController.init();
@@ -30,14 +28,13 @@ public class PanelManagerAccount extends javax.swing.JPanel {
         styleButton();
     }
 
-    
-    private void viewTabelAccount(){
+    private void viewTabelAccount() {
         txtNameUser.setText("");
         txtPasswordUser.setText("");
         txtGmailUser.setText("");
         LabelImageUser.setIcon(null);
     }
-    
+
     public void clickMouseTableAccount() {
         selectedRow = tbAccount.getSelectedRow();
         if (selectedRow != -1) {
@@ -61,142 +58,36 @@ public class PanelManagerAccount extends javax.swing.JPanel {
             }
         }
     }
-    
-    
-    private void styleButton(){
+
+    private void styleButton() {
         btnUpdateUser.setBackgroundColor(Color.ORANGE);
         btnAddUser.setBackgroundColor(Color.RED);
         btnDeleteUser.setBackgroundColor(Color.GREEN);
         btnCancelUser.setBackgroundColor(Color.BLUE);
         btnUploadAvatarUser.setBackgroundColor(Color.ORANGE);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
-        btnDeleteUser = new Forms.Components.HeaderButton();
-        btnCancelUser = new Forms.Components.HeaderButton();
-        btnUploadAvatarUser = new Forms.Components.HeaderButton();
-        btnAddUser = new Forms.Components.HeaderButton();
-        btnUpdateUser = new Forms.Components.HeaderButton();
-        LabelGmailUser = new javax.swing.JLabel();
-        LabelNameUser = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbAccount = new javax.swing.JTable();
         txtGmailUser = new Forms.Components.TextFieldController();
         txtNameUser = new Forms.Components.TextFieldController();
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         LabelImageUser = new Forms.Components.ProfilePhoto();
         txtPasswordUser = new Forms.Components.TextFieldController();
+        btnDeleteUser = new Forms.Components.HeaderButton();
         jLabel23 = new javax.swing.JLabel();
+        btnCancelUser = new Forms.Components.HeaderButton();
         LabelPasswordUser = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbAccount = new javax.swing.JTable();
-
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnDeleteUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeleteUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/DeleteIcon1.png"))); // NOI18N
-        btnDeleteUser.setText("Delete");
-        btnDeleteUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDeleteUserMouseClicked(evt);
-            }
-        });
-        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteUserActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnDeleteUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 130, 30));
-
-        btnCancelUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/CancelIcon.png"))); // NOI18N
-        btnCancelUser.setText("Cancel");
-        btnCancelUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCancelUserMouseClicked(evt);
-            }
-        });
-        jPanel4.add(btnCancelUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 510, 130, 30));
-
-        btnUploadAvatarUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnUploadAvatarUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/UploadImageIcon.png"))); // NOI18N
-        btnUploadAvatarUser.setText("UploadImage");
-        btnUploadAvatarUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnUploadAvatarUserMouseClicked(evt);
-            }
-        });
-        jPanel4.add(btnUploadAvatarUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 170, 30));
-
-        btnAddUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AddIcon.png"))); // NOI18N
-        btnAddUser.setText("Add");
-        btnAddUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAddUserMouseClicked(evt);
-            }
-        });
-        jPanel4.add(btnAddUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 130, 30));
-
-        btnUpdateUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdateUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/UpdateIcon.png"))); // NOI18N
-        btnUpdateUser.setText("Update");
-        btnUpdateUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnUpdateUserMouseClicked(evt);
-            }
-        });
-        jPanel4.add(btnUpdateUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 510, 130, 30));
-
-        LabelGmailUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        LabelGmailUser.setForeground(new java.awt.Color(255, 255, 255));
-        LabelGmailUser.setText("Gmail");
-        jPanel4.add(LabelGmailUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 40, -1));
-
-        LabelNameUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        LabelNameUser.setForeground(new java.awt.Color(255, 255, 255));
-        LabelNameUser.setText("Name");
-        jPanel4.add(LabelNameUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
-
-        txtGmailUser.setForeground(new java.awt.Color(255, 255, 255));
-        txtGmailUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtGmailUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/GmailIcon.png"))); // NOI18N
-        jPanel4.add(txtGmailUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 210, -1));
-
-        txtNameUser.setForeground(new java.awt.Color(255, 255, 255));
-        txtNameUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtNameUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountNameIcon.png"))); // NOI18N
-        jPanel4.add(txtNameUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 200, -1));
-
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("____________________________________");
-        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 210, 30));
-
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("____________________________________");
-        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 210, 30));
-
-        LabelImageUser.setPreferredSize(new java.awt.Dimension(160, 130));
-        jPanel4.add(LabelImageUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 170, 130));
-
-        txtPasswordUser.setForeground(new java.awt.Color(255, 255, 255));
-        txtPasswordUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtPasswordUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/PassIcon.png"))); // NOI18N
-        jPanel4.add(txtPasswordUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 200, -1));
-
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("____________________________________");
-        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 210, 30));
-
-        LabelPasswordUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        LabelPasswordUser.setForeground(new java.awt.Color(255, 255, 255));
-        LabelPasswordUser.setText("Password");
-        jPanel4.add(LabelPasswordUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 70, -1));
+        btnUploadAvatarUser = new Forms.Components.HeaderButton();
+        btnAddUser = new Forms.Components.HeaderButton();
+        btnUpdateUser = new Forms.Components.HeaderButton();
+        LabelPasswordUser1 = new javax.swing.JLabel();
+        LabelPasswordUser2 = new javax.swing.JLabel();
 
         tbAccount.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         tbAccount.setForeground(new java.awt.Color(255, 255, 255));
@@ -245,21 +136,215 @@ public class PanelManagerAccount extends javax.swing.JPanel {
             tbAccount.getColumnModel().getColumn(5).setResizable(false);
         }
 
+        txtGmailUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtGmailUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtGmailUser.setMaximumSize(new java.awt.Dimension(90, 28));
+        txtGmailUser.setMinimumSize(new java.awt.Dimension(40, 28));
+        txtGmailUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/GmailIcon.png"))); // NOI18N
+
+        txtNameUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtNameUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtNameUser.setMaximumSize(new java.awt.Dimension(100, 28));
+        txtNameUser.setMinimumSize(new java.awt.Dimension(40, 28));
+        txtNameUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountNameIcon.png"))); // NOI18N
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("____________________________________");
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("____________________________________");
+
+        LabelImageUser.setMaximumSize(new java.awt.Dimension(200, 150));
+        LabelImageUser.setMinimumSize(new java.awt.Dimension(100, 90));
+        LabelImageUser.setPreferredSize(new java.awt.Dimension(160, 130));
+
+        txtPasswordUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtPasswordUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtPasswordUser.setMaximumSize(new java.awt.Dimension(100, 28));
+        txtPasswordUser.setMinimumSize(new java.awt.Dimension(40, 28));
+        txtPasswordUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/PassIcon.png"))); // NOI18N
+
+        btnDeleteUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeleteUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/DeleteIcon1.png"))); // NOI18N
+        btnDeleteUser.setText("Delete");
+        btnDeleteUser.setMaximumSize(new java.awt.Dimension(90, 40));
+        btnDeleteUser.setMinimumSize(new java.awt.Dimension(30, 40));
+        btnDeleteUser.setPreferredSize(new java.awt.Dimension(50, 40));
+        btnDeleteUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteUserMouseClicked(evt);
+            }
+        });
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
+
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("____________________________________");
+
+        btnCancelUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/CancelIcon.png"))); // NOI18N
+        btnCancelUser.setText("Cancel");
+        btnCancelUser.setMaximumSize(new java.awt.Dimension(90, 40));
+        btnCancelUser.setMinimumSize(new java.awt.Dimension(30, 40));
+        btnCancelUser.setPreferredSize(new java.awt.Dimension(50, 40));
+        btnCancelUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelUserMouseClicked(evt);
+            }
+        });
+
+        LabelPasswordUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelPasswordUser.setForeground(new java.awt.Color(255, 255, 255));
+        LabelPasswordUser.setText("Password");
+
+        btnUploadAvatarUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnUploadAvatarUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/UploadImageIcon.png"))); // NOI18N
+        btnUploadAvatarUser.setText("UploadImage");
+        btnUploadAvatarUser.setMaximumSize(new java.awt.Dimension(120, 38));
+        btnUploadAvatarUser.setMinimumSize(new java.awt.Dimension(60, 38));
+        btnUploadAvatarUser.setPreferredSize(new java.awt.Dimension(180, 30));
+        btnUploadAvatarUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUploadAvatarUserMouseClicked(evt);
+            }
+        });
+        btnUploadAvatarUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUploadAvatarUserActionPerformed(evt);
+            }
+        });
+
+        btnAddUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AddIcon.png"))); // NOI18N
+        btnAddUser.setText("Add");
+        btnAddUser.setMaximumSize(new java.awt.Dimension(10, 40));
+        btnAddUser.setMinimumSize(new java.awt.Dimension(5, 40));
+        btnAddUser.setPreferredSize(new java.awt.Dimension(7, 40));
+        btnAddUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddUserMouseClicked(evt);
+            }
+        });
+
+        btnUpdateUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/UpdateIcon.png"))); // NOI18N
+        btnUpdateUser.setText("Update");
+        btnUpdateUser.setMaximumSize(new java.awt.Dimension(90, 40));
+        btnUpdateUser.setMinimumSize(new java.awt.Dimension(30, 40));
+        btnUpdateUser.setPreferredSize(new java.awt.Dimension(50, 40));
+        btnUpdateUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateUserMouseClicked(evt);
+            }
+        });
+
+        LabelPasswordUser1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelPasswordUser1.setForeground(new java.awt.Color(255, 255, 255));
+        LabelPasswordUser1.setText("Name");
+
+        LabelPasswordUser2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelPasswordUser2.setForeground(new java.awt.Color(255, 255, 255));
+        LabelPasswordUser2.setText("Gmail");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LabelPasswordUser, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(LabelPasswordUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(LabelPasswordUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNameUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(41, 41, 41))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtPasswordUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(26, 26, 26))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtGmailUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(59, 59, 59)))
+                        .addGap(141, 141, 141))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(btnUploadAvatarUser, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                        .addGap(135, 135, 135))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(LabelImageUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnUpdateUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAddUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(54, 54, 54)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCancelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(77, 77, 77)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(LabelImageUser, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUploadAvatarUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(LabelPasswordUser1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addComponent(LabelPasswordUser)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPasswordUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addComponent(LabelPasswordUser2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtGmailUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAccountMouseClicked
+        clickMouseTableAccount();
+    }//GEN-LAST:event_tbAccountMouseClicked
 
     private void btnDeleteUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteUserMouseClicked
 
@@ -276,6 +361,10 @@ public class PanelManagerAccount extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeleteUserMouseClicked
 
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
+
     private void btnCancelUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelUserMouseClicked
         viewTabelAccount();
     }//GEN-LAST:event_btnCancelUserMouseClicked
@@ -286,7 +375,7 @@ public class PanelManagerAccount extends javax.swing.JPanel {
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             selectedFile = chooser.getSelectedFile();
             icon = new ImageIcon(new ImageIcon(selectedFile.getAbsolutePath())
-                .getImage().getScaledInstance(LabelImageUser.getWidth(), LabelImageUser.getHeight(), Image.SCALE_SMOOTH));
+                    .getImage().getScaledInstance(LabelImageUser.getWidth(), LabelImageUser.getHeight(), Image.SCALE_SMOOTH));
             LabelImageUser.setIcon(icon);
             LabelImageUser.setBorder(null);
         }
@@ -295,6 +384,10 @@ public class PanelManagerAccount extends javax.swing.JPanel {
             return;
         }
     }//GEN-LAST:event_btnUploadAvatarUserMouseClicked
+
+    private void btnUploadAvatarUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadAvatarUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUploadAvatarUserActionPerformed
 
     private void btnAddUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddUserMouseClicked
 
@@ -343,20 +436,12 @@ public class PanelManagerAccount extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateUserMouseClicked
 
-    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteUserActionPerformed
-
-    private void tbAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAccountMouseClicked
-        clickMouseTableAccount();
-    }//GEN-LAST:event_tbAccountMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel LabelGmailUser;
     private Forms.Components.ProfilePhoto LabelImageUser;
-    private javax.swing.JLabel LabelNameUser;
     private javax.swing.JLabel LabelPasswordUser;
+    private javax.swing.JLabel LabelPasswordUser1;
+    private javax.swing.JLabel LabelPasswordUser2;
     private Forms.Components.HeaderButton btnAddUser;
     private Forms.Components.HeaderButton btnCancelUser;
     private Forms.Components.HeaderButton btnDeleteUser;
@@ -365,7 +450,6 @@ public class PanelManagerAccount extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbAccount;
     private Forms.Components.TextFieldController txtGmailUser;
