@@ -39,10 +39,10 @@ public class PhoneController {
     private final String selectPhoneSQLByName = "SELECT * FROM Phones WHERE namePhone LIKE ?";
 
     private final String insertPhoneSQL = "INSERT INTO Phones (namePhone, brandPhone, pricePhone"
-            + ", quantity , operatingSystem ,imagePhone,descriptionPhone , statusPhone) VALUES (?,?,?,?,?,?,?,?)";
+            + ", quantityPhone , operatingSystemPhone ,imagePhone,descriptionPhone , statusPhone) VALUES (?,?,?,?,?,?,?,?)";
 
     private final String updatePhoneById = "UPDATE Phones SET namePhone =? , brandPhone =? , pricePhone = ?, "
-            + "quantity = ?, operatingSystem = ? , imagePhone =? , descriptionPhone=?  , statusPhone = ?  WHERE idPhone  = ?";
+            + "quantityPhone = ?, operatingSystemPhone = ? , imagePhone =? , descriptionPhone=?  , statusPhone = ?  WHERE idPhone  = ?";
 
     private final String deletePhoneById = "delete from Phones where idPhone = ?";
 
@@ -67,8 +67,8 @@ public class PhoneController {
                 String name = rs.getString("namePhone");
                 String brand = rs.getString("brandPhone");
                 double price = rs.getDouble("pricePhone");
-                int quantity = rs.getInt("quantity");
-                String operating = rs.getString("operatingSystem");
+                int quantity = rs.getInt("quantityPhone");
+                String operating = rs.getString("operatingSystemPhone");
                 byte[] image = rs.getBytes("imagePhone");
                 String descriptionPhone = rs.getString("descriptionPhone");
                 boolean status = rs.getBoolean("statusPhone");
@@ -99,7 +99,7 @@ public class PhoneController {
                 String brand = rs.getString("brandPhone");
                 double price = rs.getDouble("pricePhone");
                 int quantity = rs.getInt("quantity");
-                String operating = rs.getString("operatingSystem");
+                String operating = rs.getString("operatingSystemPhone");
                 byte[] image = rs.getBytes("imagePhone");
                 String descriptionPhone = rs.getString("descriptionPhone");
                 boolean status = rs.getBoolean("statusPhone");
@@ -290,5 +290,18 @@ public class PhoneController {
 //                .findFirst()
 //                .orElse(null); // Trả về null nếu không tìm thấy
 //    }
+    
+//    public void In(){
+//        for(Phone a : listPhones){
+//            System.out.println(a.getNamePhone());
+//        }
+//    }
+//    public static void main(String[] args) {
+//        PhoneController.init();
+//        PhoneController.instance.loadDataProducts();
+//        PhoneController.instance.In();
+//    }
 
 }
+
+

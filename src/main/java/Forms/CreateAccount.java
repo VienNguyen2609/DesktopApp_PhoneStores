@@ -178,20 +178,20 @@ public class CreateAccount extends javax.swing.JFrame {
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
 
-        AccountController.instance.loadDataAccounts();
-        try {
-            String name = this.txtName.getText().trim();
-            String pass = this.txtPassword.getText().trim();
-            String gmail = this.txtGmail.getText().trim();
-
-            if (!AccountController.instance.checkAccount(name, pass, gmail)) {
-                return;
-            } else if (AccountController.instance.addAccount(name, pass, gmail, null)) {
-                LabelMessage.setText("CREATED ACCOUNT SUCCESSFULLY");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//        AccountController.instance.loadDataAccounts();
+//        try {
+//            String name = this.txtName.getText().trim();
+//            String pass = this.txtPassword.getText().trim();
+//            String gmail = this.txtGmail.getText().trim();
+//
+//            if (!AccountController.instance.checkAccount(name, pass, gmail)) {
+//                return;
+//            } else if (AccountController.instance.addAccount(name, pass, gmail, null)) {
+//                LabelMessage.setText("CREATED ACCOUNT SUCCESSFULLY");
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
     }//GEN-LAST:event_headerButton1MouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked

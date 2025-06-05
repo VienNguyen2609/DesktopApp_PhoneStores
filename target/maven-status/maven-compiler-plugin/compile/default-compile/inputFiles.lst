@@ -23,7 +23,8 @@ E:\LTJava_Nhom12\src\main\java\Forms\PanelPhone.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelProfile.java
 E:\LTJava_Nhom12\src\main\java\Forms\TestHome.java
 E:\LTJava_Nhom12\src\main\java\Main\Run.java
-E:\LTJava_Nhom12\src\main\java\Model\Account.java
-E:\LTJava_Nhom12\src\main\java\Model\Bill.java
 E:\LTJava_Nhom12\src\main\java\Model\BillDisplay.java
+E:\LTJava_Nhom12\src\main\java\Model\Order.java
+E:\LTJava_Nhom12\src\main\java\Model\OrderDetail.java
 E:\LTJava_Nhom12\src\main\java\Model\Phone.java
+E:\LTJava_Nhom12\src\main\java\Model\Staff.java

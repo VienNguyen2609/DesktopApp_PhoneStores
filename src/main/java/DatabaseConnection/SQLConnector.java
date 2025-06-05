@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class SQLConnector {
 
-    private static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private final static String url = "jdbc:sqlserver://localhost:1433;databaseName=PhoneStore;user=sa;password=26092005;encrypt= false;";
+    private final static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private final static String url = "jdbc:sqlserver://localhost:1433;databaseName=PhoneStores;user=sa;password=26092005;encrypt= false;";
     private final static String user = "sa";
     private final static String password = "26092005";
 

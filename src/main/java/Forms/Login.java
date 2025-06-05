@@ -5,7 +5,7 @@ import Controllers.AccountController;
 import Forms.Components.EffectComponents;
 import Forms.Components.SetThemFlatLaf;
 import Forms.Components.ThemeFlatLaf;
-import Model.Account;
+import Model.Staff;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.File;
@@ -236,7 +236,7 @@ public class Login extends javax.swing.JFrame {
 
         SetThemFlatLaf.setThem(ThemeFlatLaf.Dark);
         if (AccountController.instance.checkLogin(username, password)) {
-            Account user = AccountController.instance.getAccountByUsername(username);
+            Staff user = AccountController.instance.getAccountByUsername(username);
             new HomePage(user).setVisible(true);
             dispose();
         }

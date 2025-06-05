@@ -4,7 +4,7 @@ package Forms;
 import Controllers.AccountController;
 import Forms.Components.RoundedBorder;
 import Forms.Components.RoundedPanel;
-import Model.Account;
+import Model.Staff;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -23,12 +23,12 @@ import javax.swing.JOptionPane;
 public class PanelProfile extends javax.swing.JPanel {
 
     private JLabel label;
-    private Account account ; 
+    private Staff account ; 
     private File selectedFile ; 
     private Icon icon ;
-    private Account currentAccount ; 
+    private Staff currentAccount ; 
     
-    public PanelProfile(Account account) {
+    public PanelProfile(Staff account) {
         initComponents();
         this.account = account ; 
         currentAccount = account;
@@ -48,10 +48,10 @@ public class PanelProfile extends javax.swing.JPanel {
         txtPass.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtGmail.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtPass.setBackground(null);
-        txtName.setText(account.getUserName());
-        txtPass.setText(account.getUserPassword());
-        txtGmail.setText(account.getUserGmail());
-        setAvatar(account.getAvatarUser());
+        txtName.setText(account.getName());
+        txtPass.setText(account.getPassword());
+        txtGmail.setText(account.getEmail());
+        setAvatar(account.getAvatar());
         btnUploadAvatar2.setForeground(new Color(0, 0, 0));
         btnEditProfile.setForeground(new Color(0, 0, 0));
         dEdit.setSize(new Dimension(600, 600));
@@ -285,7 +285,7 @@ public class PanelProfile extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "PHOTO NOT UPDATE YET!");
             return;
         }
-        AccountController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getUserName());
+        AccountController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getName());
         
     }//GEN-LAST:event_btnUploadAvatar2MouseClicked
 

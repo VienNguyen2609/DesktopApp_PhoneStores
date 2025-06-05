@@ -1,7 +1,7 @@
 package Forms;
 
 import Controllers.BillController;
-import Model.Account;
+import Model.Staff;
 import Model.BillDisplay;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -17,21 +17,21 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
     private int selectedRow;
     private PanelPhone panelPhone;
-    private Account account;
+    private Staff account;
     private PanelHome panelHome;
 
-    public PanelManagerBill(PanelPhone panelPhone, Account account, PanelHome panelHome) {
+    public PanelManagerBill(PanelPhone panelPhone, Staff account, PanelHome panelHome) {
         initComponents();
         BillController.init();
         this.panelPhone = panelPhone;
         this.account = account;
         this.panelHome = panelHome;
 
-        if (account.getUserName().equalsIgnoreCase("admin")) {
+        if (account.getName().equalsIgnoreCase("admin")) {
             list = BillController.instance.getDisplayBills("admin");
             BillController.instance.showBillDisplayToTable(tbBill, list);
         } else {
-            list = BillController.instance.getDisplayBills(account.getUserName());
+            list = BillController.instance.getDisplayBills(account.getName());
             BillController.instance.showBillDisplayToTable(tbBill, list);
         }
 
@@ -42,7 +42,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
     public void statusBill() {
         // Luôn refresh dữ liệu khi được gọi
-        list = BillController.instance.getDisplayBills(account.getUserName());
+        list = BillController.instance.getDisplayBills(account.getName());
         BillController.instance.showBillDisplayToTable(tbBill, list);
 
         // Refresh UI
@@ -438,15 +438,15 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
     private void btnRemoveAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveAllMouseClicked
 
-        if (account.getUserName().equalsIgnoreCase("admin")) {
+        if (account.getName().equalsIgnoreCase("admin")) {
             BillController.instance.deleteAllBills();
 
-            list = BillController.instance.getDisplayBills(account.getUserName());
+            list = BillController.instance.getDisplayBills(account.getName());
             BillController.instance.showBillDisplayToTable(tbBill, list);
         } else {
-            BillController.instance.deleteAllBillsByUserName(account.getUserName());
+            BillController.instance.deleteAllBillsByUserName(account.getName());
 
-            list = BillController.instance.getDisplayBills(account.getUserName());
+            list = BillController.instance.getDisplayBills(account.getName());
             BillController.instance.showBillDisplayToTable(tbBill, list);
         }
         viewBill();
@@ -464,7 +464,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
             int quantity = Integer.parseInt(tbBill.getValueAt(selectedRow, 4).toString());
             BillController.instance.deleteBill(idBill, phoneName, quantity);
             viewBill();
-            list = BillController.instance.getDisplayBills(account.getUserName());
+            list = BillController.instance.getDisplayBills(account.getName());
             BillController.instance.showBillDisplayToTable(tbBill, list);
 
         }

@@ -1,6 +1,6 @@
 package Controllers;
 
-import Model.Account;
+import Model.Staff;
 import DatabaseConnection.SQLConnector;
 import Forms.Components.EffectComponents;
 import java.io.File;
@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class AccountController {
 
-    private ArrayList<Account> listAccount = new ArrayList<>();
+    private ArrayList<Staff> listAccount = new ArrayList<>();
 
     public static AccountController instance;
     private static Connection conn;
@@ -37,13 +37,13 @@ public class AccountController {
         isInitiallized = true;
     }
    
-    private final String loadDataAccount_SQL = "select * from Accounts";
-    private final String insertAccountWithAvatarSql  = "INSERT INTO Accounts (UserName, UserPassword, UserGmail,UserAvatar) VALUES (?,?,?,?)";
-    private final String insertAccountSql  = "INSERT INTO Accounts (UserName, UserPassword, UserGmail) VALUES (?,?,?)";
-    private final String deleteAccountByIdSql  = "Delete From Accounts where UserId =?" ; 
-    private final String updateAccountByNameSql  = "UPDATE Accounts SET UserName = ? , UserPassword = ?  , UserGmail = ? WHERE UserName = ?";
-    private final String updateAccountByIdSql  = "UPDATE Accounts SET UserName = ? , UserPassword = ?  , UserGmail = ? WHERE UserId = ?";
-    private final String updateAvatarByUsernameSql  = "UPDATE Accounts SET UserAvatar = ? WHERE UserName = ?" ; 
+    private final String loadDataAccount_SQL = "select * from Staffs";
+    private final String insertAccountWithAvatarSql  = "INSERT INTO Staffs (nameStaff, passwordStaff , emailStaff ,avatarStaff) VALUES (?,?,?,?)";
+    private final String insertAccountSql  = "INSERT INTO Staffs (nameStaff, passwordStaff, emailStaff) VALUES (?,?,?)";
+    private final String deleteAccountByIdSql  = "Delete From Staffs where idStaff =?" ; 
+    private final String updateAccountByNameSql  = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , emailStaff = ? WHERE nameStaff = ?";
+    private final String updateAccountByIdSql  = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , emailStaff = ? WHERE idStaff = ?";
+    private final String updateAvatarByUsernameSql  = "UPDATE Staffs SET avatarStaff = ? WHERE nameStaff = ?" ; 
 
     private void setupDatabaseCommand(String sql) throws SQLException {
         try {
@@ -62,12 +62,12 @@ public class AccountController {
             setupDatabaseCommand(loadDataAccount_SQL);
             rs = ps.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("UserId");
-                String name = rs.getString("UserName");
-                String pass = rs.getString("UserPassword");
-                String gmail = rs.getString("UserGmail");
-                byte[] avatar = rs.getBytes("UserAvatar");
-                Account _account = new Account(id, name, pass, gmail, avatar);
+                int id = rs.getInt("idStaff");
+                String name = rs.getString("nameStaff");
+                String pass = rs.getString("passwordStaff");
+                String gmail = rs.getString("emailStaff");
+                byte[] avatar = rs.getBytes("avatarStaff");
+                Staff _account = new Staff(id, name, pass, gmail, avatar);
                 this.listAccount.add(_account);
             }
             // Mỗi ResultSet/PreparedStatement chiếm bộ nhớ
@@ -93,9 +93,9 @@ public class AccountController {
         model.setNumRows(0);
         loadDataAccounts();
         int n = 0;
-        for (Account account : listAccount) {
-            model.addRow(new Object[]{n++, account.getUserId(), account.getUserName(),
-                account.getUserPassword(), account.getUserGmail(), account.getAvatarUser()});
+        for (Staff account : listAccount) {
+            model.addRow(new Object[]{n++, account.getId(), account.getName(),
+                account.getPassword(), account.getEmail(), account.getAvatar()});
         }
     }
 
@@ -106,8 +106,8 @@ public class AccountController {
                 return false;// JOptionPane.showMessageDialog(null, "INFORMATION CAN NOT BE EMPTY", "ERROR", JOptionPane.CANCEL_OPTION);
 
             } else {
-                for (Account account : this.listAccount) {
-                    if (account.getUserName().equalsIgnoreCase(name) && (String.valueOf(account.getUserPassword()).equalsIgnoreCase(pass))) {
+                for (Staff account : this.listAccount) {
+                    if (account.getName().equalsIgnoreCase(name) && (String.valueOf(account.getPassword()).equalsIgnoreCase(pass))) {
                         return true;
                     }
                 }
@@ -134,11 +134,11 @@ public class AccountController {
             }
             int n = ps.executeUpdate();
             if (n != 0) {
-                Account _account;
+                Staff _account;
                 if (image != null) {
-                    _account = new Account(name, pass, gmail, image);
+                    _account = new Staff(name, pass, gmail, image);
                 } else {
-                    _account = new Account(name, pass, gmail);
+                    _account = new Staff(name, pass, gmail);
                 }
                 this.listAccount.add(_account);
                 return true;
@@ -157,8 +157,8 @@ public class AccountController {
             ps.setInt(1, id);
             int n = ps.executeUpdate();
             if (n > 0) {
-                for (Account account : this.listAccount) {
-                    if (account.getUserId() == id) {
+                for (Staff account : this.listAccount) {
+                    if (account.getId()== id) {
                         this.listAccount.remove(account);
                         return true;
 
@@ -172,7 +172,7 @@ public class AccountController {
     }
 
     //update cho panel profile 
-    public Account updateAccount(String name, String pass, String gmail, String Username) {
+    public Staff updateAccount(String name, String pass, String gmail, String Username) {
 
         try {
             setupDatabaseCommand(updateAccountByNameSql );
@@ -182,11 +182,11 @@ public class AccountController {
             ps.setString(4, Username);
             int n = ps.executeUpdate();
             if (n > 0) {
-                for (Account account : listAccount) {
-                    if (account.getUserName().equalsIgnoreCase(Username)) {
-                        account.setUserName(name);
-                        account.setUserPassword(pass);
-                        account.setUserGmail(gmail);
+                for (Staff account : listAccount) {
+                    if (account.getName().equalsIgnoreCase(Username)) {
+                        account.setName(name);
+                        account.setPassword(pass);
+                        account.setEmail(gmail);
                         return account;
                     }
                 }
@@ -207,11 +207,11 @@ public class AccountController {
             ps.setInt(4, id);
             int n = ps.executeUpdate();
             if (n > 0) {
-                for (Account account : listAccount) {
-                    if (account.getUserId() == id) {
-                        account.setUserName(name);
-                        account.setUserPassword(pass);
-                        account.setUserGmail(gmail);
+                for (Staff account : listAccount) {
+                    if (account.getId()== id) {
+                        account.setName(name);
+                        account.setPassword(pass);
+                        account.setEmail(gmail);
                         return true;
                     }
                 }
@@ -294,16 +294,16 @@ public class AccountController {
         
     }
 
-    public Account getAccountByUsername(String username) {
-        for (Account account : listAccount) {
-            if (account.getUserName().equalsIgnoreCase(username)) {
+    public Staff getAccountByUsername(String username) {
+        for (Staff account : listAccount) {
+            if (account.getName().equalsIgnoreCase(username)) {
                 return account;
             }
         }
         return null;
     }
 
-    public ArrayList<Account> getDataAccount() {
+    public ArrayList<Staff> getDataAccount() {
         return listAccount;
     }
 }

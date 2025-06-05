@@ -3,7 +3,7 @@ package Forms;
 import Controllers.PhoneController;
 import Forms.Components.EffectComponents;
 import Main.Run;
-import Model.Account;
+import Model.Staff;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.File;
@@ -19,7 +19,7 @@ public class HomePage extends javax.swing.JFrame {
     private PanelManagerBill panelManagerBill;
     private PanelProfile panelProfile;
     
-    private Account currentAccount;
+    private Staff currentAccount;
 
     private int quantityAvailableBill;
     private File selectedFile;
@@ -45,7 +45,7 @@ public class HomePage extends javax.swing.JFrame {
         initComponents();
     }
 
-    public HomePage(Account account) {
+    public HomePage(Staff account) {
         initComponents();
         PhoneController.init();
         EffectComponents.init();
@@ -63,7 +63,7 @@ public class HomePage extends javax.swing.JFrame {
         panelManagerPhone = new PanelManagerPhone(panelHome);
         panelProfile = new PanelProfile(account);
 
-        if (account.getUserName().equalsIgnoreCase("admin")) {
+        if (account.getName().equalsIgnoreCase("admin")) {
             this.jPanel2.add(panelManagerAccount);
             this.jPanel2.add(panelProfile);
             this.jPanel2.add(panelManagerBill);

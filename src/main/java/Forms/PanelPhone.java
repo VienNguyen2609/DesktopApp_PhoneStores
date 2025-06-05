@@ -2,7 +2,7 @@ package Forms;
 
 import Controllers.BillController;
 import Forms.Components.EffectComponents;
-import Model.Account;
+import Model.Staff;
 import Model.Phone;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class PanelPhone extends javax.swing.JPanel {
 
-    private Account currentAccount;
+    private Staff currentAccount;
 
     private PanelHome panelHome;
     private int quantityAvailable;
@@ -34,7 +34,7 @@ public class PanelPhone extends javax.swing.JPanel {
     private int quantityAvailableBill;
     public int statusBill = 0;
 
-    public PanelPhone(Account account) {
+    public PanelPhone(Staff account) {
         initComponents();
         this.currentAccount = account;
     }
@@ -43,20 +43,19 @@ public class PanelPhone extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PanelPhone(Phone phone, PanelHome panelHome, Account account, PanelManagerBill panelManagerBill) {
+    public PanelPhone(Phone phone, PanelHome panelHome, Staff account, PanelManagerBill panelManagerBill) {
         initComponents();
         BillController.init();
         this.panelHome = panelHome;
         this.currentAccount = account;
         this.panelManagerBill = panelManagerBill;
-        
+
         PanelBill.setSize(new Dimension(600, 700));
         PanelBill.setLocation(400, 100);
         PanelBill.setVisible(false);
         PanelBill.setTitle("CONFIRM BILL");
         PanelBill.setResizable(false);
-        
-        
+
         productIdCurrent = phone.getPhoneId();
         txtName.setText(phone.getNamePhone());
         txtBrand.setText(String.valueOf(phone.getBrandPhone()));
@@ -68,13 +67,12 @@ public class PanelPhone extends javax.swing.JPanel {
         byte[] imageBytes = phone.getImagePhone();
         int defaultWidth = 201;
         int defaultHeight = 240;
-        
+
 //        try {
 //            EffectComponents.instance.bufferedImage("E:\\Image\\459226e0-3cab-4bb5-862f-1b2810a37d03.png", jLabel2, 0.9f);
 //        } catch (IOException ex) {
 //            System.out.println("ERROR: " + ex.getMessage());
 //        }
-        
         if (imageBytes != null && imageBytes.length > 0) {
             try {
                 ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
@@ -97,9 +95,9 @@ public class PanelPhone extends javax.swing.JPanel {
         }
 
         this.jLabel1.repaint();
-        
-        btnPurchase.setForeground(new Color(0, 0 , 0));
-        
+
+        btnPurchase.setForeground(new Color(0, 0, 0));
+
     }
 
     private void viewBill() {
@@ -170,7 +168,6 @@ public class PanelPhone extends javax.swing.JPanel {
         txtDescription = new Forms.Components.TextFieldController();
         txtOS = new Forms.Components.TextFieldController();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
 
         PanelBill.setModal(true);
 
@@ -208,6 +205,11 @@ public class PanelPhone extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnBuyMouseExited(evt);
+            }
+        });
+        btnBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuyActionPerformed(evt);
             }
         });
         jPanel2.add(btnBuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 620, 110, -1));
@@ -360,7 +362,7 @@ public class PanelPhone extends javax.swing.JPanel {
                 btnPurchaseMouseClicked(evt);
             }
         });
-        jPanel16.add(btnPurchase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, 250, 40));
+        jPanel16.add(btnPurchase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 250, 40));
 
         txtName.setEditable(false);
         txtName.setForeground(new java.awt.Color(255, 255, 255));
@@ -428,9 +430,6 @@ public class PanelPhone extends javax.swing.JPanel {
         jPanel16.add(txtOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 150, 30));
         jPanel16.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 600));
 
-        jCheckBox1.setText("jCheckBox1");
-        jPanel16.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, -1, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -441,9 +440,7 @@ public class PanelPhone extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -457,36 +454,46 @@ public class PanelPhone extends javax.swing.JPanel {
 
     private void btnBuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuyMouseClicked
 
-        try {
+//        try {
+//
+//            int quantity = Integer.parseInt(txtBillQuantity.getText().trim());
+//            if (quantity > quantityAvailableBill || quantity < 0 || quantity == 0) {
+//                JOptionPane.showMessageDialog(this, "Purchase quantity exceeds available stock!");
+//                return;
+//            }
+//
+//            double price = Double.parseDouble(txtBillPrice.getText().trim());
+//
+//            int check = JOptionPane.showConfirmDialog(this, "ARE YOU SURE WANT BUY IT ", "CONFIRM", JOptionPane.YES_NO_OPTION);
+//            if (check == JOptionPane.YES_OPTION) {
+//                if (BillController.instance.addBill(currentAccount.getUserId(), productIdCurrent, new java.sql.Date(new Date().getTime()), quantity, price)) {
+//
+//                    PanelBill.setVisible(false);
+//                    JOptionPane.showMessageDialog(this, "BUY SUCCESSFULLY");
+//                    //                     BillController.instance.loadBills(tbBill, currentAccount.getUserName());
+//                    statusBill = 1;
+//                    panelManagerBill.statusBill();
+//                    panelHome.addPanelProducts();
+////                    addPanelProducts();
+//                    viewBill();
+//                    return;
+//                }
+//            } else {
+//                return;
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "ENTER A NUMBER NOT STRING", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
 
-            int quantity = Integer.parseInt(txtBillQuantity.getText().trim());
-            if (quantity > quantityAvailableBill || quantity < 0 || quantity == 0) {
-                JOptionPane.showMessageDialog(this, "Purchase quantity exceeds available stock!");
-                return;
-            }
-
-            double price = Double.parseDouble(txtBillPrice.getText().trim());
-
-            int check = JOptionPane.showConfirmDialog(this, "ARE YOU SURE WANT BUY IT ", "CONFIRM", JOptionPane.YES_NO_OPTION);
-            if (check == JOptionPane.YES_OPTION) {
-                if (BillController.instance.addBill(currentAccount.getUserId(), productIdCurrent, new java.sql.Date(new Date().getTime()), quantity, price)) {
-
-                    PanelBill.setVisible(false);
-                    JOptionPane.showMessageDialog(this, "BUY SUCCESSFULLY");
-                    //                     BillController.instance.loadBills(tbBill, currentAccount.getUserName());
-                    statusBill = 1;
-                    panelManagerBill.statusBill();
-                    panelHome.addPanelProducts();
-//                    addPanelProducts();
-                    viewBill();
-                    return;
-                }
-            } else {
-                return;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "ENTER A NUMBER NOT STRING", "Error", JOptionPane.ERROR_MESSAGE);
+        int quantity = Integer.parseInt(txtBillQuantity.getText().trim());
+        if (quantity > quantityAvailableBill || quantity < 0 || quantity == 0) {
+            JOptionPane.showMessageDialog(this, "Purchase quantity exceeds available stock!");
+            return;
+        } else {
+            panelHome.getTextPhone(txtBillName, txtBillBrand, txtBillOS, txtBillDescription, txtBillQuantity, txtBillPrice);
+            PanelBill.setVisible(false);
         }
+
 
     }//GEN-LAST:event_btnBuyMouseClicked
 
@@ -525,9 +532,13 @@ public class PanelPhone extends javax.swing.JPanel {
     private void btnPurchaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPurchaseMouseClicked
 
         getTextBill(productIdCurrent, txtName.getText().trim(), txtBrand.getText(),
-            txtPrice.getText(), txtOS.getText(), txtDescription.getText(), quantityAvailable, icon);
+                txtPrice.getText(), txtOS.getText(), txtDescription.getText(), quantityAvailable, icon);
 
     }//GEN-LAST:event_btnPurchaseMouseClicked
+
+    private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
+
+    }//GEN-LAST:event_btnBuyActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -537,7 +548,6 @@ public class PanelPhone extends javax.swing.JPanel {
     private javax.swing.JButton btnBuy;
     private javax.swing.JButton btnCanelBuy;
     private Forms.Components.HeaderButton btnPurchase;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;

@@ -5,7 +5,7 @@ package Controllers;
  * @author VIEN
  */
 import DatabaseConnection.SQLConnector;
-import Model.Bill;
+import Model.Order;
 import Model.BillDisplay;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class BillController {
 
-    private ArrayList<Bill> listBill = new ArrayList<>();
+    private ArrayList<Order> listBill = new ArrayList<>();
 
     private static Connection conn;
     private static PreparedStatement ps;
@@ -44,17 +44,26 @@ public class BillController {
         }
     }
 
-    private final String insertBillSQL = "INSERT INTO Bills ( UserId, idPhone  , BillDate ,Quantity ,Price) VALUES (?,?,?,?,?)";
-    private final String updateQuantitySQL = "UPDATE Phones SET Quantity = Quantity - ? WHERE idPhone = ?";
-    private final String updatePhoneByNameSQL = "UPDATE Phones SET Quantity = Quantity + ? WHERE namePhone = ?";
-    private final String deleteBillByIdSQL = "DELETE FROM Bills WHERE BillId = ?";
-    private final String getPhoneQtySql = "SELECT idPhone, Quantity FROM Bills";
-    private final String updateQuantityPhoneByIdSQL = "UPDATE Phones SET Quantity = Quantity + ? WHERE idPhone = ?";
-    private final String deleteBillSQL = "DELETE FROM Bills";
-    private final String getUserIdByUserNamSQL = "SELECT UserId FROM Accounts WHERE UserName = ?";
-    private final String getIdQuantityBillByIdSQL = "SELECT idPhone, Quantity FROM Bills WHERE UserId = ?";
-    private final String updateQuantityPhoneById = "UPDATE Phones SET Quantity = Quantity + ? WHERE idPhone = ?";
-    private final String deleteBillById = "DELETE FROM Bills WHERE UserId = ?";
+    private final String insertOrderSQL = "INSERT INTO Orders (timeOfBookingOrder, "
+            + "statusOrder, totalOrder, addressOrder, idClient, idStaff) VALUES (?, ?, ?, ?, ?, ?)";
+
+    private final String updateQuantitySQL = "UPDATE Phones SET quantityPhone = quantityPhone + ? WHERE idPhone = ?";
+
+    private final String updatePhoneByNameSQL = "UPDATE Phones SET quantityPhone = quantityPhone + ? WHERE namePhone = ?";
+    
+    private final String deleteBillByIdSQL = "DELETE FROM Orders WHERE idOrder = ?";
+    
+    private final String getPhoneQtySql = "SELECT idPhone, quantity FROM "
+            + "OrderDetails WHERE idOrder = ?";
+
+    private final String updateQuantityPhoneByIdSQL = "UPDATE Phones SET quantityPhone = quantityPhone + ? WHERE idPhone = ?";
+    
+    private final String deleteBillSQL = "DELETE FROM Orders";
+    
+    private final String getUserIdByUserNamSQL = "SELECT idClient FROM Clients WHERE nameClient = ?";
+    private final String getIdQuantityBillByIdSQL = "SELECT idPhone FROM Orders WHERE idClient = ?";
+    private final String updateQuantityPhoneById = "UPDATE Phones SET quantityPhone = quantityPhone + ? WHERE idPhone = ?";
+    private final String deleteBillById = "DELETE FROM Orders WHERE idClient = ?";
     
     
     
@@ -70,89 +79,45 @@ public class BillController {
     }
     
     
-//    public void loadBills(JTable table, String name) {
-//        listBill.clear();
-//        model = (DefaultTableModel) table.getModel();
-//        model.setRowCount(0);
+
+
+//    public boolean addBill(int userId, int idPhone, Date billDate, int quantity, double price) {
 //
-//        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-//        for (int i = 0; i < table.getColumnCount(); i++) {
-//            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-//        }
 //        try {
-//            if (name.equalsIgnoreCase("admin")) {
-//                setupDatabaseCommand("SELECT b.BillId, u.UserName, p.ProductName, p.ProductSize, b.Quantity, b.Price, b.TotalAmount, b.BillDate "
-//                        + "FROM Bill b "
-//                        + "JOIN UserAccount u ON b.UserId = u.UserId "
-//                        + "JOIN Products p ON b.ProductId = p.ProductId ");
-//            } else {
-//                setupDatabaseCommand("SELECT b.BillId, u.UserName, p.ProductName, p.ProductSize, b.Quantity, b.Price, b.TotalAmount, b.BillDate "
-//                        + "FROM Bill b "
-//                        + "JOIN UserAccount u ON b.UserId = u.UserId "
-//                        + "JOIN Products p ON b.ProductId = p.ProductId "
-//                        + "WHERE u.UserName = ?");
-//                ps.setString(1, name);
-//            }
-//            rs = ps.executeQuery();
-//            int n = 0;
-//            while (rs.next()) {
-//                model.addRow(new Object[]{n++,
-//                    rs.getInt("BillId"),
-//                    rs.getString("UserName"),
-//                    rs.getString("ProductName"),
-//                    rs.getInt("ProductSize"),
-//                    rs.getInt("Quantity"),
-//                    rs.getFloat("Price"),
-//                    rs.getFloat("TotalAmount"),
-//                    rs.getDate("BillDate")
-//                });
+//            setupDatabaseCommand(insertOrderSQL);
+//            ps.setInt(1, userId);
+//            ps.setInt(2, idPhone);
+//            ps.setDate(3, new java.sql.Date(billDate.getTime()));
+//            ps.setInt(4, quantity);
+//            ps.setDouble(5, price);
+//            int n = ps.executeUpdate();
+//            ps.close();
+//
+//            if (n > 0) {
+//
+//                // Nếu thêm thành công, cập nhật số lượng sản phẩm
+//                setupDatabaseCommand(updateQuantitySQL);
+//                ps.setInt(1, quantity);
+//                ps.setInt(2, idPhone);
+//                int m = ps.executeUpdate(); // Thực thi UPDATE
+//                ps.close();
+//
+//                if (m > 0) {
+//
+//                    // Nếu UPDATE thành công, thêm vào listBill
+//                    Order bill = new Order(userId, idPhone, quantity, price, billDate);
+//                    listBill.add(bill);
+//                    return true;
+//                }
 //            }
 //
-//            rs.close();
-//            ps.close();
+//        } catch (SQLException e) {
+//            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "Unexpected error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 //        }
+//        return false;
 //    }
-
-    public boolean addBill(int userId, int idPhone, Date billDate, int quantity, double price) {
-
-        try {
-            setupDatabaseCommand(insertBillSQL);
-            ps.setInt(1, userId);
-            ps.setInt(2, idPhone);
-            ps.setDate(3, new java.sql.Date(billDate.getTime()));
-            ps.setInt(4, quantity);
-            ps.setDouble(5, price);
-            int n = ps.executeUpdate();
-            ps.close();
-
-            if (n > 0) {
-
-                // Nếu thêm thành công, cập nhật số lượng sản phẩm
-                setupDatabaseCommand(updateQuantitySQL);
-                ps.setInt(1, quantity);
-                ps.setInt(2, idPhone);
-                int m = ps.executeUpdate(); // Thực thi UPDATE
-                ps.close();
-
-                if (m > 0) {
-
-                    // Nếu UPDATE thành công, thêm vào listBill
-                    Bill bill = new Bill(userId, idPhone, quantity, price, billDate);
-                    listBill.add(bill);
-                    return true;
-                }
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unexpected error: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        return false;
-    }
 
     public boolean deleteBill(int billId, String namePhone, int quantity) {
         try {
@@ -168,7 +133,7 @@ public class BillController {
             ps.close();
 
             if (n > 0) {
-                listBill.removeIf(b -> b.getBillId() == billId);
+                listBill.removeIf(b -> b.getIdOrder()== billId);
                 return true;
             }
         } catch (Exception e) {
@@ -178,100 +143,100 @@ public class BillController {
     }
 
     public boolean deleteAllBills() {
-        try {
-            // 1. Lấy tất cả hóa đơn để phục hồi số lượng về Phones
-
-            setupDatabaseCommand(getPhoneQtySql);
-            ResultSet rs = ps.executeQuery();
-
-            // Tạm lưu số lượng cần cộng lại vào Phones
-            Map<Integer, Integer> phoneUpdateMap = new HashMap<>();
-            while (rs.next()) {
-                int idPhone = rs.getInt("idPhone");
-                int quantity = rs.getInt("Quantity");
-                phoneUpdateMap.put(idPhone, phoneUpdateMap.getOrDefault(idPhone, 0) + quantity);
-            }
-            rs.close();
-            ps.close();
-
-            // 2. Cập nhật số lượng hàng tồn kho cho từng idPhone
-            for (Map.Entry<Integer, Integer> entry : phoneUpdateMap.entrySet()) {
-                setupDatabaseCommand(updateQuantityPhoneByIdSQL);
-                ps.setInt(1, entry.getValue());
-                ps.setInt(2, entry.getKey());
-                ps.executeUpdate();
-                ps.close();
-            }
-
-            // 3. Xóa toàn bộ bill
-            setupDatabaseCommand(deleteBillSQL);
-            int rows = ps.executeUpdate();
-            ps.close();
-
-            // 4. Xóa toàn bộ trong listBill
-            listBill.clear();
-
-            return rows > 0;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            // 1. Lấy tất cả hóa đơn để phục hồi số lượng về Phones
+//
+//            setupDatabaseCommand(getPhoneQtySql);
+//            ResultSet rs = ps.executeQuery();
+//
+//            // Tạm lưu số lượng cần cộng lại vào Phones
+//            Map<Integer, Integer> phoneUpdateMap = new HashMap<>();
+//            while (rs.next()) {
+//                int idPhone = rs.getInt("idPhone");
+//                int quantity = rs.getInt("Quantity");
+//                phoneUpdateMap.put(idPhone, phoneUpdateMap.getOrDefault(idPhone, 0) + quantity);
+//            }
+//            rs.close();
+//            ps.close();
+//
+//            // 2. Cập nhật số lượng hàng tồn kho cho từng idPhone
+//            for (Map.Entry<Integer, Integer> entry : phoneUpdateMap.entrySet()) {
+//                setupDatabaseCommand(updateQuantityPhoneByIdSQL);
+//                ps.setInt(1, entry.getValue());
+//                ps.setInt(2, entry.getKey());
+//                ps.executeUpdate();
+//                ps.close();
+//            }
+//
+//            // 3. Xóa toàn bộ bill
+//            setupDatabaseCommand(deleteBillSQL);
+//            int rows = ps.executeUpdate();
+//            ps.close();
+//
+//            // 4. Xóa toàn bộ trong listBill
+//            listBill.clear();
+//
+//            return rows > 0;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return false;
     }
 
     public boolean deleteAllBillsByUserName(String nameUser) {
-        try {
-            // 1. Tìm UserId theo tên người dùng
-            setupDatabaseCommand(getUserIdByUserNamSQL);
-            ps.setString(1, nameUser);
-            rs = ps.executeQuery();
-
-            if (!rs.next()) {
-                System.out.println("User Name Not Found: " + nameUser);
-                return false;
-            }
-
-            int userId = rs.getInt("UserId");
-            rs.close();
-            ps.close();
-
-            // 2. Lấy các bill của user này
-            setupDatabaseCommand(getIdQuantityBillByIdSQL);
-            ps.setInt(1, userId);
-            rs = ps.executeQuery();
-
-            Map<Integer, Integer> phoneUpdateMap = new HashMap<>();
-            while (rs.next()) {
-                int idPhone = rs.getInt("idPhone");
-                int quantity = rs.getInt("Quantity");
-                phoneUpdateMap.put(idPhone, phoneUpdateMap.getOrDefault(idPhone, 0) + quantity);
-            }
-            rs.close();
-            ps.close();
-
-            // 3. Cập nhật lại tồn kho trong Phones
-            for (Map.Entry<Integer, Integer> entry : phoneUpdateMap.entrySet()) {
-                setupDatabaseCommand(updateQuantityPhoneById);
-                ps.setInt(1, entry.getValue());
-                ps.setInt(2, entry.getKey());
-                ps.executeUpdate();
-                ps.close();
-            }
-
-            // 4. Xóa bills của user 
-            setupDatabaseCommand(deleteBillById);
-            ps.setInt(1, userId);
-            int rows = ps.executeUpdate();
-            ps.close();
-
-            // 5. Xóa khỏi listBill
-            listBill.removeIf(b -> b.getUserId() == userId);
-
-            return rows > 0;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            // 1. Tìm UserId theo tên người dùng
+//            setupDatabaseCommand(getUserIdByUserNamSQL);
+//            ps.setString(1, nameUser);
+//            rs = ps.executeQuery();
+//
+//            if (!rs.next()) {
+//                System.out.println("User Name Not Found: " + nameUser);
+//                return false;
+//            }
+//
+//            int userId = rs.getInt("UserId");
+//            rs.close();
+//            ps.close();
+//
+//            // 2. Lấy các bill của user này
+//            setupDatabaseCommand(getIdQuantityBillByIdSQL);
+//            ps.setInt(1, userId);
+//            rs = ps.executeQuery();
+//
+//            Map<Integer, Integer> phoneUpdateMap = new HashMap<>();
+//            while (rs.next()) {
+//                int idPhone = rs.getInt("idPhone");
+//                int quantity = rs.getInt("Quantity");
+//                phoneUpdateMap.put(idPhone, phoneUpdateMap.getOrDefault(idPhone, 0) + quantity);
+//            }
+//            rs.close();
+//            ps.close();
+//
+//            // 3. Cập nhật lại tồn kho trong Phones
+//            for (Map.Entry<Integer, Integer> entry : phoneUpdateMap.entrySet()) {
+//                setupDatabaseCommand(updateQuantityPhoneById);
+//                ps.setInt(1, entry.getValue());
+//                ps.setInt(2, entry.getKey());
+//                ps.executeUpdate();
+//                ps.close();
+//            }
+//
+//            // 4. Xóa bills của user 
+//            setupDatabaseCommand(deleteBillById);
+//            ps.setInt(1, userId);
+//            int rows = ps.executeUpdate();
+//            ps.close();
+//
+//            // 5. Xóa khỏi listBill
+//            listBill.removeIf(b -> b.getIdOrder()== userId);
+//
+//            return rows > 0;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return false;
     }
 
@@ -292,55 +257,55 @@ public class BillController {
 //    }
 //    return false;
 //}
-    public ArrayList<Bill> getDataBills() {
+    public ArrayList<Order> getDataBills() {
         return listBill;
     }
 
     public ArrayList<BillDisplay> getDisplayBills(String name) {
         ArrayList<BillDisplay> list = new ArrayList<>();
 
-        try {
-            final String sql;
-            if (name.equalsIgnoreCase("admin")) {
-                sql = """
-                SELECT b.BillId, u.UserName, p.namePhone, b.Quantity, b.Price, b.TotalAmount, b.BillDate , b.PaymentStatus
-                FROM Bills b
-                JOIN Accounts u ON b.UserId = u.UserId
-                JOIN Phones p ON b.idPhone = p.idPhone
-            """;
-                setupDatabaseCommand(sql);
-            } else {
-                sql = """
-                SELECT b.BillId, u.UserName, p.namePhone, b.Quantity, b.Price, b.TotalAmount, b.BillDate , b.PaymentStatus
-                FROM Bills b
-                JOIN Accounts u ON b.UserId = u.UserId
-                JOIN Phones p ON b.idPhone = p.idPhone
-                WHERE u.UserName = ?
-            """;
-                setupDatabaseCommand(sql);
-                ps.setString(1, name);
-            }
-
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                BillDisplay b = new BillDisplay(
-                        rs.getInt("BillId"),
-                        rs.getString("UserName"),
-                        rs.getString("namePhone"),
-                        rs.getInt("Quantity"),
-                        rs.getDouble("Price"),
-                        rs.getDouble("TotalAmount"),
-                        rs.getDate("BillDate"),
-                        rs.getBoolean("PaymentStatus")
-                );
-                list.add(b);
-            }
-
-            rs.close();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            final String sql;
+//            if (name.equalsIgnoreCase("admin")) {
+//                sql = """
+//                SELECT b.BillId, u.UserName, p.namePhone, b.Quantity, b.Price, b.TotalAmount, b.BillDate , b.PaymentStatus
+//                FROM Bills b
+//                JOIN Accounts u ON b.UserId = u.UserId
+//                JOIN Phones p ON b.idPhone = p.idPhone
+//            """;
+//                setupDatabaseCommand(sql);
+//            } else {
+//                sql = """
+//                SELECT b.BillId, u.UserName, p.namePhone, b.Quantity, b.Price, b.TotalAmount, b.BillDate , b.PaymentStatus
+//                FROM Bills b
+//                JOIN Accounts u ON b.UserId = u.UserId
+//                JOIN Phones p ON b.idPhone = p.idPhone
+//                WHERE u.UserName = ?
+//            """;
+//                setupDatabaseCommand(sql);
+//                ps.setString(1, name);
+//            }
+//
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                BillDisplay b = new BillDisplay(
+//                        rs.getInt("BillId"),
+//                        rs.getString("UserName"),
+//                        rs.getString("namePhone"),
+//                        rs.getInt("Quantity"),
+//                        rs.getDouble("Price"),
+//                        rs.getDouble("TotalAmount"),
+//                        rs.getDate("BillDate"),
+//                        rs.getBoolean("PaymentStatus")
+//                );
+//                list.add(b);
+//            }
+//
+//            rs.close();
+//            ps.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         return list;
     }
