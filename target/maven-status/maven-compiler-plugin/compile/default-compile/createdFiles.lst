@@ -31,6 +31,7 @@ Forms\PanelManagerPhone$6.class
 Forms\PanelManagerStaff.class
 Forms\PanelProfile$6.class
 Forms\PanelManagerClient$2.class
+Forms\PanelManagerClient$9.class
 Forms\CreateAccount$3.class
 Model\Order.class
 Forms\Components\ThemeFlatLaf.class
@@ -38,6 +39,7 @@ Forms\Components\ProfilePhoto.class
 Forms\PanelManagerPhone$4.class
 Forms\Login$2.class
 Forms\PanelManagerStaff$5.class
+Forms\DialogForClient.class
 Forms\HomePage$4.class
 Forms\PanelPhone$7.class
 DatabaseConnection\SQLConnector.class
@@ -68,6 +70,7 @@ Forms\PanelManagerPhone$5.class
 Forms\Login$3.class
 Forms\PanelManagerBill.class
 Forms\PanelManagerClient$3.class
+Model\OrderForClient.class
 Forms\Components\RoundedBorder.class
 Forms\PanelManagerStaff$7.class
 Model\Client.class

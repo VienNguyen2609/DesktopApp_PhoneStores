@@ -14,6 +14,7 @@ E:\LTJava_Nhom12\src\main\java\Forms\Components\SetThemFlatLaf.java
 E:\LTJava_Nhom12\src\main\java\Forms\Components\TextFieldController.java
 E:\LTJava_Nhom12\src\main\java\Forms\Components\ThemeFlatLaf.java
 E:\LTJava_Nhom12\src\main\java\Forms\CreateAccount.java
+E:\LTJava_Nhom12\src\main\java\Forms\DialogForClient.java
 E:\LTJava_Nhom12\src\main\java\Forms\HomePage.java
 E:\LTJava_Nhom12\src\main\java\Forms\Login.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelHome.java
@@ -30,6 +31,7 @@ E:\LTJava_Nhom12\src\main\java\Model\BillDisplay.java
 E:\LTJava_Nhom12\src\main\java\Model\Client.java
 E:\LTJava_Nhom12\src\main\java\Model\Order.java
 E:\LTJava_Nhom12\src\main\java\Model\OrderDetail.java
+E:\LTJava_Nhom12\src\main\java\Model\OrderForClient.java
 E:\LTJava_Nhom12\src\main\java\Model\Phone.java
 E:\LTJava_Nhom12\src\main\java\Model\Staff.java
 E:\LTJava_Nhom12\src\main\java\util\ImageUtils.java
