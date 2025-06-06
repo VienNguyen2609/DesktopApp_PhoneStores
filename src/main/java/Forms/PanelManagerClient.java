@@ -2,13 +2,20 @@ package Forms;
 
 import Controllers.ClientController;
 import Model.Client;
+import Model.OrderForClient;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,8 +53,112 @@ public class PanelManagerClient extends javax.swing.JPanel {
         listClient = clientController.loadDataAccounts();
         viewTabelClient();
         styleButton();
+        
+        //ktra chuột phải
+//        JScrollPane jScrollPane=new JScrollPane(tbClient);
+        //tạo popup menu
+        JPopupMenu jPopupMenu = new JPopupMenu();
+        JMenuItem jMenuItem1 = new JMenuItem("Xem đơn hàng");
+        JMenuItem jMenuItem2 = new JMenuItem("Xóa");
+        JMenuItem jMenuItem3 = new JMenuItem("Hủy");
+
+        jPopupMenu.add(jMenuItem1);
+        jPopupMenu.add(jMenuItem2);
+        jPopupMenu.add(jMenuItem3);
+
+        //thêm listener
+        tbClient.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showPopup(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                showPopup(e);
+            }
+
+            private void showPopup(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    int row = tbClient.rowAtPoint(e.getPoint());
+                    if (row >= 0 && row < tbClient.getRowCount()) {
+                        tbClient.setRowSelectionInterval(row, row); // Chọn dòng được click
+                        jPopupMenu.show(e.getComponent(), e.getX(), e.getY());
+                    }
+                }
+            }
+        });
+
+        // Ví dụ xử lý khi chọn "Xóa"
+        jMenuItem2.addActionListener(e -> {
+            selectedRow = tbClient.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "You have not selected anyone yet!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (selectedRow >= listClient.size()) {
+                JOptionPane.showMessageDialog(this, "Selected row is invalid!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            client = listClient.get(selectedRow);
+            if (client.getNameClient().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Name cannot be blank!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                int chon = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete?");
+                if (chon == JOptionPane.YES_OPTION) {
+                    try {
+                        int id = client.getIdClient();
+                        String phone = txtTelClient.getText().trim();
+                        int idOrder = clientController.findIdOrder();
+                        int idOrderOfOrder=clientController.findIdOrderOfOrder();
+                        if (idOrder == -1 || idOrderOfOrder == -1) {
+                            clientController.delClient(phone);
+                        }else if(idOrder == -1 && idOrderOfOrder != -1){
+                            clientController.delClientOnOrder(id, phone);
+                        }
+                        else {
+                            clientController.delClientOnBill(idOrder, id, phone);
+                        }
+                        listClient = clientController.loadDataAccounts();
+                        viewTabelClient();
+                        txtNameUser.setText("");
+                        txtTelClient.setText("");
+                        txtGmail.setText("");
+                        txtAddress.setText("");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PanelManagerClient.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        
+        jMenuItem1.addActionListener(e -> {
+            selectedRow = tbClient.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "You have not selected any customers yet!", "ERROR", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            Client selectedClient = listClient.get(selectedRow);
+            int clientId = selectedClient.getIdClient();
+
+            List<OrderForClient> orderList = clientController.viewOrderOfClient(clientId);
+
+            if (orderList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "This customer has no orders yet!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            DialogForClient dialog = new DialogForClient((JFrame) SwingUtilities.getWindowAncestor(this), orderList);
+            dialog.setVisible(true);  
+        });
     }
 
+    public void loadTabelClient(){
+         listClient = clientController.loadDataAccounts();
+    }
+    
     private void viewTabelClient() {
         model.setNumRows(0);
         int n = 1;
@@ -430,17 +541,26 @@ public class PanelManagerClient extends javax.swing.JPanel {
         } else {
             int chon = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete?");
             if (chon == JOptionPane.YES_OPTION) {
-
-                String phone = txtTelClient.getText().trim();
-
-                Client cl = new Client(phone);
-                clientController.delClient(phone);
-                listClient = clientController.loadDataAccounts();
-                viewTabelClient();
-                txtNameUser.setText("");
-                txtTelClient.setText("");
-                txtGmail.setText("");
-                txtAddress.setText("");
+                try {
+                    int id=client.getIdClient();
+                    String phone = txtTelClient.getText().trim();
+                    int idOrder=clientController.findIdOrder();
+                    
+                    if(idOrder == -1){
+                        clientController.delClient(phone);
+                    }else{
+                        clientController.delClientOnBill(idOrder, id, phone);
+                    }
+                    listClient = clientController.loadDataAccounts();
+                    viewTabelClient();
+                    txtNameUser.setText("");
+                    txtTelClient.setText("");
+                    txtGmail.setText("");
+                    txtAddress.setText("");
+                } catch (SQLException ex) {
+                    Logger.getLogger(PanelManagerClient.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         }
 

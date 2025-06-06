@@ -30,12 +30,14 @@ Forms\PanelPhone$8.class
 Forms\PanelManagerPhone$6.class
 Forms\PanelProfile$6.class
 Forms\PanelManagerClient$2.class
+Forms\PanelManagerClient$9.class
 Forms\CreateAccount$3.class
 Model\Order.class
 Forms\Components\ThemeFlatLaf.class
 Forms\Components\ProfilePhoto.class
 Forms\PanelManagerPhone$4.class
 Forms\Login$2.class
+Forms\DialogForClient.class
 Forms\PanelManagerAccount$7.class
 Forms\HomePage$4.class
 Forms\PanelPhone$7.class
@@ -70,6 +72,7 @@ Forms\PanelManagerPhone$5.class
 Forms\Login$3.class
 Forms\PanelManagerBill.class
 Forms\PanelManagerClient$3.class
+Model\OrderForClient.class
 Forms\Components\RoundedBorder.class
 Model\Client.class
 Forms\PanelManagerAccount$10.class
