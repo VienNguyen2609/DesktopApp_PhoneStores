@@ -18,11 +18,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-public class AccountController {
+public class StafftController {
 
     private ArrayList<Staff> listStaff = new ArrayList<>();
 
-    public static AccountController instance;
+    public static StafftController instance;
     private static Connection conn;
     private static PreparedStatement ps;
     private static ResultSet rs;
@@ -33,16 +33,16 @@ public class AccountController {
         if (isInitiallized == true) {
             return;
         }
-        instance = new AccountController();
+        instance = new StafftController();
         isInitiallized = true;
     }
 
     private final String loadDataAccount_SQL = "select * from Staffs";
     private final String insertAccountWithAvatarSql = "INSERT INTO Staffs (nameStaff, passwordStaff , emailStaff , positionStaff ,avatarStaff) VALUES (?,?,?,?,?)";
-    private final String insertAccountSql = "INSERT INTO Staffs (nameStaff, passwordStaff, emailStaff ) VALUES (?,?,?)";
+    private final String insertAccountSql = "INSERT INTO Staffs (nameStaff, passwordStaff, positionStaff ,  emailStaff ) VALUES (?,?,?,?)";
     private final String deleteAccountByIdSql = "Delete From Staffs where idStaff =?";
-    private final String updateAccountByNameSql = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , emailStaff = ? WHERE nameStaff = ?";
-    private final String updateAccountByIdSql = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , emailStaff = ? , positionStaff =?  WHERE idStaff = ?";
+    private final String updateAccountByNameSql = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , emailStaff = ?   WHERE nameStaff = ?";
+    private final String updateAccountByIdSql = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , emailStaff = ? , positionStaff =? , statusStaff =?   WHERE idStaff = ?";
     private final String updateAvatarByUsernameSql = "UPDATE Staffs SET avatarStaff = ? WHERE nameStaff = ?";
 
     private void setupDatabaseCommand(String sql) throws SQLException {
@@ -67,8 +67,9 @@ public class AccountController {
                 String pass = rs.getString("passwordStaff");
                 String gmail = rs.getString("emailStaff");
                 String position = rs.getString("positionStaff");
+                boolean status = rs.getBoolean("statusStaff");
                 byte[] avatar = rs.getBytes("avatarStaff");
-                Staff _staff = new Staff(id, name, pass, gmail, position, avatar);
+                Staff _staff = new Staff(id, name, pass, gmail, position, status, avatar);
                 this.listStaff.add(_staff);
             }
             // Mỗi ResultSet/PreparedStatement chiếm bộ nhớ
@@ -94,9 +95,17 @@ public class AccountController {
         model.setNumRows(0);
         loadDataAccounts();
         int n = 0;
+        String status = "";
         for (Staff staff : listStaff) {
-            model.addRow(new Object[]{n++, staff.getId(), staff.getName(),
-                staff.getPassword(), staff.getEmail(), staff.getPosition(), staff.getAvatar()});
+            if (staff.isStatus() == false) {
+                status = "Inactive";
+                model.addRow(new Object[]{n++, staff.getId(), staff.getName(),
+                    staff.getPassword(), staff.getEmail(), staff.getPosition(), status, staff.getAvatar()});
+            } else {
+                status = "Active";
+                model.addRow(new Object[]{n++, staff.getId(), staff.getName(),
+                    staff.getPassword(), staff.getEmail(), staff.getPosition(), status, staff.getAvatar()});
+            }
         }
     }
 
@@ -109,7 +118,12 @@ public class AccountController {
             } else {
                 for (Staff staff : this.listStaff) {
                     if (staff.getName().equalsIgnoreCase(name) && (String.valueOf(staff.getPassword()).equalsIgnoreCase(pass))) {
-                        return true;
+                        if (staff.isStatus() == false) {
+                            JOptionPane.showMessageDialog(null, "This account is currently inactive!");
+                            return false;
+                        } else {
+                            return true;
+                        }
                     }
                 }
             }
@@ -119,7 +133,7 @@ public class AccountController {
         return false;
     }
 
-    public boolean addAccount(String name, String pass, String gmail, String position , byte[] image) {
+    public boolean addAccount(String name, String pass, String gmail, String position, byte[] image) {
         try {
             if (image != null) {
                 setupDatabaseCommand(insertAccountWithAvatarSql);
@@ -132,7 +146,9 @@ public class AccountController {
                 setupDatabaseCommand(insertAccountSql);
                 ps.setString(1, name);
                 ps.setString(2, pass);
-                ps.setString(3, gmail);
+                ps.setString(3, position);
+                ps.setString(4, gmail);
+
             }
             int n = ps.executeUpdate();
             if (n != 0) {
@@ -174,18 +190,18 @@ public class AccountController {
     }
 
     //update cho panel profile 
-    public Staff updateAccount(String name, String pass, String gmail, String Username) {
+    public Staff updateAccount(String name, String pass, String gmail, String nameStaff) {
 
         try {
             setupDatabaseCommand(updateAccountByNameSql);
             ps.setString(1, name);
             ps.setString(2, pass);
             ps.setString(3, gmail);
-            ps.setString(4, Username);
+            ps.setString(4, nameStaff);
             int n = ps.executeUpdate();
             if (n > 0) {
                 for (Staff staff : listStaff) {
-                    if (staff.getName().equalsIgnoreCase(Username)) {
+                    if (staff.getName().equalsIgnoreCase(nameStaff)) {
                         staff.setName(name);
                         staff.setPassword(pass);
                         staff.setEmail(gmail);
@@ -199,7 +215,7 @@ public class AccountController {
         return null;
     }
 
-    public boolean updateAccountManager(String name, String pass, String gmail, String position, int id) {
+    public boolean updateAccountManager(String name, String pass, String gmail, String position, boolean status , int id) {
 
         try {
             setupDatabaseCommand(updateAccountByIdSql);
@@ -207,7 +223,8 @@ public class AccountController {
             ps.setString(2, pass);
             ps.setString(3, gmail);
             ps.setString(4, position);
-            ps.setInt(5, id);
+            ps.setBoolean(5, status);
+            ps.setInt(6, id);
             int n = ps.executeUpdate();
             if (n > 0) {
                 for (Staff staff : listStaff) {

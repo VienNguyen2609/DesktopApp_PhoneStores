@@ -162,11 +162,11 @@
                       <Component id="btnMenuBill" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="btnMenuPhone" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                      <Component id="btnMenuAccount" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="btnMenuClient" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace pref="210" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="btnMenuAccount" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace pref="223" max="32767" attributes="0"/>
                       <Component id="btnProfle" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Component id="btnLogOut" min="-2" pref="36" max="-2" attributes="0"/>

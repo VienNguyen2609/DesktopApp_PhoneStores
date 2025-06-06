@@ -1,7 +1,7 @@
 
 package Forms;
 
-import Controllers.AccountController;
+import Controllers.StafftController;
 import Forms.Components.EffectComponents;
 import Forms.Components.SetThemFlatLaf;
 import Forms.Components.ThemeFlatLaf;
@@ -19,7 +19,7 @@ public class Login extends javax.swing.JFrame {
     
     public Login() {
         initComponents();
-        AccountController.init();
+        StafftController.init();
         EffectComponents.init();
         
         setTitle("PRIMA MOBILES , LOGIN");
@@ -230,13 +230,15 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseExited
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
-        AccountController.instance.loadDataAccounts();
+        StafftController.instance.loadDataAccounts();
         String username = txtName.getText().trim();
         String password = String.valueOf(txtPassword.getPassword()).trim();
 
         SetThemFlatLaf.setThem(ThemeFlatLaf.Dark);
-        if (AccountController.instance.checkLogin(username, password)) {
-            Staff user = AccountController.instance.getAccountByUsername(username);
+        
+        
+        if (StafftController.instance.checkLogin(username, password)) {
+            Staff user = StafftController.instance.getAccountByUsername(username);
             new HomePage(user).setVisible(true);
             dispose();
         }

@@ -1,6 +1,6 @@
 package Forms;
 
-import Controllers.AccountController;
+import Controllers.StafftController;
 import Forms.Components.RoundedBorder;
 import Forms.Components.RoundedPanel;
 import Model.Staff;
@@ -430,7 +430,7 @@ public class PanelProfile extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "PHOTO NOT UPDATE YET!");
             return;
         }
-        AccountController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getName());
+        StafftController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getName());
 
     }//GEN-LAST:event_btnUploadAvatar2MouseClicked
 
@@ -456,14 +456,14 @@ public class PanelProfile extends javax.swing.JPanel {
         String password = txtPass1.getText().trim();
         String gmail = txtGmail1.getText().trim();
         
-        AccountController.instance.loadDataAccounts();
+        StafftController.instance.loadDataAccounts();
         try {
 
-            if (!AccountController.instance.checkAccountIsAdmin(name, password, gmail , statusStaff)) {
+            if (!StafftController.instance.checkAccountIsAdmin(name, password, gmail , statusStaff)) {
                 return;
             }
 
-            Staff UpdateAccount = AccountController.instance.updateAccount(name, password, gmail, currentAccount.getName());
+            Staff UpdateAccount = StafftController.instance.updateAccount(name, password, gmail, currentAccount.getName());
             if (UpdateAccount != null) {
                 currentAccount = UpdateAccount;
                 JOptionPane.showMessageDialog(this, "Profile Updated Successfully");

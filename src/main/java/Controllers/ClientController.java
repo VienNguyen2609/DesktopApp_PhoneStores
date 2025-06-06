@@ -30,7 +30,7 @@ public class ClientController {
     private final String insertClientSql = "INSERT INTO Clients(nameClient,telClient"
             + ",addressClient ,gmailClient  ) VALUES(?,?,?,?)";
 
-    private final String deleteClienByTelltSql = "DELETE FROM Clients WHERE AND telClient=?";
+    private final String deleteClienByTelltSql = "DELETE FROM Clients WHERE  telClient=?";
 
     private final String updateClientSql = "UPDATE Clients SET nameClient=?,telClient=?,"
             + "gmailClient=? , addressClient =?  WHERE idClient=?";

@@ -1,6 +1,6 @@
 package Forms;
 
-import Controllers.AccountController;
+import Controllers.StafftController;
 import Forms.Components.EffectComponents;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -10,7 +10,7 @@ public class CreateAccount extends javax.swing.JFrame {
 
     public CreateAccount() {
         initComponents();
-        AccountController.init();
+        StafftController.init();
         EffectComponents.init();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -178,16 +178,19 @@ public class CreateAccount extends javax.swing.JFrame {
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
 
-        AccountController.instance.loadDataAccounts();
+        StafftController.instance.loadDataAccounts();
         try {
             String name = this.txtName.getText().trim();
             String pass = this.txtPassword.getText().trim();
             String gmail = this.txtGmail.getText().trim();
 
-            if (!AccountController.instance.checkAccount(name, pass, gmail)) {
+            if (!StafftController.instance.checkAccount(name, pass, gmail)) {
                 return;
-            } else if (AccountController.instance.addAccount(name, pass, gmail, "", null)) {
+            } else if (StafftController.instance.addAccount(name, pass, gmail, "No position", null)) {
                 LabelMessage.setText("CREATED ACCOUNT SUCCESSFULLY");
+            }
+            else{
+                LabelMessage.setText("CREATED ACCOUNT FAILURE");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

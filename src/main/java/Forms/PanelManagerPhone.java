@@ -28,7 +28,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
     private boolean statusPhone;
     private String statusPhoneText;
     private int selectedRow;
-    private byte[] imageProduct = null;
+    private byte[] imagePhone = null;
 
     private PanelHome panelHome;
 
@@ -82,17 +82,21 @@ public class PanelManagerPhone extends javax.swing.JPanel {
             return;
         }
         try {
-            if (selectedFile == null) {
-                return;
+
+            if (selectedFile != null) {
+                imagePhone = Files.readAllBytes(selectedFile.toPath()); // Chọn ảnh mới
+            } else if (icon != null) {
+                // Lấy byte[] từ icon (ImageIcon)
+                imagePhone = util.ImageUtils.iconToBytes((ImageIcon) icon); // 👈 thêm hàm này ở dưới
             } else {
-                imageProduct = Files.readAllBytes(selectedFile.toPath());
+                imagePhone = null; // Không có ảnh
             }
         } catch (IOException ex) {
             Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void clickTableProduct() {
+    private void clickTableProduct() {
 
         selectedRow = tbProduct.getSelectedRow();
 
@@ -121,8 +125,10 @@ public class PanelManagerPhone extends javax.swing.JPanel {
                 cbStatusPhone.setSelectedIndex(1);
             }
             if (image != null) {
-                ImageIcon icon = new ImageIcon(image);
+                icon = new ImageIcon(image);
+
                 LabelImagePhone.setIcon(icon);
+
             } else {
                 LabelImagePhone.setIcon(null);
             }
@@ -130,8 +136,8 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         }
 
     }
-    
-    public void loadTabelPhone(){
+
+    public void loadTabelPhone() {
         PhoneController.instance.loadTableProduct(tbProduct);
     }
 
@@ -568,7 +574,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             selectedFile = chooser.getSelectedFile();
             icon = new ImageIcon(new ImageIcon(selectedFile.getAbsolutePath())
-                .getImage().getScaledInstance(LabelImagePhone.getWidth(), LabelImagePhone.getHeight(), Image.SCALE_SMOOTH));
+                    .getImage().getScaledInstance(LabelImagePhone.getWidth(), LabelImagePhone.getHeight(), Image.SCALE_SMOOTH));
             LabelImagePhone.setIcon(icon);
             LabelImagePhone.setBorder(null);
         }
@@ -584,15 +590,15 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
         try {
             if (PhoneController.instance.addProduct(namePhoneText, brandPhoneText,
-                pricePhoneText, quantityPhoneText, OSPhoneText, imageProduct, DescriptionPhoneText, statusPhone)) {
-            PhoneController.instance.loadDataProducts();
-            PhoneController.instance.loadTableProduct(tbProduct);
-            viewTextProduct();
-            LabelImagePhone.setIcon(null);
-            // LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
-            JOptionPane.showMessageDialog(this, "PRODUCT ADDED SUCCESSFULLY");
+                    pricePhoneText, quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone)) {
+                PhoneController.instance.loadDataProducts();
+                PhoneController.instance.loadTableProduct(tbProduct);
+                viewTextProduct();
+                LabelImagePhone.setIcon(null);
+                // LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
+                JOptionPane.showMessageDialog(this, "PRODUCT ADDED SUCCESSFULLY");
 
-        }
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -605,14 +611,15 @@ public class PanelManagerPhone extends javax.swing.JPanel {
     private void btnUpdatePhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdatePhoneMouseClicked
 
         getPhoneInputData();
+
         if (PhoneController.instance.updateProduct(namePhoneText, brandPhoneText, pricePhoneText,
-            quantityPhoneText, OSPhoneText, imageProduct, DescriptionPhoneText, statusPhone, idProductText)) {
-        JOptionPane.showMessageDialog(this, "UPDATED THIS PRODUCT ID: " + idProductText + " SUCCESSFULLY");
-        PhoneController.instance.loadTableProduct(tbProduct);
-        viewTextProduct();
-        LabelImagePhone.setIcon(null);
-        //   LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
-        return;
+                quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone, idProductText)) {
+            JOptionPane.showMessageDialog(this, "UPDATED THIS PRODUCT ID: " + idProductText + " SUCCESSFULLY");
+            PhoneController.instance.loadTableProduct(tbProduct);
+            viewTextProduct();
+            LabelImagePhone.setIcon(null);
+            //   LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
+            return;
         } else {
             JOptionPane.showMessageDialog(this, "UPDATED FAILURE THIS PRODUCT ID: " + idProductText);
             return;

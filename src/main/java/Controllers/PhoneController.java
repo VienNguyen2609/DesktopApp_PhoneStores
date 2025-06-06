@@ -36,7 +36,7 @@ public class PhoneController {
     }
 
     private final String selectPhoneSQL = "SELECT * FROM Phones";
-    private final String selectPhoneSQLByName = "SELECT * FROM Phones WHERE namePhone LIKE ?";
+    private final String selectPhoneSQLByNameOrBrand = "SELECT * FROM Phones WHERE namePhone LIKE ? OR brandPhone LIKE ?";
 
     private final String insertPhoneSQL = "INSERT INTO Phones (namePhone, brandPhone, pricePhone"
             + ", quantityPhone , operatingSystemPhone ,imagePhone,descriptionPhone , statusPhone) VALUES (?,?,?,?,?,?,?,?)";
@@ -86,24 +86,25 @@ public class PhoneController {
         }
     }
 
-    public void searchByName(String name) {
+    public void searchByName(String name , String brand) {
         listPhones.clear();
         try {
 
-            setupDatabaseCommand(selectPhoneSQLByName);
+            setupDatabaseCommand(selectPhoneSQLByNameOrBrand);
             ps.setString(1, "%" + name + "%");
+            ps.setString(2, "%" + brand + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("idPhone");
                 String _name = rs.getString("namePhone");
-                String brand = rs.getString("brandPhone");
+                String _brand = rs.getString("brandPhone");
                 double price = rs.getDouble("pricePhone");
                 int quantity = rs.getInt("quantityPhone");
                 String operating = rs.getString("operatingSystemPhone");
                 byte[] image = rs.getBytes("imagePhone");
                 String descriptionPhone = rs.getString("descriptionPhone");
                 boolean status = rs.getBoolean("statusPhone");
-                Phone _phone = new Phone(id, _name, brand, price, quantity, operating, image, descriptionPhone, status);
+                Phone _phone = new Phone(id, _name, _brand, price, quantity, operating, image, descriptionPhone, status);
                 listPhones.add(_phone);
             }
             rs.close();
@@ -182,7 +183,8 @@ public class PhoneController {
         return check;
     }
 
-    public boolean updateProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone, boolean status, int idProduct) {
+    public boolean updateProduct(String name, String brand, double price, int quantity, 
+            String operatingSystem, byte[] image, String descriptionPhone, boolean status, int idProduct) {
 
         try {
             setupDatabaseCommand(updatePhoneById);

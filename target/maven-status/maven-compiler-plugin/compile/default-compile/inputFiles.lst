@@ -1,7 +1,7 @@
-E:\LTJava_Nhom12\src\main\java\Controllers\AccountController.java
 E:\LTJava_Nhom12\src\main\java\Controllers\BillController.java
 E:\LTJava_Nhom12\src\main\java\Controllers\ClientController.java
 E:\LTJava_Nhom12\src\main\java\Controllers\PhoneController.java
+E:\LTJava_Nhom12\src\main\java\Controllers\StafftController.java
 E:\LTJava_Nhom12\src\main\java\DatabaseConnection\SQLConnector.java
 E:\LTJava_Nhom12\src\main\java\Forms\Components\EffectComponents.java
 E:\LTJava_Nhom12\src\main\java\Forms\Components\HeaderButton.java
@@ -17,12 +17,13 @@ E:\LTJava_Nhom12\src\main\java\Forms\CreateAccount.java
 E:\LTJava_Nhom12\src\main\java\Forms\HomePage.java
 E:\LTJava_Nhom12\src\main\java\Forms\Login.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelHome.java
-E:\LTJava_Nhom12\src\main\java\Forms\PanelManagerAccount.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelManagerBill.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelManagerClient.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelManagerPhone.java
+E:\LTJava_Nhom12\src\main\java\Forms\PanelManagerStaff.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelPhone.java
 E:\LTJava_Nhom12\src\main\java\Forms\PanelProfile.java
+E:\LTJava_Nhom12\src\main\java\Forms\PanelRevenue.java
 E:\LTJava_Nhom12\src\main\java\Forms\TestHome.java
 E:\LTJava_Nhom12\src\main\java\Main\Run.java
 E:\LTJava_Nhom12\src\main\java\Model\BillDisplay.java
@@ -31,3 +32,4 @@ E:\LTJava_Nhom12\src\main\java\Model\Order.java
 E:\LTJava_Nhom12\src\main\java\Model\OrderDetail.java
 E:\LTJava_Nhom12\src\main\java\Model\Phone.java
 E:\LTJava_Nhom12\src\main\java\Model\Staff.java
+E:\LTJava_Nhom12\src\main\java\util\ImageUtils.java

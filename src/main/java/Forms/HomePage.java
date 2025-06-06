@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class HomePage extends javax.swing.JFrame {
 
-    private PanelManagerAccount panelManagerAccount;
+    private PanelManagerStaff panelManagerAccount;
     private PanelPhone panelPhone;
     private PanelHome panelHome;
     private PanelManagerPhone panelManagerPhone;
@@ -52,12 +52,13 @@ public class HomePage extends javax.swing.JFrame {
         EffectComponents.init();
         this.currentAccount = staff;
 
-        panelManagerAccount = new PanelManagerAccount();
+        panelManagerAccount = new PanelManagerStaff();
         panelPhone = new PanelPhone(currentAccount);
 
         // TẠM thời gán null
         panelManagerBill = new PanelManagerBill(panelPhone, staff, null);
-        panelHome = new PanelHome(currentAccount, panelManagerBill, null);
+        panelManagerClient = new PanelManagerClient();
+        panelHome = new PanelHome(currentAccount, panelManagerBill, null, panelManagerClient);
 
         // GÁN lại panelHome cho panelManagerBill
         panelManagerBill.setPanelHome(panelHome);
@@ -66,7 +67,6 @@ public class HomePage extends javax.swing.JFrame {
         panelProfile = new PanelProfile(staff);
 
         panelHome.setPanelManagerPhone(panelManagerPhone);
-        panelManagerClient = new PanelManagerClient();
 
         if ("admin".equalsIgnoreCase(staff.getPosition())) {
 
@@ -284,11 +284,11 @@ public class HomePage extends javax.swing.JFrame {
                 .addComponent(btnMenuBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(btnMenuPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnMenuAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(37, 37, 37)
                 .addComponent(btnMenuClient, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addComponent(btnMenuAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
                 .addComponent(btnProfle, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))

@@ -5,6 +5,7 @@ import Model.Staff;
 import Model.BillDisplay;
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,13 +20,13 @@ public class PanelManagerBill extends javax.swing.JPanel {
     private Staff account;
     private PanelHome panelHome;
 
-    public PanelManagerBill(PanelPhone panelPhone, Staff account, PanelHome panelHome  ) {
+    public PanelManagerBill(PanelPhone panelPhone, Staff account, PanelHome panelHome) {
         initComponents();
         BillController.init();
         this.panelPhone = panelPhone;
         this.account = account;
         this.panelHome = panelHome;
-        
+
         list = BillController.instance.getDisplayBills();
         BillController.instance.showBillDisplayToTable(tbBill, list);
 
@@ -73,10 +74,6 @@ public class PanelManagerBill extends javax.swing.JPanel {
     public void setPanelHome(PanelHome panelHome) {
         this.panelHome = panelHome;
     }
-
- 
-    
-    
 
     private void viewBill() {
         txtBillNameUser.setText("");
@@ -134,7 +131,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "BillId", "Client Name", "Phone", "Quantity", "Price", "Total", "DateBooking", "Status", "Name Staff"
+                "No.", "BillId", "Client Name", "Phone", "Quantity", "Price", "Total", "DateBooking", "Name Staff", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -442,33 +439,41 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
     private void btnRemoveAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveAllMouseClicked
 
-        BillController.instance.deleteAllBills();
+        int check = JOptionPane.showConfirmDialog(this, "Do you want delete all bill!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            BillController.instance.deleteAllBills();
 
-        list = BillController.instance.getDisplayBills();
-        BillController.instance.showBillDisplayToTable(tbBill, list);
+            list = BillController.instance.getDisplayBills();
+            BillController.instance.showBillDisplayToTable(tbBill, list);
 
-        viewBill();
-        panelHome.addPanelProducts();
+            viewBill();
+            panelHome.addPanelProducts();
+        }
+        
 
     }//GEN-LAST:event_btnRemoveAllMouseClicked
 
     private void btnRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveMouseClicked
 
-        selectedRow = tbBill.getSelectedRow();
-        if (selectedRow != -1) {
+        int check = JOptionPane.showConfirmDialog(this, "Do you want delete this bill!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            selectedRow = tbBill.getSelectedRow();
+            if (selectedRow != -1) {
 
-            int idBill = Integer.parseInt(tbBill.getValueAt(selectedRow, 1).toString());
-            String phoneName = tbBill.getValueAt(selectedRow, 3).toString();
-            int quantity = Integer.parseInt(tbBill.getValueAt(selectedRow, 4).toString());
-            BillController.instance.deleteBill(idBill);
-            
-            viewBill();
-            list = BillController.instance.getDisplayBills();
-            BillController.instance.showBillDisplayToTable(tbBill, list);
+                int idBill = Integer.parseInt(tbBill.getValueAt(selectedRow, 1).toString());
+                String phoneName = tbBill.getValueAt(selectedRow, 3).toString();
+                int quantity = Integer.parseInt(tbBill.getValueAt(selectedRow, 4).toString());
+                
+                BillController.instance.deleteBill(idBill);
 
+                viewBill();
+                list = BillController.instance.getDisplayBills();
+                BillController.instance.showBillDisplayToTable(tbBill, list);
+
+            }
+
+            panelHome.addPanelProducts();
         }
-
-        panelHome.addPanelProducts();
 
     }//GEN-LAST:event_btnRemoveMouseClicked
 

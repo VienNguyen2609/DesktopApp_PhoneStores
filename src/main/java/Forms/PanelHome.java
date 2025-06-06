@@ -23,20 +23,22 @@ public class PanelHome extends javax.swing.JPanel {
 
     private Staff currentAccount;
     private PanelManagerBill panelManagerBill;
-    private PanelManagerPhone panelManagerPhone ; 
+    private PanelManagerPhone panelManagerPhone;
+    private PanelManagerClient panelManagerClient;
     private DefaultTableModel model;
 
     private double totalAmount = 0;
 
-    public PanelHome(Staff account, PanelManagerBill panelManagerBill , PanelManagerPhone panelManagerPhone) {
+    public PanelHome(Staff account, PanelManagerBill panelManagerBill,
+            PanelManagerPhone panelManagerPhone, PanelManagerClient panelManagerClient) {
         initComponents();
         PhoneController.init();
         BillController.init();
 
         this.currentAccount = account;
         this.panelManagerBill = panelManagerBill;
-        this.panelManagerPhone = panelManagerPhone ;
-        
+        this.panelManagerPhone = panelManagerPhone;
+        this.panelManagerClient = panelManagerClient;
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(15);
 
         addPanelProducts();
@@ -88,11 +90,11 @@ public class PanelHome extends javax.swing.JPanel {
         this.PanelContainProduct.repaint();
     }
 
-    public void searchByName(String name) {
+    public void searchByName(String name, String brand) {
 
         this.PanelContainProduct.setLayout(new GridBagLayout());
         this.PanelContainProduct.removeAll();
-        PhoneController.instance.searchByName(name);
+        PhoneController.instance.searchByName(name, brand);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(30, 50, 30, 50); // Khoảng cách giữa các item
@@ -121,8 +123,6 @@ public class PanelHome extends javax.swing.JPanel {
     public void setPanelManagerPhone(PanelManagerPhone panelManagerPhone) {
         this.panelManagerPhone = panelManagerPhone;
     }
-    
-    
 
     private void removePlaceHolderStyle(JTextField textField) {
         Font font = textField.getFont();
@@ -453,29 +453,51 @@ public class PanelHome extends javax.swing.JPanel {
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
 
         String name = txtSearch.getText().trim();
-        searchByName(name);
-        
-        if(name.isEmpty()){
+        searchByName(name, name);
+
+        if (name.isEmpty()) {
             addPanelProducts();
         }
-        
+
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnCofirmBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCofirmBillMouseClicked
 
-        String name = txtName.getText();
-        String phone = txtNumberPhone.getText();
-        String address = txtAdress.getText();
-        String email = txtEmail.getText();
-        double _totalAmount = Double.parseDouble(txtTotal.getText());
+        String name = txtName.getText().trim();
+        String phone = txtNumberPhone.getText().trim();
+        String address = txtAdress.getText().trim();
+        String email = txtEmail.getText().trim();
+        String totalText = txtTotal.getText().trim();
+        if (totalText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "empty transaction!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        BillController.instance.confirmBill(tbPhone, name, phone, address, email, _totalAmount, currentAccount.getId());
-        panelManagerBill.loadBillInTbale();
-        panelManagerPhone.loadTabelPhone();
-        addPanelProducts();
-        viewClient();
-        model.setNumRows(0);
-        txtTotal.setText("");
+        double _totalAmount;
+        try {
+            _totalAmount = Double.parseDouble(totalText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "empty transaction!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (currentAccount.isStatus() == false) {
+            JOptionPane.showMessageDialog(this, "This account is currently inactive!");
+            return ;
+        }
+        if (currentAccount.getPosition().equalsIgnoreCase("employee")
+                || currentAccount.getPosition().equalsIgnoreCase("admin")) {
+            BillController.instance.confirmBill(tbPhone, name, phone, address, email, _totalAmount, currentAccount.getId());
+            panelManagerBill.loadBillInTbale();
+            panelManagerPhone.loadTabelPhone();
+            panelManagerClient.loadTbaleClient();
+            addPanelProducts();
+            viewClient();
+            model.setNumRows(0);
+            txtTotal.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "YOU HAVE NOT BEEN GRANTED EMPLOYEE POSITION");
+        }
 
     }//GEN-LAST:event_btnCofirmBillMouseClicked
 
@@ -485,6 +507,7 @@ public class PanelHome extends javax.swing.JPanel {
         if (check == JOptionPane.YES_OPTION) {
             model.setNumRows(0);
             txtTotal.setText("");
+            viewClient();
         }
 
     }//GEN-LAST:event_btnDeleleBillMouseClicked

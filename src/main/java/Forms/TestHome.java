@@ -6,7 +6,6 @@ import Forms.Components.ThemeFlatLaf;
 import Model.Staff;
 
 
-
 public class TestHome {
      public static void main(String[] args) {
         SetThemFlatLaf.setThem(ThemeFlatLaf.Dark);

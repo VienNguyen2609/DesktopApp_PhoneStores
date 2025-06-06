@@ -257,8 +257,8 @@
                 <Column editable="false" title="Price" type="java.lang.Float"/>
                 <Column editable="false" title="Total" type="java.lang.Float"/>
                 <Column editable="false" title="DateBooking" type="java.lang.Object"/>
-                <Column editable="false" title="Status" type="java.lang.String"/>
                 <Column editable="false" title="Name Staff" type="java.lang.String"/>
+                <Column editable="false" title="Status" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

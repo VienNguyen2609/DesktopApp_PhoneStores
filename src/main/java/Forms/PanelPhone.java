@@ -24,13 +24,13 @@ import javax.swing.JOptionPane;
 public class PanelPhone extends javax.swing.JPanel {
 
     private Staff currentAccount;
-
+    private Phone phone ; 
     private PanelHome panelHome;
     private int quantityAvailable;
     private int productIdCurrent;
     private ImageIcon icon;
     private PanelManagerBill panelManagerBill;
-
+     
     private int quantityAvailableBill;
     public int statusBill = 0;
 
@@ -49,7 +49,8 @@ public class PanelPhone extends javax.swing.JPanel {
         this.panelHome = panelHome;
         this.currentAccount = account;
         this.panelManagerBill = panelManagerBill;
-
+        this.phone = phone;
+        
         PanelBill.setSize(new Dimension(600, 700));
         PanelBill.setLocation(400, 100);
         PanelBill.setVisible(false);
@@ -63,6 +64,12 @@ public class PanelPhone extends javax.swing.JPanel {
         txtQuantity.setText(String.valueOf(phone.getQuantityPhone()));
         txtOS.setText(phone.getOperatingSystem());
         txtDescription.setText(phone.getDescription());
+        if(phone.isStatusPhone() == true){
+            jLabel3.setText("Products in business");
+        }
+        else{
+            jLabel3.setText("out of business");
+        }
         this.quantityAvailable = phone.getQuantityPhone();
         byte[] imageBytes = phone.getImagePhone();
         int defaultWidth = 201;
@@ -170,6 +177,7 @@ public class PanelPhone extends javax.swing.JPanel {
         jLabel73 = new javax.swing.JLabel();
         txtDescription = new Forms.Components.TextFieldController();
         txtOS = new Forms.Components.TextFieldController();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         PanelBill.setModal(true);
@@ -363,8 +371,8 @@ public class PanelPhone extends javax.swing.JPanel {
 
         jLabel70.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel70.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel70.setText("Description");
-        jPanel16.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 90, 30));
+        jLabel70.setText("--------------------Description-----------------");
+        jPanel16.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 330, 30));
 
         btnPurchase.setBackground(new java.awt.Color(204, 255, 204));
         btnPurchase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/BuyIcon.png"))); // NOI18N
@@ -376,7 +384,12 @@ public class PanelPhone extends javax.swing.JPanel {
                 btnPurchaseMouseClicked(evt);
             }
         });
-        jPanel16.add(btnPurchase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 250, 40));
+        btnPurchase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPurchaseActionPerformed(evt);
+            }
+        });
+        jPanel16.add(btnPurchase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, 250, 40));
 
         txtName.setEditable(false);
         txtName.setForeground(new java.awt.Color(255, 255, 255));
@@ -393,8 +406,8 @@ public class PanelPhone extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 51));
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel16.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 190, 20));
-        jPanel16.add(LabelImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 201, 240));
+        jPanel16.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 190, 20));
+        jPanel16.add(LabelImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 201, 230));
 
         jLabel71.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel71.setForeground(new java.awt.Color(255, 255, 255));
@@ -431,7 +444,7 @@ public class PanelPhone extends javax.swing.JPanel {
         txtDescription.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtDescription.setToolTipText("");
         txtDescription.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jPanel16.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 300, -1));
+        jPanel16.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 300, -1));
 
         txtOS.setEditable(false);
         txtOS.setForeground(new java.awt.Color(204, 255, 255));
@@ -442,19 +455,21 @@ public class PanelPhone extends javax.swing.JPanel {
             }
         });
         jPanel16.add(txtOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 150, 30));
-        jPanel16.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 600));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 51));
+        jPanel16.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 230, 30));
+        jPanel16.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 620));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -468,37 +483,12 @@ public class PanelPhone extends javax.swing.JPanel {
 
     private void btnBuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuyMouseClicked
 
-//        try {
-//
-//            int quantity = Integer.parseInt(txtBillQuantity.getText().trim());
-//            if (quantity > quantityAvailableBill || quantity < 0 || quantity == 0) {
-//                JOptionPane.showMessageDialog(this, "Purchase quantity exceeds available stock!");
-//                return;
-//            }
-//
-//            double price = Double.parseDouble(txtBillPrice.getText().trim());
-//
-//            int check = JOptionPane.showConfirmDialog(this, "ARE YOU SURE WANT BUY IT ", "CONFIRM", JOptionPane.YES_NO_OPTION);
-//            if (check == JOptionPane.YES_OPTION) {
-//                if (BillController.instance.addBill(currentAccount.getUserId(), productIdCurrent, new java.sql.Date(new Date().getTime()), quantity, price)) {
-//
-//                    PanelBill.setVisible(false);
-//                    JOptionPane.showMessageDialog(this, "BUY SUCCESSFULLY");
-//                    //                     BillController.instance.loadBills(tbBill, currentAccount.getUserName());
-//                    statusBill = 1;
-//                    panelManagerBill.statusBill();
-//                    panelHome.addPanelProducts();
-////                    addPanelProducts();
-//                    viewBill();
-//                    return;
-//                }
-//            } else {
-//                return;
-//            }
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(this, "ENTER A NUMBER NOT STRING", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
 
+        if(phone.isStatusPhone() == false){
+            PanelBill.setVisible(false);
+            JOptionPane.showMessageDialog(this, "The product is currently out of stock.");
+            return;
+        }
         int quantity = Integer.parseInt(txtBillQuantity.getText().trim());
         if (quantity > quantityAvailableBill || quantity < 0 || quantity == 0) {
             JOptionPane.showMessageDialog(this, "Purchase quantity exceeds available stock!");
@@ -554,6 +544,10 @@ public class PanelPhone extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnBuyActionPerformed
 
+    private void btnPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPurchaseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPurchaseActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ImageProductBill;
@@ -573,6 +567,7 @@ public class PanelPhone extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;

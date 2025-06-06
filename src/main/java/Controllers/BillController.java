@@ -167,7 +167,7 @@ public class BillController {
             List<Integer> unpaidOrderIds = new ArrayList<>();
             while (rs.next()) {
                 String status = rs.getString("statusOrder");
-                if (status == null || status.equalsIgnoreCase("Chờ xác nhận") || status.equalsIgnoreCase("Chưa thanh toán")) {
+                if (status == null || !status.equalsIgnoreCase("Confirmed")) {
                     unpaidOrderIds.add(rs.getInt("idOrder"));
                 }
             }
@@ -321,6 +321,16 @@ public class BillController {
     public void confirmBill(JTable tabel, String name, String phone, String address,
             String email, double total, int idStaff) {
 
+        // Kiểm tra nếu chưa chọn sản phẩm nào
+        if (tabel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No products selected to order!", "Message", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(name.isEmpty() || phone.isEmpty() || address.isEmpty() || email.isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Enter information of buyer", "Message", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
             // Mở kết nối & bật transaction
             if (conn == null || conn.isClosed()) {

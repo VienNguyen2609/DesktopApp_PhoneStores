@@ -19,7 +19,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
 
     private int selectedRow;
     private List<Client> listClient = new ArrayList<>();
-    Client client;
+    private Client client;
     ClientController clientController;
     DefaultTableModel model;
 
@@ -61,6 +61,12 @@ public class PanelManagerClient extends javax.swing.JPanel {
         btnUpdateClient.setBackgroundColor(Color.BLUE);
         btnCancelClient.setBackgroundColor(Color.RED);
         btnDeleteClient.setBackgroundColor(Color.ORANGE);
+    }
+
+    public void loadTbaleClient() {
+
+        listClient = clientController.loadDataAccounts();
+        viewTabelClient();
     }
 
     @SuppressWarnings("unchecked")
