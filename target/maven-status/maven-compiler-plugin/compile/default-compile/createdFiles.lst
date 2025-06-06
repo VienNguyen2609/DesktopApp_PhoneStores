@@ -1,8 +1,10 @@
 Forms\HomePage$6.class
+Forms\PanelManagerClient$7.class
 Forms\PanelPhone$2.class
 Forms\PanelManagerAccount$9.class
 Forms\Components\RippleEffect$1.class
 Forms\CreateAccount$1.class
+Forms\HomePage$9.class
 Forms\Components\EffectComponents$2.class
 Forms\Components\SetThemFlatLaf$1.class
 Forms\PanelHome$4.class
@@ -17,13 +19,16 @@ Forms\PanelManagerPhone$3.class
 Forms\PanelManagerBill$4.class
 Forms\PanelPhone$5.class
 Model\OrderDetail.class
+Forms\PanelManagerClient$1.class
 Forms\Components\RippleEffect.class
 Forms\Login$4.class
+Forms\PanelManagerClient$4.class
 Forms\Components\SetThemFlatLaf.class
 Main\Run.class
 Forms\PanelManagerAccount$6.class
 Forms\PanelPhone$8.class
 Forms\PanelManagerPhone$6.class
+Forms\PanelManagerClient$2.class
 Forms\CreateAccount$3.class
 Model\Order.class
 Forms\Components\ThemeFlatLaf.class
@@ -34,6 +39,7 @@ Forms\PanelManagerAccount$7.class
 Forms\HomePage$4.class
 Forms\PanelPhone$7.class
 DatabaseConnection\SQLConnector.class
+Forms\PanelManagerClient$8.class
 Forms\PanelManagerAccount$8.class
 Forms\Components\TextFieldController.class
 Forms\PanelManagerAccount$1.class
@@ -50,6 +56,7 @@ Forms\Components\EffectComponents.class
 Forms\PanelManagerAccount$2.class
 Forms\PanelManagerPhone$2.class
 Forms\PanelPhone$9.class
+Forms\PanelManagerClient.class
 Forms\PanelProfile$1.class
 Forms\TestHome.class
 Forms\PanelManagerPhone.class
@@ -60,7 +67,9 @@ Forms\PanelManagerAccount$5.class
 Forms\PanelManagerPhone$5.class
 Forms\Login$3.class
 Forms\PanelManagerBill.class
+Forms\PanelManagerClient$3.class
 Forms\Components\RoundedBorder.class
+Model\Client.class
 Forms\PanelHome$3.class
 Forms\PanelPhone$1.class
 Forms\Components\RippleEffect$Effect.class
@@ -74,8 +83,10 @@ Controllers\PhoneController.class
 Forms\HomePage$1.class
 Forms\PanelPhone$4.class
 Forms\PanelManagerAccount$4.class
+Controllers\ClientController.class
 Forms\PanelProfile$3.class
 Forms\Components\PasswordField.class
+Forms\PanelManagerClient$5.class
 Forms\PanelPhone.class
 Forms\PanelManagerBill$1.class
 Forms\PanelManagerPhone$7.class
@@ -84,6 +95,7 @@ Forms\HomePage$7.class
 Model\Phone.class
 Forms\PanelManagerPhone$1.class
 Forms\PanelManagerBill$2.class
+Forms\PanelManagerClient$6.class
 Model\Staff.class
 Forms\Components\RippleEffect$Effect$1.class
 Forms\PanelProfile$2.class

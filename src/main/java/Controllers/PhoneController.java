@@ -98,7 +98,7 @@ public class PhoneController {
                 String _name = rs.getString("namePhone");
                 String brand = rs.getString("brandPhone");
                 double price = rs.getDouble("pricePhone");
-                int quantity = rs.getInt("quantity");
+                int quantity = rs.getInt("quantityPhone");
                 String operating = rs.getString("operatingSystemPhone");
                 byte[] image = rs.getBytes("imagePhone");
                 String descriptionPhone = rs.getString("descriptionPhone");
