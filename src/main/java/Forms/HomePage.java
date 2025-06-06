@@ -45,25 +45,28 @@ public class HomePage extends javax.swing.JFrame {
         initComponents();
     }
 
-    public HomePage(Staff account) {
+    public HomePage(Staff staff ){
         initComponents();
         PhoneController.init();
         EffectComponents.init();
-        this.currentAccount = account;
+        this.currentAccount = staff;
 
         panelManagerAccount = new PanelManagerAccount();
         panelPhone = new PanelPhone(currentAccount);
 
         // TẠM thời gán null
-        panelManagerBill = new PanelManagerBill(panelPhone, account, null);
-        panelHome = new PanelHome(currentAccount, panelManagerBill);
+        panelManagerBill = new PanelManagerBill(panelPhone, staff, null );
+        panelHome = new PanelHome(currentAccount, panelManagerBill , null);
 
         // GÁN lại panelHome cho panelManagerBill
         panelManagerBill.setPanelHome(panelHome);
         panelManagerPhone = new PanelManagerPhone(panelHome);
-        panelProfile = new PanelProfile(account);
+        panelProfile = new PanelProfile(staff);
+       
+        panelHome.setPanelManagerPhone(panelManagerPhone);
+        
+        if ("admin".equalsIgnoreCase(staff.getPosition())) {
 
-        if (account.getName().equalsIgnoreCase("admin")) {
             this.jPanel2.add(panelManagerAccount);
             this.jPanel2.add(panelProfile);
             this.jPanel2.add(panelManagerBill);

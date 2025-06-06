@@ -9,23 +9,25 @@ import java.util.Date;
 public class BillDisplay {
 
     private int billId;
-    private String userName;
-    private String phoneName;
+    private String nameClient;
+    private String namePhone;
     private int quantity;
     private double price;
     private double totalAmount;
     private Date billDate;
-    private boolean PaymentStatus ; 
+    private String paymentStatus ; 
+    private String nameStaff ; 
 
-    public BillDisplay(int billId, String userName, String phoneName, int quantity, double price, double totalAmount, Date billDate, boolean PaymentStatus) {
+    public BillDisplay(int billId, String nameClient, String namePhone, int quantity, double price, double totalAmount, Date billDate, String paymentStatus, String nameStaff) {
         this.billId = billId;
-        this.userName = userName;
-        this.phoneName = phoneName;
+        this.nameClient = nameClient;
+        this.namePhone = namePhone;
         this.quantity = quantity;
         this.price = price;
         this.totalAmount = totalAmount;
         this.billDate = billDate;
-        this.PaymentStatus = PaymentStatus;
+        this.paymentStatus = paymentStatus;
+        this.nameStaff = nameStaff;
     }
 
     public int getBillId() {
@@ -36,20 +38,20 @@ public class BillDisplay {
         this.billId = billId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getNameClient() {
+        return nameClient;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setNameClient(String nameClient) {
+        this.nameClient = nameClient;
     }
 
-    public String getPhoneName() {
-        return phoneName;
+    public String getNamePhone() {
+        return namePhone;
     }
 
-    public void setPhoneName(String phoneName) {
-        this.phoneName = phoneName;
+    public void setNamePhone(String namePhone) {
+        this.namePhone = namePhone;
     }
 
     public int getQuantity() {
@@ -84,12 +86,20 @@ public class BillDisplay {
         this.billDate = billDate;
     }
 
-    public boolean isPaymentStatus() {
-        return PaymentStatus;
+    public String getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setPaymentStatus(boolean PaymentStatus) {
-        this.PaymentStatus = PaymentStatus;
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getNameStaff() {
+        return nameStaff;
+    }
+
+    public void setNameStaff(String nameStaff) {
+        this.nameStaff = nameStaff;
     }
     
     

@@ -1,4 +1,3 @@
-
 package Forms.Components;
 
 import Forms.CreateAccount;
@@ -23,10 +22,10 @@ public class EffectComponents {
 
     private JTextField textField;
     private JLabel label;
-    
+
     public static EffectComponents instance;
     private static boolean isInitiallized = false;
-    
+
     public static void init() {
         if (isInitiallized == true) {
             return;
@@ -36,8 +35,6 @@ public class EffectComponents {
 
     }
 
-
-    
     public static BufferedImage makeTransparent(BufferedImage img, float alpha, JLabel label) {
         int width = img.getWidth();
         int height = img.getHeight();
@@ -50,60 +47,32 @@ public class EffectComponents {
         return transparentImage;
     }
 
-    
-    public void bufferedImage(String c, JLabel label , float alpha) throws IOException {
+    public void bufferedImage(String c, JLabel label, float alpha) throws IOException {
         BufferedImage image = ImageIO.read(new File(c));
         EffectComponents.instance.makeTransparent(image, alpha, label);
     }
 
-    
-   
-
-     public void focusPointer(JTextField textField, JLabel label ,JLabel label1 ,  Color colorFirst, Color colorLast) {
-
+    public void focusPointer(JTextField textField, JComponent componentToColor, JLabel animationLabel, Color colorFirst, Color colorLast) {
         textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                label.setForeground(colorFirst);
-                animationComponents(label1);
+                componentToColor.setForeground(colorFirst);
+                if (animationLabel != null) {
+                    animationComponents(animationLabel);
+                }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().length() != 0) {
-                    label.setForeground(colorFirst);
-
+                    componentToColor.setForeground(colorFirst);
                 } else {
-                    label.setForeground(colorLast);
-
+                    componentToColor.setForeground(colorLast);
                 }
-
             }
         });
     }
-     
-     public void focusPointer1(JTextField textField, JComponent jComponent ,  Color colorFirst, Color colorLast) {
 
-        textField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                jComponent.setForeground(colorFirst);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (textField.getText().length() != 0) {
-                    jComponent.setForeground(colorFirst);
-
-                } else {
-                    jComponent.setForeground(colorLast);
-
-                }
-
-            }
-        });
-    }
-     
     //animation components 
     public void animationComponents(JLabel label) {
         int targetWidth = label.getWidth();
@@ -128,13 +97,14 @@ public class EffectComponents {
         }).start();
     }
 
-    public void scaleImage(JLabel LabelLogo  , String c ) {
+    public void scaleImage(JLabel LabelLogo, String c) {
         ImageIcon icon = new ImageIcon(getClass().getResource(c));
         Image img = icon.getImage();
         Image imgScale = img.getScaledInstance(LabelLogo.getWidth(), LabelLogo.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon acalledIcon = new ImageIcon(imgScale);
         LabelLogo.setIcon(acalledIcon);
     }
+
     //bắt lổi tiếng việt 
     public static boolean containsVietnameseCharacters(String text) {
         String vietnamesePattern = ".*[àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ].*";

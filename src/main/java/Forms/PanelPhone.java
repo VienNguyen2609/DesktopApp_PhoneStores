@@ -111,10 +111,11 @@ public class PanelPhone extends javax.swing.JPanel {
         txtBillQuantity.setText("");
     }
 
-    public void getTextBill(int productId, String name, String brand, String price, String OS, String description, int quantityAvailable, ImageIcon imageIcon) {
+    public void getTextBill(int id , String name, String brand, String price, String OS, String description, int quantityAvailable, ImageIcon imageIcon) {
 
         ImageProductBill.setIcon(imageIcon);
-        productIdCurrent = productId;
+        productIdCurrent = id;
+        txtBillID.setText(""+productIdCurrent);
         txtBillName.setText(name);
         txtBillPrice.setText(price);
         txtBillOS.setText(OS);
@@ -152,6 +153,8 @@ public class PanelPhone extends javax.swing.JPanel {
         txtBillPrice = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         txtBillDate = new javax.swing.JTextField();
+        txtBillID = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel69 = new javax.swing.JLabel();
         jLabel70 = new javax.swing.JLabel();
@@ -245,9 +248,9 @@ public class PanelPhone extends javax.swing.JPanel {
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 19)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel22.setText("Name");
+        jLabel22.setText("ID Phone");
         jLabel22.setToolTipText("");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         ImageProductBill.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(51, 255, 255)));
         jPanel2.add(ImageProductBill, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 63, 210, 240));
@@ -306,6 +309,17 @@ public class PanelPhone extends javax.swing.JPanel {
         txtBillDate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtBillDate.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.add(txtBillDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 167, 33));
+
+        txtBillID.setEditable(false);
+        txtBillID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtBillID.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(txtBillID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 110, 33));
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 19)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel25.setText("Name");
+        jLabel25.setToolTipText("");
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -490,7 +504,7 @@ public class PanelPhone extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Purchase quantity exceeds available stock!");
             return;
         } else {
-            panelHome.getTextPhone(txtBillName, txtBillBrand, txtBillOS, txtBillDescription, txtBillQuantity, txtBillPrice);
+            panelHome.getTextPhone(txtBillID , txtBillName, txtBillBrand, txtBillOS, txtBillDescription, txtBillQuantity, txtBillPrice);
             PanelBill.setVisible(false);
         }
 
@@ -558,6 +572,7 @@ public class PanelPhone extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
@@ -569,6 +584,7 @@ public class PanelPhone extends javax.swing.JPanel {
     private javax.swing.JTextField txtBillBrand;
     private javax.swing.JTextField txtBillDate;
     private javax.swing.JTextField txtBillDescription;
+    private javax.swing.JTextField txtBillID;
     private javax.swing.JTextField txtBillName;
     private javax.swing.JTextField txtBillOS;
     private javax.swing.JTextField txtBillPrice;

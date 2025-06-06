@@ -130,6 +130,10 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         }
 
     }
+    
+    public void loadTabelPhone(){
+        PhoneController.instance.loadTableProduct(tbProduct);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

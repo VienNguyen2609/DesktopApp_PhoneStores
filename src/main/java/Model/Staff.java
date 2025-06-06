@@ -1,34 +1,44 @@
-
 package Model;
 
-
 public class Staff {
-    
-    private int id ; 
-    private String name; 
-    private String password; 
-    private String email; 
-    private byte [] avatar; 
 
-    public Staff(String name, String password, String email) {
-        this( name, password, email, null);
+    private int id;
+    private String name;
+    private String password;
+    private String email;
+    private String position;
+    private byte[] avatar;
+
+    public Staff(String name, String password, String email ) {
+        this(name, password, email , null);
     }
 
-    public Staff(int id, String name, String password, String email, byte[] avatar) {
+   
+    public Staff(int id, String name, String password, String email, String position, byte[] avatar) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
+        this.position = position;
         this.avatar = avatar;
     }
+    public Staff(String name, String password, String email, String position, byte[] avatar) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.position = position;
+        this.avatar = avatar;
+    }
+    
 
-    public Staff(String name, String password, String email, byte[] avatar) {
+    public Staff(String name, String password, String email,  byte[] avatar) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.avatar = avatar;
     }
-    
+
+   
 
     public int getId() {
         return id;
@@ -62,6 +72,14 @@ public class Staff {
         this.email = email;
     }
 
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     public byte[] getAvatar() {
         return avatar;
     }
@@ -69,6 +87,5 @@ public class Staff {
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
-   
-    
+
 }

@@ -5,7 +5,6 @@ import Model.Staff;
 import Model.BillDisplay;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -20,20 +19,15 @@ public class PanelManagerBill extends javax.swing.JPanel {
     private Staff account;
     private PanelHome panelHome;
 
-    public PanelManagerBill(PanelPhone panelPhone, Staff account, PanelHome panelHome) {
+    public PanelManagerBill(PanelPhone panelPhone, Staff account, PanelHome panelHome  ) {
         initComponents();
         BillController.init();
         this.panelPhone = panelPhone;
         this.account = account;
         this.panelHome = panelHome;
-
-        if (account.getName().equalsIgnoreCase("admin")) {
-            list = BillController.instance.getDisplayBills("admin");
-            BillController.instance.showBillDisplayToTable(tbBill, list);
-        } else {
-            list = BillController.instance.getDisplayBills(account.getName());
-            BillController.instance.showBillDisplayToTable(tbBill, list);
-        }
+        
+        list = BillController.instance.getDisplayBills();
+        BillController.instance.showBillDisplayToTable(tbBill, list);
 
         btnRemoveAll.setForeground(new Color(0, 0, 0));
         btnRemoveAll.setBackgroundColor(new Color(204, 255, 255));
@@ -42,7 +36,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
     public void statusBill() {
         // Luôn refresh dữ liệu khi được gọi
-        list = BillController.instance.getDisplayBills(account.getName());
+        list = BillController.instance.getDisplayBills();
         BillController.instance.showBillDisplayToTable(tbBill, list);
 
         // Refresh UI
@@ -80,6 +74,10 @@ public class PanelManagerBill extends javax.swing.JPanel {
         this.panelHome = panelHome;
     }
 
+ 
+    
+    
+
     private void viewBill() {
         txtBillNameUser.setText("");
         txtBillPhoneName.setText("");
@@ -88,6 +86,11 @@ public class PanelManagerBill extends javax.swing.JPanel {
         txtBillTotal.setText("");
         txtBillDate.setText("");
         txtBillStatus.setText("");
+    }
+
+    public void loadBillInTbale() {
+        list = BillController.instance.getDisplayBills();
+        BillController.instance.showBillDisplayToTable(tbBill, list);
     }
 
     @SuppressWarnings("unchecked")
@@ -125,20 +128,20 @@ public class PanelManagerBill extends javax.swing.JPanel {
         tbBill.setForeground(new java.awt.Color(255, 255, 255));
         tbBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "BillId", "User Name", "Phone", "Quantity", "Price", "Total", "DateBooking", "Status"
+                "No.", "BillId", "Client Name", "Phone", "Quantity", "Price", "Total", "DateBooking", "Status", "Name Staff"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -169,6 +172,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
             tbBill.getColumnModel().getColumn(6).setResizable(false);
             tbBill.getColumnModel().getColumn(7).setResizable(false);
             tbBill.getColumnModel().getColumn(8).setResizable(false);
+            tbBill.getColumnModel().getColumn(9).setResizable(false);
         }
 
         btnRemoveAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/DeleteIcon.png"))); // NOI18N
@@ -438,17 +442,11 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
     private void btnRemoveAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveAllMouseClicked
 
-        if (account.getName().equalsIgnoreCase("admin")) {
-            BillController.instance.deleteAllBills();
+        BillController.instance.deleteAllBills();
 
-            list = BillController.instance.getDisplayBills(account.getName());
-            BillController.instance.showBillDisplayToTable(tbBill, list);
-        } else {
-            BillController.instance.deleteAllBillsByUserName(account.getName());
+        list = BillController.instance.getDisplayBills();
+        BillController.instance.showBillDisplayToTable(tbBill, list);
 
-            list = BillController.instance.getDisplayBills(account.getName());
-            BillController.instance.showBillDisplayToTable(tbBill, list);
-        }
         viewBill();
         panelHome.addPanelProducts();
 
@@ -462,9 +460,10 @@ public class PanelManagerBill extends javax.swing.JPanel {
             int idBill = Integer.parseInt(tbBill.getValueAt(selectedRow, 1).toString());
             String phoneName = tbBill.getValueAt(selectedRow, 3).toString();
             int quantity = Integer.parseInt(tbBill.getValueAt(selectedRow, 4).toString());
-            BillController.instance.deleteBill(idBill, phoneName, quantity);
+            BillController.instance.deleteBill(idBill);
+            
             viewBill();
-            list = BillController.instance.getDisplayBills(account.getName());
+            list = BillController.instance.getDisplayBills();
             BillController.instance.showBillDisplayToTable(tbBill, list);
 
         }

@@ -1,7 +1,7 @@
 package Forms;
 
+import Controllers.BillController;
 import Controllers.PhoneController;
-import DatabaseConnection.SQLConnector;
 import Forms.Components.RoundedBorder;
 import Model.Staff;
 import Model.Phone;
@@ -10,16 +10,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,20 +23,22 @@ public class PanelHome extends javax.swing.JPanel {
 
     private Staff currentAccount;
     private PanelManagerBill panelManagerBill;
+    private PanelManagerPhone panelManagerPhone ; 
     private DefaultTableModel model;
-
-    private static Connection conn;
-    private static PreparedStatement ps;
-    private static ResultSet rs;
 
     private double totalAmount = 0;
 
-    public PanelHome(Staff account, PanelManagerBill panelManagerBill) {
+    public PanelHome(Staff account, PanelManagerBill panelManagerBill , PanelManagerPhone panelManagerPhone) {
         initComponents();
+        PhoneController.init();
+        BillController.init();
+
         this.currentAccount = account;
         this.panelManagerBill = panelManagerBill;
+        this.panelManagerPhone = panelManagerPhone ;
+        
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(15);
-        PhoneController.init();
+
         addPanelProducts();
         model = (DefaultTableModel) tbPhone.getModel();
         model.setNumRows(0);
@@ -63,6 +55,7 @@ public class PanelHome extends javax.swing.JPanel {
         txtNumberPhone.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         txtEmail.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         btnCofirmBill.setForeground(new Color(0, 0, 0));
+        btnDeleleBill.setForeground(new Color(0, 0, 0));
     }
 
     public void addPanelProducts() {
@@ -125,6 +118,12 @@ public class PanelHome extends javax.swing.JPanel {
         this.PanelContainProduct.repaint();
     }
 
+    public void setPanelManagerPhone(PanelManagerPhone panelManagerPhone) {
+        this.panelManagerPhone = panelManagerPhone;
+    }
+    
+    
+
     private void removePlaceHolderStyle(JTextField textField) {
         Font font = textField.getFont();
         font = font.deriveFont(Font.PLAIN | Font.BOLD);
@@ -139,8 +138,9 @@ public class PanelHome extends javax.swing.JPanel {
         textField.setForeground(Color.WHITE);
     }
 
-    public void getTextPhone(JTextField txtName, JTextField txtBrand, JTextField txtOS, JTextField txtDescription,
+    public void getTextPhone(JTextField txtID, JTextField txtName, JTextField txtBrand, JTextField txtOS, JTextField txtDescription,
             JTextField txtQuantity, JTextField txtPrice) {
+        int id = Integer.parseInt(txtID.getText());
         String name = txtName.getText();
         String brand = txtBrand.getText();
         String os = txtOS.getText();
@@ -153,9 +153,16 @@ public class PanelHome extends javax.swing.JPanel {
         // STT = số dòng hiện tại + 1
         int no = tbPhone.getRowCount() + 1;
 
-        // Thêm dòng mới
+        for (int i = 0; i < tbPhone.getRowCount(); i++) {
+            int existingId = Integer.parseInt(tbPhone.getValueAt(i, 1).toString()); // cột 1 là ID
+            if (existingId == id) {
+                JOptionPane.showMessageDialog(null, "The product already exists in the list. Please choose another product!");
+                return;
+            }
+        }
+
         model.addRow(new Object[]{
-            no, name, brand, os, quantity, price, description, total
+            no, id, name, brand, os, quantity, price, description, total
         });
         txtTotal.setText("" + totalAmount);
     }
@@ -165,139 +172,6 @@ public class PanelHome extends javax.swing.JPanel {
         txtEmail.setText("");
         txtNumberPhone.setText("");
         txtAdress.setText("");
-    }
-
-    private void setupDatabaseCommand(String sql, boolean returnGeneratedKeys) throws SQLException {
-        try {
-            SQLConnector.getForName();
-            conn = SQLConnector.getConnection();
-            if (returnGeneratedKeys) {
-                ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            } else {
-                ps = conn.prepareStatement(sql);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PhoneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void setupDatabaseCommand(String sql) throws SQLException {
-        setupDatabaseCommand(sql, false);
-    }
-
-    private void confirmBill() {
-        String name = txtName.getText();
-        String phone = txtNumberPhone.getText();
-        String address = txtAdress.getText();
-        String email = txtEmail.getText();
-        double _totalAmount = Double.parseDouble(txtTotal.getText());
-
-        try {
-            // Mở kết nối & bật transaction
-            if (conn == null || conn.isClosed()) {
-                SQLConnector.getForName();
-                conn = SQLConnector.getConnection();
-            }
-            conn.setAutoCommit(false);
-
-            // 1. Thêm khách hàng mới
-            String insertClientSQL = "INSERT INTO Clients(nameClient, telClient, addressClient, gmailClient) VALUES(?,?,?,?)";
-            setupDatabaseCommand(insertClientSQL, true);
-            ps.setString(1, name);
-            ps.setString(2, phone);
-            ps.setString(3, address);
-            ps.setString(4, email);
-            ps.executeUpdate();
-
-            ResultSet rsClient = ps.getGeneratedKeys();
-            int idClient = 0;
-            if (rsClient.next()) {
-                idClient = rsClient.getInt(1);
-            }
-            rsClient.close();
-            ps.close();
-
-            // 2. Thêm đơn hàng (Orders)
-            String insertOrderSQL = "INSERT INTO Orders(timeOfBookingOrder, statusOrder, totalOrder, addressOrder, idClient, idStaff) VALUES (?, ?, ?, ?, ?, ?)";
-            setupDatabaseCommand(insertOrderSQL, true);
-            ps.setTimestamp(1, new Timestamp(System.currentTimeMillis())); // thời gian hiện tại
-            ps.setString(2, "Đã xác nhận"); // bạn có thể thay bằng trạng thái động
-            ps.setDouble(3, _totalAmount);
-            ps.setString(4, address);
-            ps.setInt(5, idClient);
-            ps.setInt(6, currentAccount.getId()); // idStaff từ tài khoản đăng nhập
-            ps.executeUpdate();
-
-            ResultSet rsOrder = ps.getGeneratedKeys();
-            int idOrder = 0;
-            if (rsOrder.next()) {
-                idOrder = rsOrder.getInt(1);
-            }
-            rsOrder.close();
-            ps.close();
-
-            // 3. Thêm các chi tiết đơn hàng (OrderDetails)
-            for (int i = 0; i < tbPhone.getRowCount(); i++) {
-                String productName = tbPhone.getValueAt(i, 1).toString();
-                int quantity = Integer.parseInt(tbPhone.getValueAt(i, 4).toString());
-
-                // Lấy idPhone theo tên
-                String queryPhone = "SELECT idPhone FROM Phones WHERE namePhone = ?";
-                setupDatabaseCommand(queryPhone);
-                ps.setString(1, productName);
-                ResultSet rsPhone = ps.executeQuery();
-
-                int idPhone = 0;
-                if (rsPhone.next()) {
-                    idPhone = rsPhone.getInt("idPhone");
-                }
-                rsPhone.close();
-                ps.close();
-
-                // Thêm vào OrderDetails
-                String insertDetail = "INSERT INTO OrderDetails(idOrder, idPhone, quantity) VALUES (?, ?, ?)";
-                setupDatabaseCommand(insertDetail);
-                ps.setInt(1, idOrder);
-                ps.setInt(2, idPhone);
-                ps.setInt(3, quantity);
-                ps.executeUpdate();
-                ps.close();
-
-                // Trừ số lượng sản phẩm trong bảng Phones
-                String updatePhone = "UPDATE Phones SET quantityPhone = quantityPhone - ? WHERE idPhone = ?";
-                setupDatabaseCommand(updatePhone);
-                ps.setInt(1, quantity);
-                ps.setInt(2, idPhone);
-                ps.executeUpdate();
-                ps.close();
-            }
-
-            // Hoàn tất giao dịch
-            conn.commit();
-            JOptionPane.showMessageDialog(null, "Đơn hàng đã được xác nhận thành công!");
-
-        } catch (Exception e) {
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi xác nhận đơn hàng!");
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.setAutoCommit(true);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -323,6 +197,7 @@ public class PanelHome extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnCofirmBill = new Forms.Components.HeaderButton();
+        btnDeleleBill = new Forms.Components.HeaderButton();
 
         PanelHomePage.setPreferredSize(new java.awt.Dimension(1100, 720));
 
@@ -366,20 +241,20 @@ public class PanelHome extends javax.swing.JPanel {
 
         tbPhone.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Name", "Brand", "OS", "Quantity", "Price", "Description", "Total"
+                "No.", "Id", "Name", "Brand", "OS", "Quantity", "Price", "Description", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -400,6 +275,7 @@ public class PanelHome extends javax.swing.JPanel {
             tbPhone.getColumnModel().getColumn(5).setResizable(false);
             tbPhone.getColumnModel().getColumn(6).setResizable(false);
             tbPhone.getColumnModel().getColumn(7).setResizable(false);
+            tbPhone.getColumnModel().getColumn(8).setResizable(false);
         }
 
         txtName.setForeground(new java.awt.Color(255, 255, 255));
@@ -449,6 +325,14 @@ public class PanelHome extends javax.swing.JPanel {
             }
         });
 
+        btnDeleleBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/DeleteIcon.png"))); // NOI18N
+        btnDeleleBill.setText("Delete Bill");
+        btnDeleleBill.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleleBillMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelHomePageLayout = new javax.swing.GroupLayout(PanelHomePage);
         PanelHomePage.setLayout(PanelHomePageLayout);
         PanelHomePageLayout.setHorizontalGroup(
@@ -476,19 +360,19 @@ public class PanelHome extends javax.swing.JPanel {
                                     .addComponent(txtNumberPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(PanelHomePageLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnCofirmBill, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(PanelHomePageLayout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDeleleBill, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 93, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHomePageLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHomePageLayout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(192, 192, 192))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHomePageLayout.createSequentialGroup()
-                                .addComponent(btnCofirmBill, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(162, 162, 162))))))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(192, 192, 192))))
         );
         PanelHomePageLayout.setVerticalGroup(
             PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,8 +407,10 @@ public class PanelHome extends javax.swing.JPanel {
                             .addGroup(PanelHomePageLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCofirmBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeleleBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCofirmBill, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(76, 76, 76))
         );
@@ -567,23 +453,48 @@ public class PanelHome extends javax.swing.JPanel {
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
 
         String name = txtSearch.getText().trim();
-
         searchByName(name);
-
+        
+        if(name.isEmpty()){
+            addPanelProducts();
+        }
+        
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnCofirmBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCofirmBillMouseClicked
-        confirmBill();
+
+        String name = txtName.getText();
+        String phone = txtNumberPhone.getText();
+        String address = txtAdress.getText();
+        String email = txtEmail.getText();
+        double _totalAmount = Double.parseDouble(txtTotal.getText());
+
+        BillController.instance.confirmBill(tbPhone, name, phone, address, email, _totalAmount, currentAccount.getId());
+        panelManagerBill.loadBillInTbale();
+        panelManagerPhone.loadTabelPhone();
         addPanelProducts();
         viewClient();
         model.setNumRows(0);
+        txtTotal.setText("");
+
     }//GEN-LAST:event_btnCofirmBillMouseClicked
+
+    private void btnDeleleBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleleBillMouseClicked
+
+        int check = JOptionPane.showConfirmDialog(this, "Do you want delete all bill in tabel !", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            model.setNumRows(0);
+            txtTotal.setText("");
+        }
+
+    }//GEN-LAST:event_btnDeleleBillMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelContainProduct;
     private javax.swing.JPanel PanelHomePage;
     private Forms.Components.HeaderButton btnCofirmBill;
+    private Forms.Components.HeaderButton btnDeleleBill;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
