@@ -1,20 +1,19 @@
-
 package Model;
 
-
 public class Phone {
-   
-    private int phoneId ; 
-    private String namePhone; 
-    private String brandPhone; 
+
+    private int phoneId;
+    private String namePhone;
+    private String brandPhone;
     private double pricePhone;
-    private int quantityPhone; 
+    private int quantityPhone;
     private String operatingSystem;
     private byte[] imagePhone;
-    private String description; 
+    private String description;
     private boolean statusPhone;
-    
-    public Phone(String namePhone, String brandPhone, double pricePhone, int quantityPhone, String operatingSystem, byte[] imagePhone, String description , boolean statusPhone) {
+
+    public Phone(String namePhone, String brandPhone, double pricePhone,
+            int quantityPhone, String operatingSystem, byte[] imagePhone, String description, boolean statusPhone) {
         this.namePhone = namePhone;
         this.brandPhone = brandPhone;
         this.pricePhone = pricePhone;
@@ -22,12 +21,11 @@ public class Phone {
         this.operatingSystem = operatingSystem;
         this.imagePhone = imagePhone;
         this.description = description;
-        this.statusPhone = statusPhone ; 
+        this.statusPhone = statusPhone;
     }
 
-    
-    
-    public Phone(int phoneId, String namePhone, String brandPhone, double pricePhone, int quantityPhone, String operatingSystem, byte[] imagePhone, String description , boolean statusPhone) {
+    public Phone(int phoneId, String namePhone, String brandPhone, double pricePhone,
+            int quantityPhone, String operatingSystem, byte[] imagePhone, String description, boolean statusPhone) {
         this.phoneId = phoneId;
         this.namePhone = namePhone;
         this.brandPhone = brandPhone;
@@ -36,7 +34,7 @@ public class Phone {
         this.operatingSystem = operatingSystem;
         this.imagePhone = imagePhone;
         this.description = description;
-        this.statusPhone = statusPhone ;
+        this.statusPhone = statusPhone;
     }
 
     public int getPhoneId() {
@@ -110,7 +108,5 @@ public class Phone {
     public void setStatusPhone(boolean statusPhone) {
         this.statusPhone = statusPhone;
     }
-    
-    
-    
- }
+
+}

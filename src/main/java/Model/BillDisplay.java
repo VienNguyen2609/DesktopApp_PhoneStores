@@ -18,7 +18,8 @@ public class BillDisplay {
     private String paymentStatus ; 
     private String nameStaff ; 
 
-    public BillDisplay(int billId, String nameClient, String namePhone, int quantity, double price, double totalAmount, Date billDate, String paymentStatus, String nameStaff) {
+    public BillDisplay(int billId, String nameClient, String namePhone, int quantity, 
+            double price, double totalAmount, Date billDate, String paymentStatus, String nameStaff) {
         this.billId = billId;
         this.nameClient = nameClient;
         this.namePhone = namePhone;

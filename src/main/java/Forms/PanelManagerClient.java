@@ -1,6 +1,8 @@
 package Forms;
 
 import Controllers.ClientController;
+import Forms.Components.ViewDialogForClient;
+import Forms.Components.ViewTabel;
 import Model.Client;
 import Model.OrderForClient;
 import java.awt.Color;
@@ -24,6 +26,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PanelManagerClient extends javax.swing.JPanel {
 
+    
+    private ViewTabel viewTabel = new ViewTabel();
+    
     private int selectedRow;
     private List<Client> listClient = new ArrayList<>();
     private Client client;
@@ -53,7 +58,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
         listClient = clientController.loadDataAccounts();
         viewTabelClient();
         styleButton();
-        
+
         //ktra chuột phải
 //        JScrollPane jScrollPane=new JScrollPane(tbClient);
         //tạo popup menu
@@ -111,13 +116,12 @@ public class PanelManagerClient extends javax.swing.JPanel {
                         int id = client.getIdClient();
                         String phone = txtTelClient.getText().trim();
                         int idOrder = clientController.findIdOrder();
-                        int idOrderOfOrder=clientController.findIdOrderOfOrder();
+                        int idOrderOfOrder = clientController.findIdOrderOfOrder();
                         if (idOrder == -1 || idOrderOfOrder == -1) {
                             clientController.delClient(phone);
-                        }else if(idOrder == -1 && idOrderOfOrder != -1){
+                        } else if (idOrder == -1 && idOrderOfOrder != -1) {
                             clientController.delClientOnOrder(id, phone);
-                        }
-                        else {
+                        } else {
                             clientController.delClientOnBill(idOrder, id, phone);
                         }
                         listClient = clientController.loadDataAccounts();
@@ -132,7 +136,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         jMenuItem1.addActionListener(e -> {
             selectedRow = tbClient.getSelectedRow();
             if (selectedRow == -1) {
@@ -150,17 +154,18 @@ public class PanelManagerClient extends javax.swing.JPanel {
                 return;
             }
 
-            DialogForClient dialog = new DialogForClient((JFrame) SwingUtilities.getWindowAncestor(this), orderList);
-            dialog.setVisible(true);  
+            ViewDialogForClient dialog = new ViewDialogForClient((JFrame) SwingUtilities.getWindowAncestor(this), orderList);
+            dialog.setVisible(true);
         });
     }
 
-    public void loadTabelClient(){
-         listClient = clientController.loadDataAccounts();
+    public void loadTabelClient() {
+        listClient = clientController.loadDataAccounts();
     }
-    
+
     private void viewTabelClient() {
         model.setNumRows(0);
+        viewTabel.view(tbClient);
         int n = 1;
         for (Client client1 : listClient) {
             model.addRow(new Object[]{n++, client1.getIdClient(), client1.getNameClient(), client1.getTelClient(), client1.getAddressClient(), client1.getGmailClient()});
@@ -202,6 +207,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
         LabelPasswordUser3 = new javax.swing.JLabel();
         txtAddress = new Forms.Components.TextFieldController();
         jLabel21 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         btnCancelClient.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/CancelIcon.png"))); // NOI18N
@@ -254,8 +260,10 @@ public class PanelManagerClient extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbClient);
         if (tbClient.getColumnModel().getColumnCount() > 0) {
-            tbClient.getColumnModel().getColumn(0).setResizable(false);
-            tbClient.getColumnModel().getColumn(1).setResizable(false);
+            tbClient.getColumnModel().getColumn(0).setMinWidth(50);
+            tbClient.getColumnModel().getColumn(0).setMaxWidth(50);
+            tbClient.getColumnModel().getColumn(1).setMinWidth(50);
+            tbClient.getColumnModel().getColumn(1).setMaxWidth(50);
             tbClient.getColumnModel().getColumn(2).setResizable(false);
             tbClient.getColumnModel().getColumn(3).setResizable(false);
             tbClient.getColumnModel().getColumn(5).setResizable(false);
@@ -265,7 +273,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
         txtNameUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtNameUser.setMaximumSize(new java.awt.Dimension(100, 28));
         txtNameUser.setMinimumSize(new java.awt.Dimension(40, 28));
-        txtNameUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountNameIcon.png"))); // NOI18N
+        txtNameUser.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ClientIcon.png"))); // NOI18N
 
         btnUpdateClient.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/UpdateIcon.png"))); // NOI18N
@@ -321,7 +329,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
         txtTelClient.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtTelClient.setMaximumSize(new java.awt.Dimension(100, 28));
         txtTelClient.setMinimumSize(new java.awt.Dimension(40, 28));
-        txtTelClient.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/PassIcon.png"))); // NOI18N
+        txtTelClient.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/TellPhoneIcon.png"))); // NOI18N
 
         btnDeleteClient.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/DeleteIcon1.png"))); // NOI18N
@@ -358,55 +366,62 @@ public class PanelManagerClient extends javax.swing.JPanel {
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("____________________________________");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ClientIcon.png"))); // NOI18N
+        jLabel1.setText("MANAGER CLIENT");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(136, 136, 136)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(42, 42, 42))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LabelPasswordUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LabelPasswordUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LabelPasswordUser, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LabelPasswordUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTelClient, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(34, 34, 34))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAddClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUpdateClient, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(82, 82, 82)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnDeleteClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCancelClient, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGap(81, 81, 81)
+                                    .addComponent(jLabel1)))
+                            .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LabelPasswordUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LabelPasswordUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LabelPasswordUser, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LabelPasswordUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTelClient, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAddClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUpdateClient, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(82, 82, 82)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnDeleteClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelClient, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(850, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(111, 111, 111)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addComponent(LabelPasswordUser1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,10 +526,20 @@ public class PanelManagerClient extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please fill in the information completely!");
             return;
         }
+        boolean check=false;
+        for (Client client1 : listClient) {
+            if(client1.getTelClient().equals(phone)){
+                check=true;
+            }
+        }
+        if(check==true){
+            JOptionPane.showMessageDialog(this, "Phone number already exits");
+            return;
+        }
         Client cl = new Client(name, phone, address, gmail);
         try {
             clientController.addClient(cl);
-
+            
             listClient = clientController.loadDataAccounts();
             JOptionPane.showMessageDialog(this, "added Successfulll Client have phone is:" + cl.getTelClient());
             viewTabelClient();
@@ -525,6 +550,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(PanelManagerClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+
 
 
     }//GEN-LAST:event_btnAddClientMouseClicked
@@ -548,15 +574,17 @@ public class PanelManagerClient extends javax.swing.JPanel {
             int chon = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete?");
             if (chon == JOptionPane.YES_OPTION) {
                 try {
-                    int id=client.getIdClient();
+                    int id = client.getIdClient();
                     String phone = txtTelClient.getText().trim();
-                    int idOrder=clientController.findIdOrder();
-                    
-                    if(idOrder == -1){
+                    int idOrder = clientController.findIdOrder();
+                    int idOrderOfOrder = clientController.findIdOrderOfOrder();
+                    if (idOrder == -1 && idOrderOfOrder == -1) {
                         clientController.delClient(phone);
-                    }else{
+                    } else if (idOrder == -1 && idOrderOfOrder != -1) {
+                        clientController.delClientOnOrder(idOrderOfOrder, phone);
+                    } else {
                         clientController.delClientOnBill(idOrder, id, phone);
-                    }
+                    } 
                     listClient = clientController.loadDataAccounts();
                     viewTabelClient();
                     txtNameUser.setText("");
@@ -566,7 +594,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(PanelManagerClient.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
         }
 
@@ -587,6 +615,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
     private Forms.Components.HeaderButton btnCancelClient;
     private Forms.Components.HeaderButton btnDeleteClient;
     private Forms.Components.HeaderButton btnUpdateClient;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;

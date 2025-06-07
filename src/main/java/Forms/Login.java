@@ -1,4 +1,3 @@
-
 package Forms;
 
 import Controllers.StafftController;
@@ -16,31 +15,28 @@ import java.io.File;
  */
 public class Login extends javax.swing.JFrame {
 
-    
     public Login() {
         initComponents();
         StafftController.init();
         EffectComponents.init();
-        
+
         setTitle("PRIMA MOBILES , LOGIN");
         String iconPath = "E:\\Image\\LogoShopIcon.png";
         setIconImage(Toolkit.getDefaultToolkit().getImage(new File(iconPath).getAbsolutePath()));
         setLocationRelativeTo(null);
         setResizable(false);
-        
+
         txtName.setOpaque(false);
         txtName.setBackground(null);
         txtPassword.setOpaque(false);
         txtPassword.setBackground(null);
-        
-        
-         StraightLine.setVisible(false);
+
+        StraightLine.setVisible(false);
         StraightLine3.setVisible(false);
         EffectComponents.instance.focusPointer(txtName, LabelNameUser, jLabel7, Color.GREEN, Color.WHITE);
         EffectComponents.instance.focusPointer(txtPassword, LabelPasswordUser, jLabel6, Color.GREEN, Color.WHITE);
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -216,7 +212,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_CheckPassMouseExited
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        
+
         new CreateAccount().setVisible(true);
         dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
@@ -230,31 +226,27 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseExited
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
+        
         StafftController.instance.loadDataAccounts();
         String username = txtName.getText().trim();
         String password = String.valueOf(txtPassword.getPassword()).trim();
 
         SetThemFlatLaf.setThem(ThemeFlatLaf.Dark);
-        
-        
+
         if (StafftController.instance.checkLogin(username, password)) {
             Staff user = StafftController.instance.getAccountByUsername(username);
+            System.out.println("Login");
             new HomePage(user).setVisible(true);
             dispose();
-        }
-
-        else if (username.isEmpty() || password.isEmpty()){
+        } else if (username.isEmpty() || password.isEmpty()) {
             LabelMessage.setText("error: INFORMATION NOT EMPTY!");
-        }
-
-        else{
+        } else {
             LabelMessage.setText("error: NAME OR PASSWORD WRONG!");
         }
     }//GEN-LAST:event_headerButton1MouseClicked
 
-    
     public static void main(String args[]) {
- 
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);

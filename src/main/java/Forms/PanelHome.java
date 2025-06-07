@@ -138,7 +138,8 @@ public class PanelHome extends javax.swing.JPanel {
         textField.setForeground(Color.WHITE);
     }
 
-    public void getTextPhone(JTextField txtID, JTextField txtName, JTextField txtBrand, JTextField txtOS, JTextField txtDescription,
+    public void getTextPhone(JTextField txtID, JTextField txtName, JTextField txtBrand,
+            JTextField txtOS, JTextField txtDescription,
             JTextField txtQuantity, JTextField txtPrice) {
         int id = Integer.parseInt(txtID.getText());
         String name = txtName.getText();
@@ -239,6 +240,8 @@ public class PanelHome extends javax.swing.JPanel {
         });
         jPanel1.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 350, 45));
 
+        tbPhone.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tbPhone.setForeground(new java.awt.Color(255, 255, 255));
         tbPhone.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -267,12 +270,15 @@ public class PanelHome extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tbPhone);
         if (tbPhone.getColumnModel().getColumnCount() > 0) {
-            tbPhone.getColumnModel().getColumn(0).setResizable(false);
-            tbPhone.getColumnModel().getColumn(1).setResizable(false);
+            tbPhone.getColumnModel().getColumn(0).setMinWidth(40);
+            tbPhone.getColumnModel().getColumn(0).setMaxWidth(40);
+            tbPhone.getColumnModel().getColumn(1).setMinWidth(40);
+            tbPhone.getColumnModel().getColumn(1).setMaxWidth(40);
             tbPhone.getColumnModel().getColumn(2).setResizable(false);
             tbPhone.getColumnModel().getColumn(3).setResizable(false);
             tbPhone.getColumnModel().getColumn(4).setResizable(false);
-            tbPhone.getColumnModel().getColumn(5).setResizable(false);
+            tbPhone.getColumnModel().getColumn(5).setMinWidth(45);
+            tbPhone.getColumnModel().getColumn(5).setMaxWidth(45);
             tbPhone.getColumnModel().getColumn(6).setResizable(false);
             tbPhone.getColumnModel().getColumn(7).setResizable(false);
             tbPhone.getColumnModel().getColumn(8).setResizable(false);
@@ -315,6 +321,7 @@ public class PanelHome extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ClientIcon.png"))); // NOI18N
         jLabel7.setText(" Enter Buyer Information");
 
         btnCofirmBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ConfirmBill.png"))); // NOI18N
@@ -341,38 +348,39 @@ public class PanelHome extends javax.swing.JPanel {
             .addGroup(PanelHomePageLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelHomePageLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHomePageLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
                     .addGroup(PanelHomePageLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
                         .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelHomePageLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
                                 .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27)
-                                .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txtNumberPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(PanelHomePageLayout.createSequentialGroup()
-                                .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnCofirmBill, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(PanelHomePageLayout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDeleleBill, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 93, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHomePageLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(192, 192, 192))))
+                                        .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel3)
+                                            .addComponent(txtAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(27, 27, 27)
+                                        .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel4)
+                                            .addComponent(txtNumberPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(PanelHomePageLayout.createSequentialGroup()
+                                        .addGroup(PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(btnCofirmBill, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(PanelHomePageLayout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnDeleleBill, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(PanelHomePageLayout.createSequentialGroup()
+                                .addGap(162, 162, 162)
+                                .addComponent(jLabel7)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         PanelHomePageLayout.setVerticalGroup(
             PanelHomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,9 +427,9 @@ public class PanelHome extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1360, Short.MAX_VALUE)
+            .addGap(0, 1364, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(PanelHomePage, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE))
+                .addComponent(PanelHomePage, javax.swing.GroupLayout.DEFAULT_SIZE, 1364, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,18 +491,21 @@ public class PanelHome extends javax.swing.JPanel {
 
         if (currentAccount.isStatus() == false) {
             JOptionPane.showMessageDialog(this, "This account is currently inactive!");
-            return ;
+            return;
         }
         if (currentAccount.getPosition().equalsIgnoreCase("employee")
                 || currentAccount.getPosition().equalsIgnoreCase("admin")) {
-            BillController.instance.confirmBill(tbPhone, name, phone, address, email, _totalAmount, currentAccount.getId());
-            panelManagerBill.loadBillInTbale();
-            panelManagerPhone.loadTabelPhone();
-            panelManagerClient.loadTbaleClient();
-            addPanelProducts();
-            viewClient();
-            model.setNumRows(0);
-            txtTotal.setText("");
+            int check = JOptionPane.showConfirmDialog(this, "CONFIRM THIS BILL !", "CONFIRM", JOptionPane.YES_NO_OPTION);
+            if (check == JOptionPane.YES_OPTION) {
+                BillController.instance.confirmBill(tbPhone, name, phone, address, email, _totalAmount, currentAccount.getId());
+                panelManagerBill.loadBillInTbale();
+                panelManagerPhone.loadTabelPhone();
+                panelManagerClient.loadTbaleClient();
+                addPanelProducts();
+                viewClient();
+                model.setNumRows(0);
+                txtTotal.setText("");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "YOU HAVE NOT BEEN GRANTED EMPLOYEE POSITION");
         }

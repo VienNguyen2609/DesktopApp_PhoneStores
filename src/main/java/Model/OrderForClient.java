@@ -20,7 +20,8 @@ public class OrderForClient {
     public OrderForClient() {
     }
 
-    public OrderForClient(String nameClient, String telClient, String namePhone, String brandPhone, double pricePhone, int quantity) {
+    public OrderForClient(String nameClient, String telClient, String namePhone, 
+            String brandPhone, double pricePhone, int quantity) {
         this.nameClient = nameClient;
         this.telClient = telClient;
         this.namePhone = namePhone;

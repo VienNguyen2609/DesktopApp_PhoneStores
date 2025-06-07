@@ -33,6 +33,9 @@ public class PanelManagerBill extends javax.swing.JPanel {
         btnRemoveAll.setForeground(new Color(0, 0, 0));
         btnRemoveAll.setBackgroundColor(new Color(204, 255, 255));
         btnRemove.setForeground(new Color(0, 0, 0));
+
+        btnRefresh.setForeground(new Color(0, 0, 0));
+        btnRefresh.setBackgroundColor(Color.LIGHT_GRAY);
     }
 
     public void statusBill() {
@@ -119,6 +122,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
         LabelNameProduct6 = new javax.swing.JLabel();
         txtBillStatus = new Forms.Components.TextFieldController();
         btnRemove = new Forms.Components.HeaderButton();
+        btnRefresh = new Forms.Components.HeaderButton();
 
         tbBill.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tbBill.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -160,11 +164,14 @@ public class PanelManagerBill extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbBill);
         if (tbBill.getColumnModel().getColumnCount() > 0) {
-            tbBill.getColumnModel().getColumn(0).setResizable(false);
-            tbBill.getColumnModel().getColumn(1).setResizable(false);
+            tbBill.getColumnModel().getColumn(0).setMinWidth(50);
+            tbBill.getColumnModel().getColumn(0).setMaxWidth(50);
+            tbBill.getColumnModel().getColumn(1).setMinWidth(50);
+            tbBill.getColumnModel().getColumn(1).setMaxWidth(50);
             tbBill.getColumnModel().getColumn(2).setResizable(false);
             tbBill.getColumnModel().getColumn(3).setResizable(false);
-            tbBill.getColumnModel().getColumn(4).setResizable(false);
+            tbBill.getColumnModel().getColumn(4).setMinWidth(50);
+            tbBill.getColumnModel().getColumn(4).setMaxWidth(50);
             tbBill.getColumnModel().getColumn(5).setResizable(false);
             tbBill.getColumnModel().getColumn(6).setResizable(false);
             tbBill.getColumnModel().getColumn(7).setResizable(false);
@@ -200,7 +207,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
         LabelNameProduct1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelNameProduct1.setForeground(new java.awt.Color(255, 255, 255));
-        LabelNameProduct1.setText("Name Phone(Can't Update)");
+        LabelNameProduct1.setText("Name Phone");
 
         txtBillPhoneName.setEditable(false);
         txtBillPhoneName.setForeground(new java.awt.Color(255, 255, 255));
@@ -284,6 +291,15 @@ public class PanelManagerBill extends javax.swing.JPanel {
             }
         });
 
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/RefreshIcon.png"))); // NOI18N
+        btnRefresh.setText("Refresh");
+        btnRefresh.setVerifyInputWhenFocusTarget(false);
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRefreshMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -333,25 +349,10 @@ public class PanelManagerBill extends javax.swing.JPanel {
                                         .addComponent(txtBillQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(40, 40, 40))
                                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
-                                .addGap(40, 40, 40))
+                                .addGap(378, 378, 378))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LabelNameProduct2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(174, 174, 174)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelNameProduct3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(168, 168, 168))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                                    .addGap(3, 3, 3))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtBillPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(40, 40, 40))))
-                        .addGap(111, 111, 111)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRemoveAll, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                            .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(512, 512, 512))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -369,7 +370,21 @@ public class PanelManagerBill extends javax.swing.JPanel {
                                     .addComponent(LabelNameProduct6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtBillStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(40, 40, 40)))
-                        .addGap(546, 546, 546))))
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(LabelNameProduct3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(168, 168, 168))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtBillPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(37, 37, 37))))
+                        .addGap(81, 81, 81)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(btnRemoveAll, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,29 +425,33 @@ public class PanelManagerBill extends javax.swing.JPanel {
                                     .addComponent(txtBillStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(LabelNameProduct3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtBillPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
+                                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(LabelNameProduct2)
-                                .addComponent(LabelNameProduct3))
+                            .addComponent(LabelNameProduct2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnRemoveAll, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtBillQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBillPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)))
+                                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel20)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -449,7 +468,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
             viewBill();
             panelHome.addPanelProducts();
         }
-        
+
 
     }//GEN-LAST:event_btnRemoveAllMouseClicked
 
@@ -463,7 +482,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
                 int idBill = Integer.parseInt(tbBill.getValueAt(selectedRow, 1).toString());
                 String phoneName = tbBill.getValueAt(selectedRow, 3).toString();
                 int quantity = Integer.parseInt(tbBill.getValueAt(selectedRow, 4).toString());
-                
+
                 BillController.instance.deleteBill(idBill);
 
                 viewBill();
@@ -481,6 +500,14 @@ public class PanelManagerBill extends javax.swing.JPanel {
         clickTabelBill();
     }//GEN-LAST:event_tbBillMouseClicked
 
+    private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseClicked
+        int check = JOptionPane.showConfirmDialog(this, "REFRESH BILL!", "CONFIRM", JOptionPane.YES_NO_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            loadBillInTbale();
+        }
+       
+    }//GEN-LAST:event_btnRefreshMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelNameProduct;
@@ -490,6 +517,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
     private javax.swing.JLabel LabelNameProduct4;
     private javax.swing.JLabel LabelNameProduct5;
     private javax.swing.JLabel LabelNameProduct6;
+    private Forms.Components.HeaderButton btnRefresh;
     private Forms.Components.HeaderButton btnRemove;
     private Forms.Components.HeaderButton btnRemoveAll;
     private javax.swing.JLabel jLabel18;

@@ -1,17 +1,13 @@
 package Forms;
 
 import Controllers.BillController;
-import Forms.Components.EffectComponents;
 import Model.Staff;
 import Model.Phone;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -118,7 +114,8 @@ public class PanelPhone extends javax.swing.JPanel {
         txtBillQuantity.setText("");
     }
 
-    public void getTextBill(int id , String name, String brand, String price, String OS, String description, int quantityAvailable, ImageIcon imageIcon) {
+    public void getTextBill(int id , String name, String brand, String price, String OS, 
+            String description, int quantityAvailable, ImageIcon imageIcon) {
 
         ImageProductBill.setIcon(imageIcon);
         productIdCurrent = id;
@@ -371,7 +368,7 @@ public class PanelPhone extends javax.swing.JPanel {
 
         jLabel70.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel70.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel70.setText("--------------------Description-----------------");
+        jLabel70.setText("------------------Description-----------------");
         jPanel16.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 330, 30));
 
         btnPurchase.setBackground(new java.awt.Color(204, 255, 204));
@@ -396,7 +393,7 @@ public class PanelPhone extends javax.swing.JPanel {
         txtName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtName.setToolTipText("");
         txtName.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jPanel16.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 130, -1));
+        jPanel16.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 190, -1));
 
         txtPrice.setEditable(false);
         txtPrice.setForeground(new java.awt.Color(204, 255, 255));
@@ -489,12 +486,17 @@ public class PanelPhone extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "The product is currently out of stock.");
             return;
         }
+        if(txtBillQuantity.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "QUANTITY EMPTY , ENTER QUANTITY");
+            return;
+        }
         int quantity = Integer.parseInt(txtBillQuantity.getText().trim());
         if (quantity > quantityAvailableBill || quantity < 0 || quantity == 0) {
             JOptionPane.showMessageDialog(this, "Purchase quantity exceeds available stock!");
             return;
         } else {
-            panelHome.getTextPhone(txtBillID , txtBillName, txtBillBrand, txtBillOS, txtBillDescription, txtBillQuantity, txtBillPrice);
+            panelHome.getTextPhone(txtBillID , txtBillName, txtBillBrand, txtBillOS,
+                    txtBillDescription, txtBillQuantity, txtBillPrice);
             PanelBill.setVisible(false);
         }
 

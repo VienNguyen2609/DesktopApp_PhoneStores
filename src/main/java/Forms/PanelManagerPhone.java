@@ -73,11 +73,16 @@ public class PanelManagerPhone extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select a product from the table first!");
             return;
         }
+        if(txtPricePhone.getText().trim().isEmpty()){
+            return;
+        }
         pricePhoneText = Double.parseDouble(txtPricePhone.getText().trim());
         quantityPhoneText = Integer.parseInt(txtQuantityPhone.getValue().toString().trim());
         idProductText = Integer.parseInt(tbProduct.getValueAt(selectedRow, 1).toString().trim());
 
-        if (namePhoneText.isEmpty() || brandPhoneText.isEmpty() || pricePhoneText <= 0 || quantityPhoneText <= 0) {
+        if (namePhoneText.isEmpty() || brandPhoneText.isEmpty() || pricePhoneText 
+                <= 0 || quantityPhoneText <= 0 || OSPhoneText.isEmpty() || 
+                DescriptionPhoneText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "INFORMATION NOT EMPTY");
             return;
         }

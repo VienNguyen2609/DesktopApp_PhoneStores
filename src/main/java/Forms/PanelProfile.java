@@ -26,8 +26,8 @@ public class PanelProfile extends javax.swing.JPanel {
     private File selectedFile;
     private Icon icon;
     private Staff currentAccount;
-    private int statusStaff  = 0 ; 
-    
+    private int statusStaff = 0;
+
     public PanelProfile(Staff account) {
         initComponents();
         this.account = account;
@@ -47,10 +47,12 @@ public class PanelProfile extends javax.swing.JPanel {
         txtName.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtPass.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtGmail.setCustomBorder(new RoundedBorder(20, Color.BLACK));
+        txtPosition.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtPass.setBackground(null);
         txtName.setText(account.getName());
         txtPass.setText(account.getPassword());
         txtGmail.setText(account.getEmail());
+        txtPosition.setText(account.getPosition());
 
         txtName1.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         txtPass1.setCustomBorder(new RoundedBorder(20, Color.WHITE));
@@ -71,9 +73,9 @@ public class PanelProfile extends javax.swing.JPanel {
         dEdit.setTitle("EDIT YOUR PROFILE");
         dEdit.setVisible(false);
         dEdit.setResizable(false);
-        
-        if(currentAccount.getName().equalsIgnoreCase("admin")){
-            statusStaff = 1 ;
+
+        if (currentAccount.getName().contains("admin")) {
+            statusStaff = 1;
         }
     }
 
@@ -430,7 +432,11 @@ public class PanelProfile extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "PHOTO NOT UPDATE YET!");
             return;
         }
-        StafftController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getName());
+        else{
+            StafftController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getName());
+            JOptionPane.showMessageDialog(this, "PHOTO UPDATE SUCCESSFULLY!");
+        }
+        
 
     }//GEN-LAST:event_btnUploadAvatar2MouseClicked
 
@@ -443,6 +449,10 @@ public class PanelProfile extends javax.swing.JPanel {
     }//GEN-LAST:event_cbPasswordMouseClicked
 
     private void btnEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditProfileMouseClicked
+        txtName.setText(account.getName());
+        txtPass.setText(account.getPassword());
+        txtGmail.setText(account.getEmail());
+        txtPosition.setText(account.getPosition());
         dEdit.setVisible(true);
     }//GEN-LAST:event_btnEditProfileMouseClicked
 
@@ -452,20 +462,25 @@ public class PanelProfile extends javax.swing.JPanel {
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
 
+        String _nameCurrently = txtName.getText().trim();
         String name = txtName1.getText().trim();
         String password = txtPass1.getText().trim();
         String gmail = txtGmail1.getText().trim();
-        
+
         StafftController.instance.loadDataAccounts();
         try {
 
-            if (!StafftController.instance.checkAccountIsAdmin(name, password, gmail , statusStaff)) {
+            if (!StafftController.instance.checkAccountIsAdmin(_nameCurrently, password, gmail, statusStaff)) {
                 return;
             }
 
             Staff UpdateAccount = StafftController.instance.updateAccount(name, password, gmail, currentAccount.getName());
             if (UpdateAccount != null) {
                 currentAccount = UpdateAccount;
+                txtName.setText(currentAccount.getName());
+                txtPass.setText(currentAccount.getPassword());
+                txtGmail.setText(currentAccount.getEmail());
+                dEdit.setVisible(false);
                 JOptionPane.showMessageDialog(this, "Profile Updated Successfully");
                 return;
 

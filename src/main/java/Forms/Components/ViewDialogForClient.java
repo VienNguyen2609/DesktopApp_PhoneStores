@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Forms;
+package Forms.Components;
 
 import Model.OrderForClient;
 import java.awt.BorderLayout;
@@ -13,15 +9,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Danh Thao
- */
-public class DialogForClient extends JDialog{
-     public DialogForClient(JFrame parent, List<OrderForClient> orders) {
+public class ViewDialogForClient extends JDialog {
+
+    public ViewDialogForClient(JFrame parent, List<OrderForClient> orders) {
         setTitle("Check Orders");
         String[] columnNames = {"NameClient", "TelClient", "NamePhone", "BrandPhone", "Price", "Quantity"};
-         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         for (OrderForClient o : orders) {
             Object[] row = {
@@ -36,7 +29,7 @@ public class DialogForClient extends JDialog{
         }
 
         JTable table = new JTable(model);
-         JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(table);
 
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);

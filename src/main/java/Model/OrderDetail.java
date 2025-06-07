@@ -10,7 +10,7 @@ public class OrderDetail {
     private int idPhone;
     private int quantity;
 
-    // Constructors
+    
     public OrderDetail() {
     }
 
@@ -20,7 +20,6 @@ public class OrderDetail {
         this.quantity = quantity;
     }
 
-    // Getters and Setters
     public int getIdOrder() {
         return idOrder;
     }

@@ -34,40 +34,6 @@ public class ProfilePhoto extends JComponent {
         setBorderSize(3);
     }
 
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//
-//        super.paintComponent(g);
-//        if (getIcon() != null) {
-//            Graphics2D g2d = (Graphics2D) g.create();
-//            int diameter = Math.min(getWidth(), getHeight());
-//            int x = (getWidth() - diameter) / 2;
-//            int y = (getHeight() - diameter) / 2;
-//
-//            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-//            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//
-////            Ellipse2D clip = new Ellipse2D.Double(x, y, diameter, diameter);
-////            
-////            g2d.setClip(clip);
-////            g2d.drawImage(((ImageIcon) getIcon()).getImage(), x, y, diameter, diameter, Color.YELLOW, this);
-////            g2d.setClip(null);
-//
-//            // Tạo clip tròn
-//            Ellipse2D clip = new Ellipse2D.Double(x, y, diameter, diameter);
-//
-//            // Nếu có ảnh thì vẽ ảnh trong clip tròn
-//            if (icon != null && icon instanceof ImageIcon) {
-//                g2d.setClip(clip);
-//                g2d.drawImage(((ImageIcon) icon).getImage(), x, y, diameter, diameter, this);
-//                g2d.setClip(null); // reset clip để vẽ viền bên ngoài
-//            }
-//            g2d.setColor(Color.YELLOW);
-//            g2d.setStroke(new java.awt.BasicStroke(borderSize));
-//            g2d.draw(clip);
-//            g2d.dispose();
-//        }
-//    }
     @Override
     protected void paintComponent(Graphics g) {
         

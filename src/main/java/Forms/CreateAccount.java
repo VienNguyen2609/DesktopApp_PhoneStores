@@ -2,9 +2,11 @@ package Forms;
 
 import Controllers.StafftController;
 import Forms.Components.EffectComponents;
+import Main.Run;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.File;
+import javax.swing.JOptionPane;
 
 public class CreateAccount extends javax.swing.JFrame {
 
@@ -184,12 +186,23 @@ public class CreateAccount extends javax.swing.JFrame {
             String pass = this.txtPassword.getText().trim();
             String gmail = this.txtGmail.getText().trim();
 
+            if(name.contains("admin")){
+                JOptionPane.showMessageDialog(this, "name only is for admin");
+                return;
+            }
             if (!StafftController.instance.checkAccount(name, pass, gmail)) {
                 return;
+
             } else if (StafftController.instance.addAccount(name, pass, gmail, "No position", null)) {
                 LabelMessage.setText("CREATED ACCOUNT SUCCESSFULLY");
-            }
-            else{
+                System.out.println("CREATED SUCCESSFULLY");
+
+                int check = JOptionPane.showConfirmDialog(this, "GO TO SIGN IN , NOW !", "CONFIRM", JOptionPane.YES_NO_OPTION);
+                if (check == JOptionPane.YES_OPTION) {
+                    Run.runApp();
+                    dispose();
+                }
+            } else {
                 LabelMessage.setText("CREATED ACCOUNT FAILURE");
             }
         } catch (Exception e) {

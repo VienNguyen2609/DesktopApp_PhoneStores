@@ -10,11 +10,10 @@ public class Staff {
     private boolean status;
     private byte[] avatar;
 
-    public Staff(String name, String password, String email ) {
-        this(name, password, email , null);
+    public Staff(String name, String password, String email  , String position) {
+        this(name, password, email ,position , null);
     }
-
-   
+    
     public Staff(int id, String name, String password, String email, String position, boolean status ,byte[] avatar) {
         this.id = id;
         this.name = name;

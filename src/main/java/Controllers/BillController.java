@@ -5,6 +5,7 @@ package Controllers;
  * @author VIEN
  */
 import DatabaseConnection.SQLConnector;
+import Forms.Components.ViewTabel;
 import Model.Order;
 import Model.BillDisplay;
 import java.sql.Connection;
@@ -19,16 +20,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class BillController {
 
     private ArrayList<Order> listBill = new ArrayList<>();
-
+    private ViewTabel viewTabel = new ViewTabel();
+    
     private static Connection conn;
     private static PreparedStatement ps;
     private static ResultSet rs;
@@ -151,7 +151,7 @@ public class BillController {
             return affectedRows > 0;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "CAN NOT DELETE THIS BILL");
         }
         return false;
     }
@@ -218,7 +218,7 @@ public class BillController {
             return rows > 0;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "CAN NOT DELETE ALL BILL");
         }
         return false;
     }
@@ -266,7 +266,7 @@ public class BillController {
             rs.close();
             ps.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "ERROR DisplayBills ");
         }
 
         return list;
@@ -276,11 +276,7 @@ public class BillController {
         model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+        viewTabel.view(table);
 
         int n = 1;
         String status = "";
@@ -318,21 +314,21 @@ public class BillController {
         }
     }
 
-    public void confirmBill(JTable tabel, String name, String phone, String address,
+    public void confirmBill(JTable table, String name, String phone, String address,
             String email, double total, int idStaff) {
 
-        // Kiểm tra nếu chưa chọn sản phẩm nào
-        if (tabel.getRowCount() == 0) {
+        if (table.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "No products selected to order!", "Message", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
-        if(name.isEmpty() || phone.isEmpty() || address.isEmpty() || email.isEmpty() ){
+
+        if (name.isEmpty() || phone.isEmpty() || address.isEmpty() || email.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Enter information of buyer", "Message", JOptionPane.WARNING_MESSAGE);
             return;
         }
+
         try {
-            // Mở kết nối & bật transaction
+            // Mở kết nối và bật chế độ transaction
             if (conn == null || conn.isClosed()) {
                 SQLConnector.getForName();
                 conn = SQLConnector.getConnection();
@@ -341,21 +337,21 @@ public class BillController {
 
             int idClient = 0;
 
-            // 1. Kiểm tra khách hàng đã tồn tại (theo số điện thoại)
+            // 1. Kiểm tra khách hàng đã tồn tại theo số điện thoại
             String selectClientSQL = "SELECT idClient FROM Clients WHERE telClient = ?";
             setupDatabaseCommand(selectClientSQL);
             ps.setString(1, phone);
             ResultSet rsClient = ps.executeQuery();
 
             if (rsClient.next()) {
-                // Khách hàng đã tồn tại
                 idClient = rsClient.getInt("idClient");
             } else {
-                // Khách hàng chưa có → thêm mới
                 rsClient.close();
                 ps.close();
 
-                String insertClientSQL = "INSERT INTO Clients(nameClient, telClient, addressClient, gmailClient) VALUES(?,?,?,?)";
+                // Thêm khách hàng mới
+                String insertClientSQL = "INSERT INTO Clients(nameClient, telClient, "
+                        + "addressClient, gmailClient) VALUES (?, ?, ?, ?)";
                 setupDatabaseCommand(insertClientSQL, true);
                 ps.setString(1, name);
                 ps.setString(2, phone);
@@ -371,10 +367,11 @@ public class BillController {
             }
             ps.close();
 
-            // 2. Thêm đơn hàng (Orders)
-            String insertOrderSQL = "INSERT INTO Orders(timeOfBookingOrder, statusOrder, totalOrder, addressOrder, idClient, idStaff) VALUES (?, ?, ?, ?, ?, ?)";
+            // 2. Thêm đơn hàng vào bảng Orders
+            String insertOrderSQL = "INSERT INTO Orders(timeOfBookingOrder, statusOrder,"
+                    + " totalOrder, addressOrder, idClient, idStaff) VALUES (?, ?, ?, ?, ?, ?)";
             setupDatabaseCommand(insertOrderSQL, true);
-            ps.setTimestamp(1, new Timestamp(System.currentTimeMillis())); // thời gian hiện tại
+            ps.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             ps.setString(2, "Confirmed");
             ps.setDouble(3, total);
             ps.setString(4, address);
@@ -390,23 +387,10 @@ public class BillController {
             rsOrder.close();
             ps.close();
 
-            // 3. Thêm các chi tiết đơn hàng (OrderDetails)
-            for (int i = 0; i < tabel.getRowCount(); i++) {
-                String productName = tabel.getValueAt(i, 2).toString(); // cột tên sản phẩm
-                int quantity = Integer.parseInt(tabel.getValueAt(i, 5).toString()); // cột số lượng
-
-                // Lấy idPhone từ bảng Phones
-                String queryPhone = "SELECT idPhone FROM Phones WHERE namePhone = ?";
-                setupDatabaseCommand(queryPhone);
-                ps.setString(1, productName);
-                ResultSet rsPhone = ps.executeQuery();
-
-                int idPhone = 0;
-                if (rsPhone.next()) {
-                    idPhone = rsPhone.getInt("idPhone");
-                }
-                rsPhone.close();
-                ps.close();
+            // 3. Thêm chi tiết đơn hàng từ bảng
+            for (int i = 0; i < table.getRowCount(); i++) {
+                int idPhone = Integer.parseInt(table.getValueAt(i, 1).toString()); // cột Id
+                int quantity = Integer.parseInt(table.getValueAt(i, 5).toString()); // cột Quantity
 
                 // Thêm vào bảng OrderDetails
                 String insertDetail = "INSERT INTO OrderDetails(idOrder, idPhone, quantity) VALUES (?, ?, ?)";
@@ -417,7 +401,7 @@ public class BillController {
                 ps.executeUpdate();
                 ps.close();
 
-                // Trừ số lượng sản phẩm
+                // Cập nhật số lượng tồn kho
                 String updatePhone = "UPDATE Phones SET quantityPhone = quantityPhone - ? WHERE idPhone = ?";
                 setupDatabaseCommand(updatePhone);
                 ps.setInt(1, quantity);
@@ -426,7 +410,6 @@ public class BillController {
                 ps.close();
             }
 
-            // Hoàn tất giao dịch
             conn.commit();
             JOptionPane.showMessageDialog(null, "Order has been confirmed successfully!");
 
@@ -449,7 +432,7 @@ public class BillController {
                     conn.setAutoCommit(true);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "ERROR: CAN NOT CONFIRM BILL!");
             }
         }
     }

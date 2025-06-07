@@ -16,7 +16,8 @@ public class Order {
     // Constructors
     public Order() {}
 
-    public Order(int idOrder, String nameOrder, Date timeOfBookingOrder, String statusOrder, double totalOrder, String addressOrder, int idClient, int idStaff) {
+    public Order(int idOrder, String nameOrder, Date timeOfBookingOrder, String statusOrder, 
+            double totalOrder, String addressOrder, int idClient, int idStaff) {
         this.idOrder = idOrder;
         this.nameOrder = nameOrder;
         this.timeOfBookingOrder = timeOfBookingOrder;

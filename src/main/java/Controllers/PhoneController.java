@@ -1,6 +1,7 @@
 package Controllers;
 
 import DatabaseConnection.SQLConnector;
+import Forms.Components.ViewTabel;
 import Model.Phone;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,16 +10,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class PhoneController {
 
     private ArrayList<Phone> listPhones = new ArrayList<>();
 
+    private ViewTabel viewTabel = new ViewTabel();
+    
     private static Connection conn;
     private static PreparedStatement ps;
     private static ResultSet rs;
@@ -120,12 +121,8 @@ public class PhoneController {
 
     public void loadTableProduct(JTable table) {
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-
+        viewTabel.view(table);
+        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setNumRows(0);
         loadDataProducts();
@@ -148,7 +145,9 @@ public class PhoneController {
         }
     }
 
-    public boolean addProduct(String name, String brand, double price, int quantity, String operatingSystem, byte[] image, String descriptionPhone, boolean status) {
+    public boolean addProduct(String name, String brand, double price, int quantity,
+            String operatingSystem, byte[] image, String descriptionPhone, boolean status) {
+        
         if (image == null) {
             JOptionPane.showMessageDialog(null, "PRODUCT IMAGE CAN NOT BE EMPTY!");
             return false;
@@ -168,7 +167,8 @@ public class PhoneController {
             int n = ps.executeUpdate();
 
             if (n > 0) {
-                Phone _phone = new Phone(name, brand, price, quantity, operatingSystem, image, descriptionPhone, status);
+                Phone _phone = new Phone(name, brand, price, quantity, operatingSystem,
+                        image, descriptionPhone, status);
                 listPhones.add(_phone);
                 check = true;
             }
@@ -222,38 +222,6 @@ public class PhoneController {
         return false;
     }
 
-//    public boolean Find(String name) {
-//        boolean check = false;
-//        try {
-//            for (Shoes shoes : listShoes) {
-//                if (shoes.getProductName().equalsIgnoreCase(name)) {
-//                    check = true;
-//                }
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-//        }
-//        return check;
-//    }
-//    public void findProduct(String name, JTable tbProduct) {
-//        DefaultTableModel model = (DefaultTableModel) tbProduct.getModel();
-//        model.setNumRows(0);
-//        int temp = 0;
-//        try {
-//            for (Shoes shoes : listShoes) {
-//                if (shoes.getProductName().equalsIgnoreCase(name)) {
-//                    temp++;
-//                    int a = listShoes.indexOf(shoes);
-//                    model.addRow(new Object[]{a++, shoes.getProductId(), shoes.getProductName(), shoes.getProductPrice(), shoes.getProductQuantity(), shoes.getProductColor(), shoes.getTotalProduct()});
-//                }
-//            }
-//            if (temp == 0) {
-//                JOptionPane.showMessageDialog(null, "NAME: " + name + "   \nFAILD!");
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
     public boolean deleteProduct(int id) {
         boolean check = false;
         try {
@@ -279,30 +247,6 @@ public class PhoneController {
     public ArrayList<Phone> getDataProduct() {
         return listPhones;
     }
-//
-//    public Shoes searchProductByName(String keyword) {
-//        if (keyword == null || keyword.trim().isEmpty()) {
-//            return null; // Không có từ khóa thì không tìm
-//        }
-//
-//        String finalKeyword = keyword.toLowerCase();
-//        return getDataProduct().stream()
-//                .filter(shoes -> shoes.getProductName() != null
-//                && shoes.getProductName().toLowerCase().equals(finalKeyword))
-//                .findFirst()
-//                .orElse(null); // Trả về null nếu không tìm thấy
-//    }
-    
-//    public void In(){
-//        for(Phone a : listPhones){
-//            System.out.println(a.getNamePhone());
-//        }
-//    }
-//    public static void main(String[] args) {
-//        PhoneController.init();
-//        PhoneController.instance.loadDataProducts();
-//        PhoneController.instance.In();
-//    }
 
 }
 

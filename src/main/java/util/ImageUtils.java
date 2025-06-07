@@ -28,9 +28,4 @@ public class ImageUtils {
             return null;
         }
     }
-
-    // Có thể thêm hàm bytesToIcon nếu cần chuyển ngược
-    public static ImageIcon bytesToIcon(byte[] data) {
-        return new ImageIcon(data);
-    }
 }
