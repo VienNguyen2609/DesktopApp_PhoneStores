@@ -30,7 +30,8 @@ public class ViewDialogForClient extends JDialog {
 
         JTable table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
-
+        table.getTableHeader().setResizingAllowed(false);   // Cho phép thay đổi kích thước cột
+        table.getTableHeader().setReorderingAllowed(false);
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
 

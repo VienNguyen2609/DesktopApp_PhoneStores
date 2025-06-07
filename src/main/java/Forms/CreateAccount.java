@@ -186,8 +186,10 @@ public class CreateAccount extends javax.swing.JFrame {
             String pass = this.txtPassword.getText().trim();
             String gmail = this.txtGmail.getText().trim();
 
-            if(name.contains("admin")){
+            if (name.contains("admin")) {
+                LabelMessage.setText("CREATED ACCNT FAILUROUE");
                 JOptionPane.showMessageDialog(this, "name only is for admin");
+
                 return;
             }
             if (!StafftController.instance.checkAccount(name, pass, gmail)) {
@@ -203,7 +205,7 @@ public class CreateAccount extends javax.swing.JFrame {
                     dispose();
                 }
             } else {
-                LabelMessage.setText("CREATED ACCOUNT FAILURE");
+                LabelMessage.setText("CREATED ACCNT FAILUROUE");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

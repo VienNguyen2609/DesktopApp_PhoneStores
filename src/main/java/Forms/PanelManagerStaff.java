@@ -174,11 +174,6 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         txtName.setMaximumSize(new java.awt.Dimension(100, 28));
         txtName.setMinimumSize(new java.awt.Dimension(40, 28));
         txtName.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AccountNameIcon.png"))); // NOI18N
-        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNameKeyReleased(evt);
-            }
-        });
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
@@ -364,7 +359,7 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                                     .addComponent(btnCancelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,10 +430,13 @@ public class PanelManagerStaff extends javax.swing.JPanel {
             return;
         }
         idUserText = Integer.parseInt(tbAccount.getValueAt(selectedRow, 1).toString().trim());
-        if (StafftController.instance.deleteAccount(idUserText)) {
-            JOptionPane.showMessageDialog(this, "DELETED SUCCESSFULLY ID:" + idUserText);
-            viewTabelAccount();
-            StafftController.instance.loadTableAccount(tbAccount);
+        int check = JOptionPane.showConfirmDialog(this, "Do you want delete this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            if (StafftController.instance.deleteAccount(idUserText)) {
+                JOptionPane.showMessageDialog(this, "DELETED SUCCESSFULLY ID:" + idUserText);
+                viewTabelAccount();
+                StafftController.instance.loadTableAccount(tbAccount);
+            }
         }
     }//GEN-LAST:event_btnDeleteUserMouseClicked
 
@@ -488,17 +486,20 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                 Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (position.length() != 0) {
-            if (StafftController.instance.addAccount(name, pass, gamil, position, imageUser)) {
-                JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
-                viewTabelAccount();
-                StafftController.instance.loadTableAccount(tbAccount);
-            }
-        } else {
-            if (StafftController.instance.addAccount(name, pass, gamil, "No position", imageUser)) {
-                JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
-                viewTabelAccount();
-                StafftController.instance.loadTableAccount(tbAccount);
+        int check = JOptionPane.showConfirmDialog(this, "Do you want add this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            if (position.length() != 0) {
+                if (StafftController.instance.addAccount(name, pass, gamil, position, imageUser)) {
+                    JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
+                    viewTabelAccount();
+                    StafftController.instance.loadTableAccount(tbAccount);
+                }
+            } else {
+                if (StafftController.instance.addAccount(name, pass, gamil, "No position", imageUser)) {
+                    JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
+                    viewTabelAccount();
+                    StafftController.instance.loadTableAccount(tbAccount);
+                }
             }
         }
     }//GEN-LAST:event_btnAddUserMouseClicked
@@ -521,24 +522,18 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         if (!StafftController.instance.checkAccount(name, pass, gamil)) {
             return;
         }
-        if (StafftController.instance.updateAccountManager(name, pass, gamil, position, statusStaff, idUserText)) {
-            JOptionPane.showMessageDialog(this, "UPDATE SUCCESSFULLY ID USER:" + idUserText);
-            viewTabelAccount();
-            StafftController.instance.loadTableAccount(tbAccount);
+        int check = JOptionPane.showConfirmDialog(this, "Do you want update this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            if (StafftController.instance.updateAccountManager(name, pass, gamil, position, statusStaff, idUserText)) {
+                JOptionPane.showMessageDialog(this, "UPDATE SUCCESSFULLY ID USER:" + idUserText);
+                viewTabelAccount();
+                StafftController.instance.loadTableAccount(tbAccount);
 
-        }
-        else{
-             JOptionPane.showMessageDialog(this, "CAN NOT UPDATE");
+            } else {
+                JOptionPane.showMessageDialog(this, "CAN NOT UPDATE");
+            }
         }
     }//GEN-LAST:event_btnUpdateUserMouseClicked
-
-    private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
-        if (!txtName.getText().trim().isEmpty()) {
-            LabelName.setForeground(Color.GREEN);
-        } else {
-            LabelName.setForeground(Color.WHITE);
-        }
-    }//GEN-LAST:event_txtNameKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -315,6 +315,9 @@ public class PanelManagerClient extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAddClientMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAddClientMouseEntered(evt);
+            }
         });
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -522,6 +525,8 @@ public class PanelManagerClient extends javax.swing.JPanel {
         String gmail = txtGmail.getText().trim();
         String address = txtAddress.getText().trim();
 
+       
+        
         if (name.isEmpty() || phone.isEmpty() || gmail.isEmpty() || address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in the information completely!");
             return;
@@ -536,8 +541,11 @@ public class PanelManagerClient extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Phone number already exits");
             return;
         }
+        
+        
         Client cl = new Client(name, phone, address, gmail);
         try {
+            
             clientController.addClient(cl);
             
             listClient = clientController.loadDataAccounts();
@@ -604,6 +612,10 @@ public class PanelManagerClient extends javax.swing.JPanel {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_btnDeleteClientActionPerformed
+
+    private void btnAddClientMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddClientMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddClientMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

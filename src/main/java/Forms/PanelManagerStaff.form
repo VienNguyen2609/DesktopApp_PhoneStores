@@ -90,7 +90,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <Component id="jScrollPane1" min="-2" pref="710" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="710" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -286,9 +286,6 @@
           <Image iconType="3" name="/Image/AccountNameIcon.png"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNameKeyReleased"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel20">
       <Properties>

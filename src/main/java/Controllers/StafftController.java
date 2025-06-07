@@ -251,7 +251,7 @@ public class StafftController {
     
     public boolean checkAccount(String name, String password, String gmail) {
         
-        if (password.length() < 5 || name.length() < 4) {
+        if (password.length() < 5 || name.length() < 4 ) {
             JOptionPane.showMessageDialog(null, "error: LENGTH PASSWORD >= 7 AND NAME >=4");
             return false;
         }

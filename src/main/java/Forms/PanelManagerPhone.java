@@ -73,16 +73,16 @@ public class PanelManagerPhone extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select a product from the table first!");
             return;
         }
-        if(txtPricePhone.getText().trim().isEmpty()){
+        if (txtPricePhone.getText().trim().isEmpty()) {
             return;
         }
         pricePhoneText = Double.parseDouble(txtPricePhone.getText().trim());
         quantityPhoneText = Integer.parseInt(txtQuantityPhone.getValue().toString().trim());
         idProductText = Integer.parseInt(tbProduct.getValueAt(selectedRow, 1).toString().trim());
 
-        if (namePhoneText.isEmpty() || brandPhoneText.isEmpty() || pricePhoneText 
-                <= 0 || quantityPhoneText <= 0 || OSPhoneText.isEmpty() || 
-                DescriptionPhoneText.isEmpty()) {
+        if (namePhoneText.isEmpty() || brandPhoneText.isEmpty() || pricePhoneText
+                <= 0 || quantityPhoneText <= 0 || OSPhoneText.isEmpty()
+                || DescriptionPhoneText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "INFORMATION NOT EMPTY");
             return;
         }
@@ -594,15 +594,18 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         getPhoneInputData();
 
         try {
-            if (PhoneController.instance.addProduct(namePhoneText, brandPhoneText,
-                    pricePhoneText, quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone)) {
-                PhoneController.instance.loadDataProducts();
-                PhoneController.instance.loadTableProduct(tbProduct);
-                viewTextProduct();
-                LabelImagePhone.setIcon(null);
-                // LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
-                JOptionPane.showMessageDialog(this, "PRODUCT ADDED SUCCESSFULLY");
+            int check = JOptionPane.showConfirmDialog(this, "Do you want add this product!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (check == JOptionPane.YES_OPTION) {
+                if (PhoneController.instance.addProduct(namePhoneText, brandPhoneText,
+                        pricePhoneText, quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone)) {
+                    PhoneController.instance.loadDataProducts();
+                    PhoneController.instance.loadTableProduct(tbProduct);
+                    viewTextProduct();
+                    LabelImagePhone.setIcon(null);
+                    // LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
+                    JOptionPane.showMessageDialog(this, "PRODUCT ADDED SUCCESSFULLY");
 
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -617,14 +620,17 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
         getPhoneInputData();
 
-        if (PhoneController.instance.updateProduct(namePhoneText, brandPhoneText, pricePhoneText,
-                quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone, idProductText)) {
-            JOptionPane.showMessageDialog(this, "UPDATED THIS PRODUCT ID: " + idProductText + " SUCCESSFULLY");
-            PhoneController.instance.loadTableProduct(tbProduct);
-            viewTextProduct();
-            LabelImagePhone.setIcon(null);
-            //   LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
-            return;
+        int check = JOptionPane.showConfirmDialog(this, "Do you want update this product!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (check == JOptionPane.YES_OPTION) {
+            if (PhoneController.instance.updateProduct(namePhoneText, brandPhoneText, pricePhoneText,
+                    quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone, idProductText)) {
+                JOptionPane.showMessageDialog(this, "UPDATED THIS PRODUCT ID: " + idProductText + " SUCCESSFULLY");
+                PhoneController.instance.loadTableProduct(tbProduct);
+                viewTextProduct();
+                LabelImagePhone.setIcon(null);
+                //   LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
+                return;
+            }
         } else {
             JOptionPane.showMessageDialog(this, "UPDATED FAILURE THIS PRODUCT ID: " + idProductText);
             return;

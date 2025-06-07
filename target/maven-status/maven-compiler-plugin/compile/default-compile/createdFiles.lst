@@ -18,7 +18,6 @@ Forms\PanelRevenue$2.class
 Forms\Login$1.class
 Forms\PanelManagerPhone$3.class
 Forms\PanelManagerBill$4.class
-Forms\PanelPhone$10.class
 Forms\PanelPhone$5.class
 Model\OrderDetail.class
 Forms\PanelManagerClient$1.class
@@ -114,6 +113,5 @@ Controllers\StafftController.class
 Forms\PanelManagerClient$6.class
 Model\Staff.class
 Forms\Components\RippleEffect$Effect$1.class
-Forms\PanelManagerStaff$10.class
 Forms\PanelProfile$2.class
 Forms\PanelPhone$3.class
