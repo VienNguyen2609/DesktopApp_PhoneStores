@@ -7,6 +7,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+
+/**
+ *
+ * @author VIEN
+ */
+
 public class ImageUtils {
 
     public static byte[] iconToBytes(ImageIcon icon) {

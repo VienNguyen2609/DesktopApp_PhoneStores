@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author VIEN
  */
+
+
 public class ViewTabel {
     
     public void view(JTable table){

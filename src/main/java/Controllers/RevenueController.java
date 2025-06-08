@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class RevenueController {
     
-    public List<Object[]> getRevenueByMonth(int month, int year) {
+    public List<Object[]> getRevenueByMonthAndYear(int month, int year) {
         List<Object[]> result = new ArrayList<>();
         
         try (Connection con = SQLConnector.getConnection()) {

@@ -2,7 +2,6 @@ Forms\HomePage$6.class
 Forms\PanelManagerClient$7.class
 Forms\PanelPhone$2.class
 Forms\PanelManagerStaff$3.class
-Forms\PanelProfile$8.class
 Forms\Components\RippleEffect$1.class
 Forms\CreateAccount$1.class
 Forms\HomePage$9.class
@@ -18,7 +17,6 @@ Forms\PanelRevenue$2.class
 Forms\Login$1.class
 Forms\PanelManagerPhone$3.class
 Forms\PanelManagerBill$4.class
-Forms\PanelPhone$5.class
 Model\OrderDetail.class
 Forms\PanelManagerClient$1.class
 Forms\Components\RippleEffect.class
@@ -27,12 +25,9 @@ Forms\Login$4.class
 Forms\PanelManagerClient$4.class
 Forms\Components\SetThemFlatLaf.class
 Main\Run.class
-Forms\PanelPhone$8.class
 Forms\PanelManagerPhone$6.class
 Forms\PanelManagerStaff.class
-Forms\PanelProfile$6.class
 Forms\PanelManagerClient$2.class
-Forms\PanelManagerClient$9.class
 Forms\CreateAccount$3.class
 Model\Order.class
 Forms\Components\ThemeFlatLaf.class
@@ -41,16 +36,13 @@ Forms\PanelManagerPhone$4.class
 Forms\Login$2.class
 Forms\PanelManagerStaff$5.class
 Forms\HomePage$4.class
-Forms\PanelPhone$7.class
 DatabaseConnection\SQLConnector.class
 Forms\PanelManagerClient$8.class
 Forms\Components\TextFieldController.class
 Forms\Components\ViewDialogForClient.class
-Forms\PanelProfile$5.class
 Forms\HomePage.class
 Forms\CreateAccount$2.class
 Model\BillDisplay.class
-Forms\PanelPhone$6.class
 Forms\Components\EffectComponents$1.class
 Forms\PanelHome$2.class
 Forms\HomePage$3.class
@@ -59,7 +51,6 @@ Forms\PanelManagerStaff$6.class
 Forms\Components\EffectComponents.class
 Forms\PanelManagerBill$5.class
 Forms\PanelManagerPhone$2.class
-Forms\PanelPhone$9.class
 Forms\PanelManagerClient.class
 Forms\PanelRevenue.class
 Forms\PanelProfile$1.class
@@ -86,15 +77,10 @@ Forms\PanelManagerStaff$4.class
 Forms\HomePage$5.class
 Forms\HomePage$8.class
 Forms\PanelManagerStaff$1.class
-Forms\PanelProfile$7.class
 Forms\PanelHome.class
 Controllers\PhoneController.class
-Forms\PanelRevenue$3.class
-Forms\PanelManagerStaff$8.class
 Forms\HomePage$1.class
-Forms\PanelPhone$4.class
 Controllers\ClientController.class
-Forms\HomePage$10.class
 Forms\PanelProfile$3.class
 Forms\Components\PasswordField.class
 Forms\PanelManagerClient$5.class
@@ -107,7 +93,6 @@ Forms\HomePage$7.class
 Model\Phone.class
 Forms\PanelManagerPhone$1.class
 Forms\PanelManagerStaff$2.class
-Forms\PanelManagerStaff$9.class
 Forms\PanelManagerBill$2.class
 Controllers\StafftController.class
 Forms\PanelManagerClient$6.class

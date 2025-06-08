@@ -1,5 +1,11 @@
 package Model;
 
+
+/**
+ *
+ * @author VIEN
+ */
+
 public class Staff {
 
     private int id;

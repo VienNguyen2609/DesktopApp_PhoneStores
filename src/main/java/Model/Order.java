@@ -3,6 +3,12 @@ package Model;
 
 import java.util.Date;
 
+/**
+ *
+ * @author VIEN
+ */
+
+
 public class Order {
     private int idOrder;
     private String nameOrder;

@@ -2,11 +2,11 @@ package Forms;
 
 import Controllers.BillController;
 import Controllers.PhoneController;
+import Forms.Components.EffectComponents;
 import Forms.Components.RoundedBorder;
 import Model.Staff;
 import Model.Phone;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,30 +17,36 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author VIEN
+ */
 public class PanelHome extends javax.swing.JPanel {
-
+    
     private int quantityAvailableBill;
-
-    private Staff currentAccount;
+    
+    private Staff currentStaff;
     private PanelManagerBill panelManagerBill;
     private PanelManagerPhone panelManagerPhone;
     private PanelManagerClient panelManagerClient;
     private DefaultTableModel model;
-
+    
     private double totalAmount = 0;
-
-    public PanelHome(Staff account, PanelManagerBill panelManagerBill,
+    
+    public PanelHome(Staff staff, PanelManagerBill panelManagerBill,
             PanelManagerPhone panelManagerPhone, PanelManagerClient panelManagerClient) {
         initComponents();
+        
         PhoneController.init();
         BillController.init();
-
-        this.currentAccount = account;
+        EffectComponents.init();
+        
+        this.currentStaff = staff;
         this.panelManagerBill = panelManagerBill;
         this.panelManagerPhone = panelManagerPhone;
         this.panelManagerClient = panelManagerClient;
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(15);
-
+        
         addPanelProducts();
         model = (DefaultTableModel) tbPhone.getModel();
         model.setNumRows(0);
@@ -51,7 +57,7 @@ public class PanelHome extends javax.swing.JPanel {
         }
         txtSearch.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         txtSearch.setPrefixIcon(new ImageIcon(getClass().getResource("/Image/SearchIcon.png")));
-
+        
         txtName.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         txtAdress.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         txtNumberPhone.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
@@ -59,13 +65,13 @@ public class PanelHome extends javax.swing.JPanel {
         btnCofirmBill.setForeground(new Color(0, 0, 0));
         btnDeleleBill.setForeground(new Color(0, 0, 0));
     }
-
+    
     public void addPanelProducts() {
-
+        
         this.PanelContainProduct.setLayout(new GridBagLayout());
         this.PanelContainProduct.removeAll();
-        PhoneController.instance.loadDataProducts();
-
+        PhoneController.instance.loadDataPhones();
+        
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 40, 20, 40); // Khoảng cách giữa các item
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -74,14 +80,12 @@ public class PanelHome extends javax.swing.JPanel {
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
-        // this.PanelContainProduct.add(txtSearch, gbc);
-//        this.PanelContainProduct.add(btnSearch, gbc);
-
+        
         gbc.gridwidth = 1;
         int cols = 2; // Số cột
-        for (int i = 0; i < PhoneController.instance.getDataProduct().size(); i++) {
-            Phone phone = PhoneController.instance.getDataProduct().get(i);
-            var newJpanel = new PanelPhone(phone, this, currentAccount, panelManagerBill);
+        for (int i = 0; i < PhoneController.instance.getDataPhone().size(); i++) {
+            Phone phone = PhoneController.instance.getDataPhone().get(i);
+            var newJpanel = new PanelPhone(phone, this, currentStaff, panelManagerBill);
             gbc.gridx = i % cols;
             gbc.gridy = (i / cols) + 1;
             this.PanelContainProduct.add(newJpanel, gbc);
@@ -89,29 +93,26 @@ public class PanelHome extends javax.swing.JPanel {
         this.PanelContainProduct.revalidate();
         this.PanelContainProduct.repaint();
     }
-
-    public void searchByName(String name, String brand) {
-
+    
+    public void fetchPhonesByNameOrBrand(String name, String brand) {
+        
         this.PanelContainProduct.setLayout(new GridBagLayout());
         this.PanelContainProduct.removeAll();
-        PhoneController.instance.searchByName(name, brand);
-
+        PhoneController.instance.fetchPhonesByNameOrBrand(name, brand);
+        
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(30, 50, 30, 50); // Khoảng cách giữa các item
+        gbc.insets = new Insets(30, 50, 30, 50);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        // gbc.weightx = 1; // Giãn ngang
-
+        
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
-        // this.PanelContainProduct.add(txtSearch, gbc);
-//        this.PanelContainProduct.add(btnSearch, gbc);
-
+        
         gbc.gridwidth = 1;
         int cols = 3; // Số cột
-        for (int i = 0; i < PhoneController.instance.getDataProduct().size(); i++) {
-            Phone phone = PhoneController.instance.getDataProduct().get(i);
-            var newJpanel = new PanelPhone(phone, this, currentAccount, panelManagerBill);
+        for (int i = 0; i < PhoneController.instance.getDataPhone().size(); i++) {
+            Phone phone = PhoneController.instance.getDataPhone().get(i);
+            var newJpanel = new PanelPhone(phone, this, currentStaff, panelManagerBill);
             gbc.gridx = i % cols;
             gbc.gridy = (i / cols) + 1;
             this.PanelContainProduct.add(newJpanel, gbc);
@@ -119,28 +120,15 @@ public class PanelHome extends javax.swing.JPanel {
         this.PanelContainProduct.revalidate();
         this.PanelContainProduct.repaint();
     }
-
+    
     public void setPanelManagerPhone(PanelManagerPhone panelManagerPhone) {
         this.panelManagerPhone = panelManagerPhone;
     }
-
-    private void removePlaceHolderStyle(JTextField textField) {
-        Font font = textField.getFont();
-        font = font.deriveFont(Font.PLAIN | Font.BOLD);
-        textField.setFont(font);
-        textField.setForeground(Color.WHITE);
-    }
-
-    private void addPlaceHolderStyle(JTextField textField) {
-        Font font = textField.getFont();
-        font = font.deriveFont(Font.ITALIC);
-        textField.setFont(font);
-        textField.setForeground(Color.WHITE);
-    }
-
+    
     public void getTextPhone(JTextField txtID, JTextField txtName, JTextField txtBrand,
             JTextField txtOS, JTextField txtDescription,
             JTextField txtQuantity, JTextField txtPrice) {
+        
         int id = Integer.parseInt(txtID.getText());
         String name = txtName.getText();
         String brand = txtBrand.getText();
@@ -149,11 +137,11 @@ public class PanelHome extends javax.swing.JPanel {
         int quantity = Integer.parseInt(txtQuantity.getText());
         double price = Double.parseDouble(txtPrice.getText());
         double total = quantity * price;
-
+        
         totalAmount += total;
         // STT = số dòng hiện tại + 1
         int no = tbPhone.getRowCount() + 1;
-
+        
         for (int i = 0; i < tbPhone.getRowCount(); i++) {
             int existingId = Integer.parseInt(tbPhone.getValueAt(i, 1).toString()); // cột 1 là ID
             if (existingId == id) {
@@ -161,20 +149,21 @@ public class PanelHome extends javax.swing.JPanel {
                 return;
             }
         }
-
+        
         model.addRow(new Object[]{
             no, id, name, brand, os, quantity, price, description, total
         });
         txtTotal.setText("" + totalAmount);
+        txtQuantity.setText("");
     }
-
+    
     private void viewClient() {
         txtName.setText("");
         txtEmail.setText("");
         txtNumberPhone.setText("");
         txtAdress.setText("");
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -445,32 +434,31 @@ public class PanelHome extends javax.swing.JPanel {
         if (txtSearch.getText().equals("Search")) {
             txtSearch.setText(null);
             txtSearch.requestFocus();
-            removePlaceHolderStyle(txtSearch);
+            EffectComponents.instance.removePlaceHolderStyle(txtSearch);
         }
         txtSearch.setCustomBorder(new RoundedBorder(20, new Color(204, 255, 255)));
     }//GEN-LAST:event_txtSearchFocusGained
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().length() == 0) {
-            addPlaceHolderStyle(txtSearch);
+            EffectComponents.instance.addPlaceHolderStyle(txtSearch);
             txtSearch.setText("Search");
         }
         txtSearch.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
     }//GEN-LAST:event_txtSearchFocusLost
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-
+        
         String name = txtSearch.getText().trim();
-        searchByName(name, name);
-
         if (name.isEmpty()) {
             addPanelProducts();
+        } else {
+            fetchPhonesByNameOrBrand(name, name);
         }
-
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnCofirmBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCofirmBillMouseClicked
-
+        
         String name = txtName.getText().trim();
         String phone = txtNumberPhone.getText().trim();
         String address = txtAdress.getText().trim();
@@ -480,7 +468,7 @@ public class PanelHome extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "empty transaction!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         double _totalAmount;
         try {
             _totalAmount = Double.parseDouble(totalText);
@@ -488,16 +476,16 @@ public class PanelHome extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "empty transaction!!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        if (currentAccount.isStatus() == false) {
+        
+        if (currentStaff.isStatus() == false) {
             JOptionPane.showMessageDialog(this, "This account is currently inactive!");
             return;
         }
-        if (currentAccount.getPosition().equalsIgnoreCase("employee")
-                || currentAccount.getPosition().equalsIgnoreCase("admin")) {
+        if (currentStaff.getPosition().equalsIgnoreCase("employee")
+                || currentStaff.getPosition().equalsIgnoreCase("admin")) {
             int check = JOptionPane.showConfirmDialog(this, "CONFIRM THIS BILL !", "CONFIRM", JOptionPane.YES_NO_OPTION);
             if (check == JOptionPane.YES_OPTION) {
-                BillController.instance.confirmBill(tbPhone, name, phone, address, email, _totalAmount, currentAccount.getId());
+                BillController.instance.confirmBill(tbPhone, name, phone, address, email, _totalAmount, currentStaff.getId());
                 panelManagerBill.loadBillInTbale();
                 panelManagerPhone.loadTabelPhone();
                 panelManagerClient.loadTbaleClient();
@@ -513,7 +501,7 @@ public class PanelHome extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCofirmBillMouseClicked
 
     private void btnDeleleBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleleBillMouseClicked
-
+        
         int check = JOptionPane.showConfirmDialog(this, "Do you want delete all bill in tabel !", "Confirm", JOptionPane.YES_NO_OPTION);
         if (check == JOptionPane.YES_OPTION) {
             model.setNumRows(0);

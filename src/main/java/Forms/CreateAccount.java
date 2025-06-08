@@ -4,21 +4,27 @@ import Controllers.StafftController;
 import Forms.Components.EffectComponents;
 import Main.Run;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author VIEN
+ */
 public class CreateAccount extends javax.swing.JFrame {
 
     public CreateAccount() {
         initComponents();
         StafftController.init();
         EffectComponents.init();
+
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("PRIMA MOBILES , CREATE ACCOUNT");
-        String iconPath = "E:\\Image\\LogoShopIcon.png";
-        setIconImage(Toolkit.getDefaultToolkit().getImage(new File(iconPath).getAbsolutePath()));
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Image/LogoShopIcon.png"));
+        setIconImage(icon);
 
         EffectComponents.instance.focusPointer(txtName, LabelNameUser, jLabel10, Color.GREEN, Color.WHITE);
         EffectComponents.instance.focusPointer(txtPassword, LabelPasswordUser, jLabel9, Color.GREEN, Color.WHITE);
@@ -180,31 +186,38 @@ public class CreateAccount extends javax.swing.JFrame {
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
 
-        StafftController.instance.loadDataAccounts();
+        StafftController.instance.loadDataStaffs();
         try {
             String name = this.txtName.getText().trim();
             String pass = this.txtPassword.getText().trim();
             String gmail = this.txtGmail.getText().trim();
 
             if (name.contains("admin")) {
-                LabelMessage.setText("CREATED ACCNT FAILUROUE");
+                LabelMessage.setText("CREATED ACCOUNT FAILUROUE");
+                txtName.setText("");
+                txtPassword.setText("");
+                txtGmail.setText("");
+                txtName.requestFocus();
                 JOptionPane.showMessageDialog(this, "name only is for admin");
 
                 return;
             }
-            if (!StafftController.instance.checkAccount(name, pass, gmail)) {
+            if (!StafftController.instance.checkStaffLogin(name, pass, gmail)) {
                 return;
 
-            } else if (StafftController.instance.addAccount(name, pass, gmail, "No position", null)) {
+            } else if (StafftController.instance.addStaff(name, pass, gmail, "No position", null)) {
                 LabelMessage.setText("CREATED ACCOUNT SUCCESSFULLY");
                 System.out.println("CREATED SUCCESSFULLY");
-
                 int check = JOptionPane.showConfirmDialog(this, "GO TO SIGN IN , NOW !", "CONFIRM", JOptionPane.YES_NO_OPTION);
                 if (check == JOptionPane.YES_OPTION) {
                     Run.runApp();
                     dispose();
                 }
             } else {
+                txtName.setText("");
+                txtPassword.setText("");
+                txtGmail.setText("");
+                txtName.requestFocus();
                 LabelMessage.setText("CREATED ACCNT FAILUROUE");
             }
         } catch (Exception e) {

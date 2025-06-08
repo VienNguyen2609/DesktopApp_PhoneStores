@@ -26,9 +26,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PanelManagerClient extends javax.swing.JPanel {
 
-    
     private ViewTabel viewTabel = new ViewTabel();
-    
+
     private int selectedRow;
     private List<Client> listClient = new ArrayList<>();
     private Client client;
@@ -185,6 +184,13 @@ public class PanelManagerClient extends javax.swing.JPanel {
         viewTabelClient();
     }
 
+    private void viewTextField() {
+        txtNameUser.setText("");
+        txtTelClient.setText("");
+        txtGmail.setText("");
+        txtAddress.setText("");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -225,10 +231,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
         tbClient.setForeground(new java.awt.Color(255, 255, 255));
         tbClient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "No.", "Id", "Name", "Password", "Address", "Email"
@@ -315,9 +318,6 @@ public class PanelManagerClient extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAddClientMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAddClientMouseEntered(evt);
-            }
         });
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -343,11 +343,6 @@ public class PanelManagerClient extends javax.swing.JPanel {
         btnDeleteClient.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDeleteClientMouseClicked(evt);
-            }
-        });
-        btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteClientActionPerformed(evt);
             }
         });
 
@@ -397,14 +392,14 @@ public class PanelManagerClient extends javax.swing.JPanel {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGap(81, 81, 81)
                                     .addComponent(jLabel1)))
-                            .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LabelPasswordUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LabelPasswordUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LabelPasswordUser, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LabelPasswordUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTelClient, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTelClient, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1))
             .addGroup(layout.createSequentialGroup()
@@ -468,10 +463,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelClientMouseClicked
-        txtNameUser.setText("");
-        txtTelClient.setText("");
-        txtGmail.setText("");
-        txtAddress.setText("");
+        viewTextField();
     }//GEN-LAST:event_btnCancelClientMouseClicked
 
     private void tbClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClientMouseClicked
@@ -494,6 +486,8 @@ public class PanelManagerClient extends javax.swing.JPanel {
         }
         client = listClient.get(selectedRow);
         if (client.getNameClient().isEmpty()) {
+            viewTextField();
+            txtNameUser.requestFocus();
             JOptionPane.showMessageDialog(this, "Name cannot be blank!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
@@ -508,10 +502,8 @@ public class PanelManagerClient extends javax.swing.JPanel {
                 clientController.updateClient(_cl);
                 listClient = clientController.loadDataAccounts();
                 viewTabelClient();
-                txtNameUser.setText("");
-                txtTelClient.setText("");
-                txtGmail.setText("");
-                txtAddress.setText("");
+                viewTextField();
+                txtNameUser.requestFocus();
             }
         }
 
@@ -525,41 +517,39 @@ public class PanelManagerClient extends javax.swing.JPanel {
         String gmail = txtGmail.getText().trim();
         String address = txtAddress.getText().trim();
 
-       
-        
         if (name.isEmpty() || phone.isEmpty() || gmail.isEmpty() || address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in the information completely!");
+            viewTextField();
+            txtNameUser.requestFocus();
             return;
         }
-        boolean check=false;
+        boolean check = false;
         for (Client client1 : listClient) {
-            if(client1.getTelClient().equals(phone)){
-                check=true;
+            if (client1.getTelClient().equals(phone)) {
+                check = true;
             }
         }
-        if(check==true){
+        if (check == true) {
             JOptionPane.showMessageDialog(this, "Phone number already exits");
+            viewTextField();
+            txtNameUser.requestFocus();
+
             return;
         }
-        
-        
+
         Client cl = new Client(name, phone, address, gmail);
         try {
-            
+
             clientController.addClient(cl);
-            
+
             listClient = clientController.loadDataAccounts();
             JOptionPane.showMessageDialog(this, "added Successfulll Client have phone is:" + cl.getTelClient());
             viewTabelClient();
-            txtNameUser.setText("");
-            txtTelClient.setText("");
-            txtGmail.setText("");
-            txtAddress.setText("");
+            viewTextField();
+            txtNameUser.requestFocus();
         } catch (SQLException ex) {
             Logger.getLogger(PanelManagerClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
 
     }//GEN-LAST:event_btnAddClientMouseClicked
 
@@ -592,13 +582,11 @@ public class PanelManagerClient extends javax.swing.JPanel {
                         clientController.delClientOnOrder(idOrderOfOrder, phone);
                     } else {
                         clientController.delClientOnBill(idOrder, id, phone);
-                    } 
+                    }
                     listClient = clientController.loadDataAccounts();
                     viewTabelClient();
-                    txtNameUser.setText("");
-                    txtTelClient.setText("");
-                    txtGmail.setText("");
-                    txtAddress.setText("");
+                    viewTextField();
+                    txtNameUser.requestFocus();
                 } catch (SQLException ex) {
                     Logger.getLogger(PanelManagerClient.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -607,15 +595,6 @@ public class PanelManagerClient extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnDeleteClientMouseClicked
-
-    private void btnDeleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClientActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnDeleteClientActionPerformed
-
-    private void btnAddClientMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddClientMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddClientMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

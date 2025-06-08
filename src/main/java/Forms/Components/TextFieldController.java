@@ -9,6 +9,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+/**
+ *
+ * @author VIEN
+ */
+
 public class TextFieldController extends JTextField {
 
     private Icon prefixIcon;

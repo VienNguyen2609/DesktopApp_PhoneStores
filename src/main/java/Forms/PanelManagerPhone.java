@@ -13,6 +13,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author VIEN
+ */
 public class PanelManagerPhone extends javax.swing.JPanel {
 
     private File selectedFile;
@@ -23,8 +27,8 @@ public class PanelManagerPhone extends javax.swing.JPanel {
     private String brandPhoneText;
     private double pricePhoneText;
     private int quantityPhoneText;
-    private String OSPhoneText;
-    private String DescriptionPhoneText;
+    private String oSPhoneText;
+    private String descriptionPhoneText;
     private boolean statusPhone;
     private String statusPhoneText;
     private int selectedRow;
@@ -35,7 +39,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
     public PanelManagerPhone(PanelHome panelHome) {
         initComponents();
         PhoneController.init();
-        PhoneController.instance.loadTableProduct(tbProduct);
+        PhoneController.instance.loadTablePhone(tbProduct);
         this.panelHome = panelHome;
         styleButton();
     }
@@ -59,49 +63,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         txtDescriptionPhone.setText("");
     }
 
-    private void getPhoneInputData() {
-
-        namePhoneText = txtNamePhone.getText().trim();
-        brandPhoneText = txtBrandPhone.getText().trim();
-        OSPhoneText = txtOSPhone.getText().trim();
-        DescriptionPhoneText = txtDescriptionPhone.getText().trim();
-        selectedRow = tbProduct.getSelectedRow();
-        statusPhoneText = cbStatusPhone.getSelectedItem().toString();
-        statusPhone = statusPhoneText.equalsIgnoreCase("Active"); // true nếu đang kinh doanh
-
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a product from the table first!");
-            return;
-        }
-        if (txtPricePhone.getText().trim().isEmpty()) {
-            return;
-        }
-        pricePhoneText = Double.parseDouble(txtPricePhone.getText().trim());
-        quantityPhoneText = Integer.parseInt(txtQuantityPhone.getValue().toString().trim());
-        idProductText = Integer.parseInt(tbProduct.getValueAt(selectedRow, 1).toString().trim());
-
-        if (namePhoneText.isEmpty() || brandPhoneText.isEmpty() || pricePhoneText
-                <= 0 || quantityPhoneText <= 0 || OSPhoneText.isEmpty()
-                || DescriptionPhoneText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "INFORMATION NOT EMPTY");
-            return;
-        }
-        try {
-
-            if (selectedFile != null) {
-                imagePhone = Files.readAllBytes(selectedFile.toPath()); // Chọn ảnh mới
-            } else if (icon != null) {
-                // Lấy byte[] từ icon (ImageIcon)
-                imagePhone = util.ImageUtils.iconToBytes((ImageIcon) icon); // 👈 thêm hàm này ở dưới
-            } else {
-                imagePhone = null; // Không có ảnh
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void clickTableProduct() {
+    private void clickTablePhone() {
 
         selectedRow = tbProduct.getSelectedRow();
 
@@ -114,11 +76,6 @@ public class PanelManagerPhone extends javax.swing.JPanel {
             byte[] image = (byte[]) tbProduct.getValueAt(selectedRow, 7);
             String description = tbProduct.getValueAt(selectedRow, 8).toString();
             String _status = tbProduct.getValueAt(selectedRow, 9).toString();
-//            LabelNameProduct.setForeground(Color.GREEN);
-//            LabelSizeProduct.setForeground(Color.GREEN);
-//            LabelPriceProduct.setForeground(Color.GREEN);
-//            LabelQuantityProduct.setForeground(Color.GREEN);
-//            LabelColorProduct.setForeground(Color.GREEN);
             txtNamePhone.setText(name);
             txtBrandPhone.setText("" + brand);
             txtPricePhone.setText("" + price); // hoặc setValue nếu là JSpinner
@@ -143,7 +100,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
     }
 
     public void loadTabelPhone() {
-        PhoneController.instance.loadTableProduct(tbProduct);
+        PhoneController.instance.loadTablePhone(tbProduct);
     }
 
     @SuppressWarnings("unchecked")
@@ -187,10 +144,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         tbProduct.setForeground(new java.awt.Color(255, 255, 255));
         tbProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "No.", "ID", "Name", "Brand", "Price", "Quantity", "Operating System", "Image", "DescriptionPhone", "Status"
@@ -349,7 +303,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("____________________________________");
+        jLabel19.setText("_____________________________");
 
         txtNamePhone.setForeground(new java.awt.Color(255, 255, 255));
         txtNamePhone.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -362,7 +316,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("____________________________________");
+        jLabel15.setText("__________________________");
 
         LabelSizeProduct1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelSizeProduct1.setForeground(new java.awt.Color(255, 255, 255));
@@ -370,7 +324,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("____________________________________");
+        jLabel16.setText("_________________________");
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -413,8 +367,8 @@ public class PanelManagerPhone extends javax.swing.JPanel {
                                 .addGap(50, 50, 50)
                                 .addGroup(PanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNamePhone, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LabelPriceProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(LabelPriceProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNamePhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(40, 40, 40)
                                 .addGroup(PanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(PanelProductsLayout.createSequentialGroup()
@@ -540,19 +494,24 @@ public class PanelManagerPhone extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductMouseClicked
-        clickTableProduct();
+        clickTablePhone();
     }//GEN-LAST:event_tbProductMouseClicked
 
     private void btnDeletePhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeletePhoneMouseClicked
 
-        getPhoneInputData();
-        PhoneController.instance.loadDataProducts();
+        selectedRow = tbProduct.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a product from the table first!");
+            return;
+        }
+        idProductText = Integer.parseInt(tbProduct.getValueAt(selectedRow, 1).toString().trim());
+        PhoneController.instance.loadDataPhones();
         try {
             int check = JOptionPane.showConfirmDialog(this, "DO YOU WANT DELETE THIS PRODUCT!", "CONFIRM", JOptionPane.YES_NO_OPTION);
 
             if (check == JOptionPane.YES_OPTION) {
-                if (PhoneController.instance.deleteProduct(idProductText)) {
-                    PhoneController.instance.loadTableProduct(tbProduct);
+                if (PhoneController.instance.deletePhone(idProductText)) {
+                    PhoneController.instance.loadTablePhone(tbProduct);
                     viewTextProduct();
                     JOptionPane.showMessageDialog(this, "DELETED SUCCESSFULLY");
                 } else {
@@ -591,25 +550,59 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
     private void btnAddPhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddPhoneMouseClicked
 
-        getPhoneInputData();
-
         try {
+            if (txtNamePhone.getText().trim().isEmpty() || txtBrandPhone.getText().trim().isEmpty()
+                    || txtDescriptionPhone.getText().trim().isEmpty() || txtOSPhone.getText().trim().isEmpty()
+                    || txtPricePhone.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "INFORMATION NOT EMPTY");
+                return;
+            }
+
+            namePhoneText = txtNamePhone.getText().trim();
+            brandPhoneText = txtBrandPhone.getText().trim();
+            oSPhoneText = txtOSPhone.getText().trim();
+            descriptionPhoneText = txtDescriptionPhone.getText().trim();
+            selectedRow = tbProduct.getSelectedRow();
+            statusPhoneText = cbStatusPhone.getSelectedItem().toString();
+            statusPhone = statusPhoneText.equalsIgnoreCase("Active"); // true nếu đang kinh doanh
+            pricePhoneText = Double.parseDouble(txtPricePhone.getText().trim());
+            quantityPhoneText = Integer.parseInt(txtQuantityPhone.getValue().toString().trim());
+
+            if (selectedFile != null) {
+                imagePhone = Files.readAllBytes(selectedFile.toPath()); // Chọn ảnh mới
+            } else if (icon != null) {
+                // Lấy byte[] từ icon (ImageIcon)
+                imagePhone = util.ImageUtils.iconToBytes((ImageIcon) icon); // 👈 thêm hàm này ở dưới
+            } else {
+                imagePhone = null; // Không có ảnh
+            }
+
             int check = JOptionPane.showConfirmDialog(this, "Do you want add this product!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
             if (check == JOptionPane.YES_OPTION) {
-                if (PhoneController.instance.addProduct(namePhoneText, brandPhoneText,
-                        pricePhoneText, quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone)) {
-                    PhoneController.instance.loadDataProducts();
-                    PhoneController.instance.loadTableProduct(tbProduct);
+                if (PhoneController.instance.addPhone(namePhoneText, brandPhoneText,
+                        pricePhoneText, quantityPhoneText, oSPhoneText, imagePhone, descriptionPhoneText, statusPhone)) {
+                    PhoneController.instance.loadDataPhones();
+                    PhoneController.instance.loadTablePhone(tbProduct);
                     viewTextProduct();
+                    txtNamePhone.requestFocus();
                     LabelImagePhone.setIcon(null);
                     // LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
                     JOptionPane.showMessageDialog(this, "PRODUCT ADDED SUCCESSFULLY");
 
                 }
+            } else {
+                viewTextProduct();
+                txtNamePhone.requestFocus();
+                JOptionPane.showMessageDialog(this, "PRODUCT ADDED FAILURE");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input! PLEASE enter number"
+                    + "only for price and quantity");
+        } catch (IOException ex) {
+            Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
     }//GEN-LAST:event_btnAddPhoneMouseClicked
 
     private void btnAddPhoneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddPhoneMouseEntered
@@ -618,23 +611,65 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
     private void btnUpdatePhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdatePhoneMouseClicked
 
-        getPhoneInputData();
-
-        int check = JOptionPane.showConfirmDialog(this, "Do you want update this product!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (check == JOptionPane.YES_OPTION) {
-            if (PhoneController.instance.updateProduct(namePhoneText, brandPhoneText, pricePhoneText,
-                    quantityPhoneText, OSPhoneText, imagePhone, DescriptionPhoneText, statusPhone, idProductText)) {
-                JOptionPane.showMessageDialog(this, "UPDATED THIS PRODUCT ID: " + idProductText + " SUCCESSFULLY");
-                PhoneController.instance.loadTableProduct(tbProduct);
-                viewTextProduct();
-                LabelImagePhone.setIcon(null);
-                //   LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
-                return;
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "UPDATED FAILURE THIS PRODUCT ID: " + idProductText);
+        selectedRow = tbProduct.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a product from the table first!");
             return;
         }
+        idProductText = Integer.parseInt(tbProduct.getValueAt(selectedRow, 1).toString().trim());
+        try {
+            if (txtNamePhone.getText().trim().isEmpty() || txtBrandPhone.getText().trim().isEmpty()
+                    || txtDescriptionPhone.getText().trim().isEmpty() || txtOSPhone.getText().trim().isEmpty()
+                    || txtPricePhone.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "INFORMATION NOT EMPTY");
+                return;
+            }
+
+            namePhoneText = txtNamePhone.getText().trim();
+            brandPhoneText = txtBrandPhone.getText().trim();
+            oSPhoneText = txtOSPhone.getText().trim();
+            descriptionPhoneText = txtDescriptionPhone.getText().trim();
+            selectedRow = tbProduct.getSelectedRow();
+            statusPhoneText = cbStatusPhone.getSelectedItem().toString();
+            statusPhone = statusPhoneText.equalsIgnoreCase("Active"); // true nếu đang kinh doanh
+            pricePhoneText = Double.parseDouble(txtPricePhone.getText().trim());
+            quantityPhoneText = Integer.parseInt(txtQuantityPhone.getValue().toString().trim());
+
+            if (selectedFile != null) {
+                imagePhone = Files.readAllBytes(selectedFile.toPath()); // Chọn ảnh mới
+            } else if (icon != null) {
+                // Lấy byte[] từ icon (ImageIcon)
+                imagePhone = util.ImageUtils.iconToBytes((ImageIcon) icon); // 👈 thêm hàm này ở dưới
+            } else {
+                imagePhone = null; // Không có ảnh
+            }
+
+            int check = JOptionPane.showConfirmDialog(this, "Do you want update this product!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (check == JOptionPane.YES_OPTION) {
+                if (PhoneController.instance.updatePhone(namePhoneText, brandPhoneText, pricePhoneText,
+                        quantityPhoneText, oSPhoneText, imagePhone, descriptionPhoneText, statusPhone, idProductText)) {
+                    JOptionPane.showMessageDialog(this, "UPDATED THIS PRODUCT ID: " + idProductText + " SUCCESSFULLY");
+                    PhoneController.instance.loadTablePhone(tbProduct);
+                    viewTextProduct();
+                    txtNamePhone.requestFocus();
+                    LabelImagePhone.setIcon(null);
+                    //   LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
+                    return;
+                }
+            } else {
+                viewTextProduct();
+                txtNamePhone.requestFocus();
+                JOptionPane.showMessageDialog(this, "UPDATED FAILURE THIS PRODUCT ID: " + idProductText);
+                return;
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input! PLEASE enter number"
+                    + "only for price and quantity");
+        } catch (IOException ex) {
+            Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_btnUpdatePhoneMouseClicked
 
     private void btnPushPhoneToHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPushPhoneToHomeMouseClicked

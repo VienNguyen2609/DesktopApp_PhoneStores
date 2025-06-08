@@ -8,11 +8,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author VIEN
+ */
+
 public class PanelRevenue extends javax.swing.JPanel {
 
     private double totalPrice = 0;
     private int totalQuantity = 0;
-    private RevenueController controller;
+    private RevenueController revenueController;
     private DefaultTableModel model;
 
     private ViewTabel viewTabel;
@@ -23,7 +28,7 @@ public class PanelRevenue extends javax.swing.JPanel {
         txtPrice.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         txtQuantity.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         btnCofirm.setForeground(new Color(0, 0, 0));
-        controller = new RevenueController();
+        revenueController = new RevenueController();
 
         viewTabel = new ViewTabel();
         viewTabel.view(tbRevenue);
@@ -49,10 +54,7 @@ public class PanelRevenue extends javax.swing.JPanel {
         tbRevenue.setForeground(new java.awt.Color(255, 255, 255));
         tbRevenue.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Phone Name", "Brand Phone", "Quantity", "Price", "Total"
@@ -112,11 +114,6 @@ public class PanelRevenue extends javax.swing.JPanel {
 
         txtPrice.setForeground(new java.awt.Color(255, 255, 255));
         txtPrice.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtPrice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPriceActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -184,7 +181,7 @@ public class PanelRevenue extends javax.swing.JPanel {
         int selectedMonth = Integer.parseInt((String) cbMonth.getSelectedItem());
         int selectedYear = Integer.parseInt((String) cbYear.getSelectedItem());
 
-        List<Object[]> list = controller.getRevenueByMonth(selectedMonth, selectedYear);
+        List<Object[]> list = revenueController.getRevenueByMonthAndYear(selectedMonth, selectedYear);
 
         model = (DefaultTableModel) tbRevenue.getModel();
         model.setRowCount(0);
@@ -202,10 +199,6 @@ public class PanelRevenue extends javax.swing.JPanel {
         txtPrice.setText("" + totalPrice);
         txtQuantity.setText("" + totalQuantity);
     }//GEN-LAST:event_btnCofirmMouseClicked
-
-    private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPriceActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

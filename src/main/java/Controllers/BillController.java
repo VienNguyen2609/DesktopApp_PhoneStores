@@ -212,7 +212,7 @@ public class BillController {
             int rows = ps.executeUpdate();
             ps.close();
 
-            // 6. Xóa trong listBill (nếu dùng)
+            // 6. Xóa trong listBill 
             listBill.clear();
 
             return rows > 0;

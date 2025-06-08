@@ -6,8 +6,8 @@ import Forms.Components.SetThemFlatLaf;
 import Forms.Components.ThemeFlatLaf;
 import Model.Staff;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
 
 /**
  *
@@ -21,8 +21,8 @@ public class Login extends javax.swing.JFrame {
         EffectComponents.init();
 
         setTitle("PRIMA MOBILES , LOGIN");
-        String iconPath = "E:\\Image\\LogoShopIcon.png";
-        setIconImage(Toolkit.getDefaultToolkit().getImage(new File(iconPath).getAbsolutePath()));
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Image/LogoShopIcon.png"));
+        setIconImage(icon);
         setLocationRelativeTo(null);
         setResizable(false);
 
@@ -226,21 +226,25 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseExited
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
-        
-        StafftController.instance.loadDataAccounts();
+
+        StafftController.instance.loadDataStaffs();
         String username = txtName.getText().trim();
         String password = String.valueOf(txtPassword.getPassword()).trim();
 
         SetThemFlatLaf.setThem(ThemeFlatLaf.Dark);
 
         if (StafftController.instance.checkLogin(username, password)) {
-            Staff user = StafftController.instance.getAccountByUsername(username);
+            Staff user = StafftController.instance.getStaffByUsername(username);
             System.out.println("Login");
             new HomePage(user).setVisible(true);
             dispose();
         } else if (username.isEmpty() || password.isEmpty()) {
+            txtName.requestFocus();
             LabelMessage.setText("error: INFORMATION NOT EMPTY!");
         } else {
+            txtName.setText("");
+            txtPassword.setText("");
+            txtName.requestFocus();
             LabelMessage.setText("error: NAME OR PASSWORD WRONG!");
         }
     }//GEN-LAST:event_headerButton1MouseClicked

@@ -20,35 +20,28 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel18" pref="214" max="32767" attributes="0"/>
-                              <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtBillNameUser" max="32767" attributes="0"/>
-                              <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel18" pref="214" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtBillTotal" max="32767" attributes="0"/>
-                              <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                          </Group>
                           <Component id="jLabel22" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelNameProduct4" min="-2" pref="51" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="LabelNameProduct4" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
+                                  <Component id="txtBillTotal" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="LabelNameProduct" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="LabelNameProduct" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtBillNameUser" alignment="0" min="-2" pref="198" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -59,22 +52,18 @@
                               <Component id="jLabel19" pref="214" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtBillPhoneName" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelNameProduct1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="LabelNameProduct1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtBillPhoneName" alignment="0" min="-2" pref="203" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtBillQuantity" max="32767" attributes="0"/>
-                                      <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="txtBillQuantity" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
                                   <Component id="jLabel20" pref="217" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="378" max="-2" attributes="0"/>
@@ -87,13 +76,12 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtBillDate" max="32767" attributes="0"/>
-                              <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                          </Group>
                           <Component id="jLabel23" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelNameProduct5" min="-2" pref="46" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="LabelNameProduct5" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                  <Component id="txtBillDate" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -101,11 +89,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel24" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="LabelNameProduct6" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtBillStatus" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="LabelNameProduct6" max="32767" attributes="0"/>
                               <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="txtBillStatus" min="-2" pref="199" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
@@ -115,11 +104,8 @@
                               <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Component id="jLabel21" alignment="0" pref="245" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtBillPrice" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel21" alignment="0" pref="279" max="32767" attributes="0"/>
+                              <Component id="txtBillPrice" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
@@ -350,7 +336,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="User Name(Can&apos;t Update)"/>
+        <Property name="text" type="java.lang.String" value="User Name"/>
       </Properties>
     </Component>
     <Component class="Forms.Components.TextFieldController" name="txtBillNameUser">
@@ -451,6 +437,7 @@
     </Component>
     <Component class="Forms.Components.TextFieldController" name="txtBillQuantity">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -470,7 +457,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="____________________________________"/>
+        <Property name="text" type="java.lang.String" value="_______________________________"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LabelNameProduct3">
@@ -486,6 +473,7 @@
     </Component>
     <Component class="Forms.Components.TextFieldController" name="txtBillPrice">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -505,7 +493,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="____________________________________"/>
+        <Property name="text" type="java.lang.String" value="_________________________________________"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LabelNameProduct4">
@@ -521,6 +509,7 @@
     </Component>
     <Component class="Forms.Components.TextFieldController" name="txtBillTotal">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -556,6 +545,7 @@
     </Component>
     <Component class="Forms.Components.TextFieldController" name="txtBillDate">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -602,6 +592,7 @@
     </Component>
     <Component class="Forms.Components.TextFieldController" name="txtBillStatus">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>

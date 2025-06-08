@@ -1,5 +1,12 @@
 package Controllers;
 
+
+/**
+ *
+ * @author VIEN
+ */
+
+
 import DatabaseConnection.SQLConnector;
 import Forms.Components.ViewTabel;
 import Model.Phone;
@@ -19,6 +26,8 @@ public class PhoneController {
     private ArrayList<Phone> listPhones = new ArrayList<>();
 
     private ViewTabel viewTabel = new ViewTabel();
+    
+    private DefaultTableModel model ;
     
     private static Connection conn;
     private static PreparedStatement ps;
@@ -57,7 +66,7 @@ public class PhoneController {
         }
     }
 
-    public void loadDataProducts() {
+    public void loadDataPhones() {
         listPhones.clear();
         try {
 
@@ -87,7 +96,7 @@ public class PhoneController {
         }
     }
 
-    public void searchByName(String name , String brand) {
+    public void fetchPhonesByNameOrBrand(String name , String brand) {
         listPhones.clear();
         try {
 
@@ -119,13 +128,13 @@ public class PhoneController {
         }
     }
 
-    public void loadTableProduct(JTable table) {
+    public void loadTablePhone(JTable table) {
 
         viewTabel.view(table);
         
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model = (DefaultTableModel) table.getModel();
         model.setNumRows(0);
-        loadDataProducts();
+        loadDataPhones();
         int n = 0;
         String status = "";
         for (Phone phone : listPhones) {
@@ -145,7 +154,7 @@ public class PhoneController {
         }
     }
 
-    public boolean addProduct(String name, String brand, double price, int quantity,
+    public boolean addPhone(String name, String brand, double price, int quantity,
             String operatingSystem, byte[] image, String descriptionPhone, boolean status) {
         
         if (image == null) {
@@ -183,7 +192,7 @@ public class PhoneController {
         return check;
     }
 
-    public boolean updateProduct(String name, String brand, double price, int quantity, 
+    public boolean updatePhone(String name, String brand, double price, int quantity, 
             String operatingSystem, byte[] image, String descriptionPhone, boolean status, int idProduct) {
 
         try {
@@ -222,7 +231,7 @@ public class PhoneController {
         return false;
     }
 
-    public boolean deleteProduct(int id) {
+    public boolean deletePhone(int id) {
         boolean check = false;
         try {
 
@@ -244,7 +253,7 @@ public class PhoneController {
         return check;
     }
 
-    public ArrayList<Phone> getDataProduct() {
+    public ArrayList<Phone> getDataPhone() {
         return listPhones;
     }
 

@@ -13,6 +13,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author VIEN
+ */
 public class PanelManagerStaff extends javax.swing.JPanel {
 
     private int selectedRow;
@@ -26,11 +30,11 @@ public class PanelManagerStaff extends javax.swing.JPanel {
     public PanelManagerStaff() {
         initComponents();
         StafftController.init();
-        StafftController.instance.loadTableAccount(tbAccount);
+        StafftController.instance.loadTableStaff(tbStaff);
         styleButton();
     }
 
-    private void viewTabelAccount() {
+    private void viewTabelStaff() {
         txtName.setText("");
         txtPassword.setText("");
         txtGmail.setText("");
@@ -38,26 +42,23 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         LabelImageUser.setIcon(null);
     }
 
-    public void clickMouseTableAccount() {
-        selectedRow = tbAccount.getSelectedRow();
+    public void clickMouseTableStaff() {
+
+        selectedRow = tbStaff.getSelectedRow();
         if (selectedRow != -1) {
-            String name = tbAccount.getValueAt(selectedRow, 2).toString();
-            String Password = tbAccount.getValueAt(selectedRow, 3).toString();
-            String gmail = tbAccount.getValueAt(selectedRow, 4).toString();
+            String name = tbStaff.getValueAt(selectedRow, 2).toString();
+            String Password = tbStaff.getValueAt(selectedRow, 3).toString();
+            String gmail = tbStaff.getValueAt(selectedRow, 4).toString();
             String position = "";
 
-            if (tbAccount.getValueAt(selectedRow, 5).toString().isEmpty()) {
+            if (tbStaff.getValueAt(selectedRow, 5).toString().isEmpty()) {
                 position = "No Positon";
             } else {
-                position = tbAccount.getValueAt(selectedRow, 5).toString();
+                position = tbStaff.getValueAt(selectedRow, 5).toString();
             }
-            String _status = tbAccount.getValueAt(selectedRow, 6).toString();
-            byte[] image = (byte[]) tbAccount.getValueAt(selectedRow, 7);
-//            LabelNameProduct.setForeground(Color.GREEN);
-//            LabelSizeProduct.setForeground(Color.GREEN);
-//            LabelPriceProduct.setForeground(Color.GREEN);
-//            LabelQuantityProduct.setForeground(Color.GREEN);
-//            LabelColorProduct.setForeground(Color.GREEN);
+            String _status = tbStaff.getValueAt(selectedRow, 6).toString();
+            byte[] image = (byte[]) tbStaff.getValueAt(selectedRow, 7);
+
             txtName.setText(name);
             txtPassword.setText(Password);
             txtGmail.setText(gmail);
@@ -90,7 +91,7 @@ public class PanelManagerStaff extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbAccount = new javax.swing.JTable();
+        tbStaff = new javax.swing.JTable();
         txtGmail = new Forms.Components.TextFieldController();
         txtName = new Forms.Components.TextFieldController();
         jLabel20 = new javax.swing.JLabel();
@@ -112,14 +113,11 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         LabelSizeProduct = new javax.swing.JLabel();
         cbStatusStaff = new javax.swing.JComboBox<>();
 
-        tbAccount.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        tbAccount.setForeground(new java.awt.Color(255, 255, 255));
-        tbAccount.setModel(new javax.swing.table.DefaultTableModel(
+        tbStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tbStaff.setForeground(new java.awt.Color(255, 255, 255));
+        tbStaff.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "No.", "Id", "Name", "Password", "Email", "Position", "Status", "Avatar"
@@ -140,27 +138,27 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tbAccount.setShowHorizontalLines(true);
-        tbAccount.setShowVerticalLines(true);
-        tbAccount.getTableHeader().setResizingAllowed(false);
-        tbAccount.getTableHeader().setReorderingAllowed(false);
-        tbAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbStaff.setShowHorizontalLines(true);
+        tbStaff.setShowVerticalLines(true);
+        tbStaff.getTableHeader().setResizingAllowed(false);
+        tbStaff.getTableHeader().setReorderingAllowed(false);
+        tbStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbAccountMouseClicked(evt);
+                tbStaffMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbAccount);
-        if (tbAccount.getColumnModel().getColumnCount() > 0) {
-            tbAccount.getColumnModel().getColumn(0).setMinWidth(40);
-            tbAccount.getColumnModel().getColumn(0).setMaxWidth(40);
-            tbAccount.getColumnModel().getColumn(1).setMinWidth(40);
-            tbAccount.getColumnModel().getColumn(1).setMaxWidth(40);
-            tbAccount.getColumnModel().getColumn(2).setResizable(false);
-            tbAccount.getColumnModel().getColumn(3).setResizable(false);
-            tbAccount.getColumnModel().getColumn(4).setResizable(false);
-            tbAccount.getColumnModel().getColumn(5).setResizable(false);
-            tbAccount.getColumnModel().getColumn(6).setResizable(false);
-            tbAccount.getColumnModel().getColumn(7).setResizable(false);
+        jScrollPane1.setViewportView(tbStaff);
+        if (tbStaff.getColumnModel().getColumnCount() > 0) {
+            tbStaff.getColumnModel().getColumn(0).setMinWidth(40);
+            tbStaff.getColumnModel().getColumn(0).setMaxWidth(40);
+            tbStaff.getColumnModel().getColumn(1).setMinWidth(40);
+            tbStaff.getColumnModel().getColumn(1).setMaxWidth(40);
+            tbStaff.getColumnModel().getColumn(2).setResizable(false);
+            tbStaff.getColumnModel().getColumn(3).setResizable(false);
+            tbStaff.getColumnModel().getColumn(4).setResizable(false);
+            tbStaff.getColumnModel().getColumn(5).setResizable(false);
+            tbStaff.getColumnModel().getColumn(6).setResizable(false);
+            tbStaff.getColumnModel().getColumn(7).setResizable(false);
         }
 
         txtGmail.setForeground(new java.awt.Color(255, 255, 255));
@@ -204,11 +202,6 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                 btnDeleteUserMouseClicked(evt);
             }
         });
-        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteUserActionPerformed(evt);
-            }
-        });
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,11 +232,6 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         btnUploadAvatarUser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUploadAvatarUserMouseClicked(evt);
-            }
-        });
-        btnUploadAvatarUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUploadAvatarUserActionPerformed(evt);
             }
         });
 
@@ -311,24 +299,7 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(65, 65, 65))
                             .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(LabelPasswordUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(LabelName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(LabelPasswordUser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addGap(50, 50, 50)
-                                                .addComponent(btnUploadAvatarUser, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(78, 78, 78))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(LabelPasswordUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,12 +308,27 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(LabelSizeProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbStatusStaff, 0, 0, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(LabelPasswordUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(LabelName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(LabelPasswordUser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(50, 50, 50)
+                                                .addComponent(btnUploadAvatarUser, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(78, 78, 78))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txtGmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
-                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(154, 154, 154))
                     .addGroup(layout.createSequentialGroup()
@@ -418,37 +404,35 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAccountMouseClicked
-        clickMouseTableAccount();
-    }//GEN-LAST:event_tbAccountMouseClicked
+    private void tbStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbStaffMouseClicked
+        clickMouseTableStaff();
+    }//GEN-LAST:event_tbStaffMouseClicked
 
     private void btnDeleteUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteUserMouseClicked
 
-        selectedRow = tbAccount.getSelectedRow();
+        selectedRow = tbStaff.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please select a product from the table first!");
             return;
         }
-        idUserText = Integer.parseInt(tbAccount.getValueAt(selectedRow, 1).toString().trim());
+        idUserText = Integer.parseInt(tbStaff.getValueAt(selectedRow, 1).toString().trim());
         int check = JOptionPane.showConfirmDialog(this, "Do you want delete this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
         if (check == JOptionPane.YES_OPTION) {
-            if (StafftController.instance.deleteAccount(idUserText)) {
+            if (StafftController.instance.deleteStaff(idUserText)) {
                 JOptionPane.showMessageDialog(this, "DELETED SUCCESSFULLY ID:" + idUserText);
-                viewTabelAccount();
-                StafftController.instance.loadTableAccount(tbAccount);
+                viewTabelStaff();
+                txtName.requestFocus();
+                StafftController.instance.loadTableStaff(tbStaff);
             }
         }
     }//GEN-LAST:event_btnDeleteUserMouseClicked
 
-    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteUserActionPerformed
-
     private void btnCancelUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelUserMouseClicked
-        viewTabelAccount();
+        viewTabelStaff();
     }//GEN-LAST:event_btnCancelUserMouseClicked
 
     private void btnUploadAvatarUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadAvatarUserMouseClicked
+
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -462,11 +446,8 @@ public class PanelManagerStaff extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "PHOTO NOT UPDATE YET!");
             return;
         }
-    }//GEN-LAST:event_btnUploadAvatarUserMouseClicked
 
-    private void btnUploadAvatarUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadAvatarUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUploadAvatarUserActionPerformed
+    }//GEN-LAST:event_btnUploadAvatarUserMouseClicked
 
     private void btnAddUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddUserMouseClicked
 
@@ -474,10 +455,12 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         String pass = txtPassword.getText().trim();
         String gamil = txtGmail.getText().trim();
         String position = txtPosition.getText().trim();
-        if (!StafftController.instance.checkAccount(name, pass, gamil)) {
+
+        if (!StafftController.instance.checkStaffLogin(name, pass, gamil)) {
             return;
         }
         if (selectedFile == null) {
+            JOptionPane.showMessageDialog(this, "PLEASE CAN NOT EMPTY AVATAR");
             return;
         } else {
             try {
@@ -489,16 +472,18 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         int check = JOptionPane.showConfirmDialog(this, "Do you want add this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
         if (check == JOptionPane.YES_OPTION) {
             if (position.length() != 0) {
-                if (StafftController.instance.addAccount(name, pass, gamil, position, imageUser)) {
+                if (StafftController.instance.addStaff(name, pass, gamil, position, imageUser)) {
                     JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
-                    viewTabelAccount();
-                    StafftController.instance.loadTableAccount(tbAccount);
+                    viewTabelStaff();
+                    txtName.requestFocus();
+                    StafftController.instance.loadTableStaff(tbStaff);
                 }
             } else {
-                if (StafftController.instance.addAccount(name, pass, gamil, "No position", imageUser)) {
+                if (StafftController.instance.addStaff(name, pass, gamil, "No position", imageUser)) {
                     JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
-                    viewTabelAccount();
-                    StafftController.instance.loadTableAccount(tbAccount);
+                    viewTabelStaff();
+                    txtName.requestFocus();
+                    StafftController.instance.loadTableStaff(tbStaff);
                 }
             }
         }
@@ -509,27 +494,30 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         statusStaffText = cbStatusStaff.getSelectedItem().toString();
         statusStaff = statusStaffText.equalsIgnoreCase("Active");
 
-        selectedRow = tbAccount.getSelectedRow();
+        selectedRow = tbStaff.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please select a product from the table first!");
             return;
         }
-        idUserText = Integer.parseInt(tbAccount.getValueAt(selectedRow, 1).toString().trim());
+        idUserText = Integer.parseInt(tbStaff.getValueAt(selectedRow, 1).toString().trim());
         String name = txtName.getText().trim();
         String pass = txtPassword.getText().trim();
         String gamil = txtGmail.getText().trim();
         String position = txtPosition.getText().trim();
-        if (!StafftController.instance.checkAccount(name, pass, gamil)) {
+        if (!StafftController.instance.checkStaffLogin(name, pass, gamil)) {
             return;
         }
         int check = JOptionPane.showConfirmDialog(this, "Do you want update this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
         if (check == JOptionPane.YES_OPTION) {
-            if (StafftController.instance.updateAccountManager(name, pass, gamil, position, statusStaff, idUserText)) {
+            if (StafftController.instance.updateStaffManager(name, pass, gamil, position, statusStaff, idUserText)) {
                 JOptionPane.showMessageDialog(this, "UPDATE SUCCESSFULLY ID USER:" + idUserText);
-                viewTabelAccount();
-                StafftController.instance.loadTableAccount(tbAccount);
+                viewTabelStaff();
+                txtName.requestFocus();
+                StafftController.instance.loadTableStaff(tbStaff);
 
             } else {
+                viewTabelStaff();
+                txtName.requestFocus();
                 JOptionPane.showMessageDialog(this, "CAN NOT UPDATE");
             }
         }
@@ -554,7 +542,7 @@ public class PanelManagerStaff extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbAccount;
+    private javax.swing.JTable tbStaff;
     private Forms.Components.TextFieldController txtGmail;
     private Forms.Components.TextFieldController txtName;
     private Forms.Components.TextFieldController txtPassword;

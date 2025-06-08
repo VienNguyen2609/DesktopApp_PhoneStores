@@ -22,16 +22,18 @@ import javax.swing.JOptionPane;
 public class PanelProfile extends javax.swing.JPanel {
 
     private JLabel label;
-    private Staff account;
+    private Staff staff;
     private File selectedFile;
     private Icon icon;
-    private Staff currentAccount;
+    private Staff currentStaff;
     private int statusStaff = 0;
 
-    public PanelProfile(Staff account) {
+    public PanelProfile(Staff staff ){
         initComponents();
-        this.account = account;
-        currentAccount = account;
+        
+        this.staff = staff;
+        currentStaff = staff;
+        
         RoundedPanel panel = new RoundedPanel(200, Color.BLUE);
         panel.setBackground(Color.CYAN);
         panel.setLayout(null);
@@ -44,37 +46,37 @@ public class PanelProfile extends javax.swing.JPanel {
         label.setForeground(Color.BLACK);
         panel.add(label);
         add(panel);
+        
         txtName.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtPass.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtGmail.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtPosition.setCustomBorder(new RoundedBorder(20, Color.BLACK));
         txtPass.setBackground(null);
-        txtName.setText(account.getName());
-        txtPass.setText(account.getPassword());
-        txtGmail.setText(account.getEmail());
-        txtPosition.setText(account.getPosition());
+        txtName.setText(staff.getName());
+        txtPass.setText(staff.getPassword());
+        txtGmail.setText(staff.getEmail());
+        txtPosition.setText(staff.getPosition());
 
         txtName1.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         txtPass1.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         txtGmail1.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         txtPass1.setBackground(null);
-        txtName1.setText(account.getName());
-        txtPass1.setText(account.getPassword());
-        txtGmail1.setText(account.getEmail());
+        txtName1.setText(staff.getName());
+        txtPass1.setText(staff.getPassword());
+        txtGmail1.setText(staff.getEmail());
 
-        setAvatar(account.getAvatar());
+        setAvatar(staff.getAvatar());
         btnUploadAvatar2.setForeground(new Color(0, 0, 0));
         btnEditProfile.setForeground(new Color(0, 0, 0));
 
         btnSave.setForeground(new Color(0, 0, 0));
-        btnCancel.setForeground(new Color(0, 0, 0));
         dEdit.setSize(new Dimension(700, 508));
         dEdit.setLocation(400, 100);
         dEdit.setTitle("EDIT YOUR PROFILE");
         dEdit.setVisible(false);
         dEdit.setResizable(false);
 
-        if (currentAccount.getName().contains("admin")) {
+        if (currentStaff.getName().contains("admin")) {
             statusStaff = 1;
         }
     }
@@ -104,7 +106,6 @@ public class PanelProfile extends javax.swing.JPanel {
         txtGmail1 = new Forms.Components.TextFieldController();
         jLabel7 = new javax.swing.JLabel();
         btnSave = new Forms.Components.HeaderButton();
-        btnCancel = new Forms.Components.HeaderButton();
         txtPass1 = new Forms.Components.TextFieldController();
         LabelAvatar5 = new Forms.Components.ProfilePhoto();
         txtName = new Forms.Components.TextFieldController();
@@ -139,11 +140,6 @@ public class PanelProfile extends javax.swing.JPanel {
         txtGmail1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         txtGmail1.setMaximumSize(new java.awt.Dimension(90, 33));
         txtGmail1.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/GmailIcon.png"))); // NOI18N
-        txtGmail1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGmail1ActionPerformed(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,24 +157,6 @@ public class PanelProfile extends javax.swing.JPanel {
                 btnSaveMouseClicked(evt);
             }
         });
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
-        btnCancel.setBackground(new java.awt.Color(153, 153, 255));
-        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/CancelIcon.png"))); // NOI18N
-        btnCancel.setText("Cancel");
-        btnCancel.setMaximumSize(new java.awt.Dimension(70, 38));
-        btnCancel.setMinimumSize(new java.awt.Dimension(40, 38));
-        btnCancel.setPreferredSize(new java.awt.Dimension(60, 38));
-        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCancelMouseClicked(evt);
-            }
-        });
 
         txtPass1.setForeground(new java.awt.Color(255, 255, 255));
         txtPass1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -190,12 +168,6 @@ public class PanelProfile extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 214, Short.MAX_VALUE)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(149, 149, 149))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(206, 206, 206)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,7 +176,11 @@ public class PanelProfile extends javax.swing.JPanel {
                     .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(258, 258, 258))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,11 +197,9 @@ public class PanelProfile extends javax.swing.JPanel {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtGmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(68, 68, 68))
+                .addGap(29, 29, 29)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81))
         );
 
         javax.swing.GroupLayout dEditLayout = new javax.swing.GroupLayout(dEdit.getContentPane());
@@ -272,11 +246,6 @@ public class PanelProfile extends javax.swing.JPanel {
         txtGmail.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         txtGmail.setMaximumSize(new java.awt.Dimension(90, 33));
         txtGmail.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/GmailIcon.png"))); // NOI18N
-        txtGmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGmailActionPerformed(evt);
-            }
-        });
 
         txtPass.setEditable(false);
         txtPass.setBackground(new java.awt.Color(0, 0, 0));
@@ -412,10 +381,6 @@ public class PanelProfile extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtGmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGmailActionPerformed
-
     private void btnUploadAvatar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadAvatar2MouseClicked
 
         JFileChooser chooser = new JFileChooser();
@@ -433,7 +398,7 @@ public class PanelProfile extends javax.swing.JPanel {
             return;
         }
         else{
-            StafftController.instance.saveAvatarToDatabase(selectedFile, currentAccount.getName());
+            StafftController.instance.saveAvatarToDatabase(selectedFile, currentStaff.getName());
             JOptionPane.showMessageDialog(this, "PHOTO UPDATE SUCCESSFULLY!");
         }
         
@@ -449,16 +414,12 @@ public class PanelProfile extends javax.swing.JPanel {
     }//GEN-LAST:event_cbPasswordMouseClicked
 
     private void btnEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditProfileMouseClicked
-        txtName.setText(account.getName());
-        txtPass.setText(account.getPassword());
-        txtGmail.setText(account.getEmail());
-        txtPosition.setText(account.getPosition());
+        txtName.setText(staff.getName());
+        txtPass.setText(staff.getPassword());
+        txtGmail.setText(staff.getEmail());
+        txtPosition.setText(staff.getPosition());
         dEdit.setVisible(true);
     }//GEN-LAST:event_btnEditProfileMouseClicked
-
-    private void txtGmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGmail1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGmail1ActionPerformed
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
 
@@ -467,19 +428,19 @@ public class PanelProfile extends javax.swing.JPanel {
         String password = txtPass1.getText().trim();
         String gmail = txtGmail1.getText().trim();
 
-        StafftController.instance.loadDataAccounts();
+        StafftController.instance.loadDataStaffs();
         try {
 
-            if (!StafftController.instance.checkAccountIsAdmin(_nameCurrently, password, gmail, statusStaff)) {
+            if (!StafftController.instance.checkLoginIsAdmin(_nameCurrently, password, gmail, statusStaff)) {
                 return;
             }
 
-            Staff UpdateAccount = StafftController.instance.updateAccount(name, password, gmail, currentAccount.getName());
-            if (UpdateAccount != null) {
-                currentAccount = UpdateAccount;
-                txtName.setText(currentAccount.getName());
-                txtPass.setText(currentAccount.getPassword());
-                txtGmail.setText(currentAccount.getEmail());
+            Staff UpdateStaff = StafftController.instance.updateStaff(name, password, gmail, currentStaff.getName());
+            if (UpdateStaff != null) {
+                currentStaff = UpdateStaff;
+                txtName.setText(currentStaff.getName());
+                txtPass.setText(currentStaff.getPassword());
+                txtGmail.setText(currentStaff.getEmail());
                 dEdit.setVisible(false);
                 JOptionPane.showMessageDialog(this, "Profile Updated Successfully");
                 return;
@@ -494,18 +455,9 @@ public class PanelProfile extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSaveMouseClicked
 
-    private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelMouseClicked
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSaveActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Forms.Components.ProfilePhoto LabelAvatar5;
-    private Forms.Components.HeaderButton btnCancel;
     private Forms.Components.HeaderButton btnEditProfile;
     private Forms.Components.HeaderButton btnSave;
     private Forms.Components.HeaderButton btnUploadAvatar2;

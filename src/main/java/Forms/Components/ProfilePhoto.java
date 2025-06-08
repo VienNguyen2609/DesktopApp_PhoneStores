@@ -12,6 +12,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
+/**
+ *
+ * @author VIEN
+ */
+
 public class ProfilePhoto extends JComponent {
 
     private Icon icon;

@@ -1,5 +1,11 @@
 package Model;
 
+
+/**
+ *
+ * @author VIEN
+ */
+
 public class Phone {
 
     private int phoneId;

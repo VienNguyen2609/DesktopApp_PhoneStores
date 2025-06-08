@@ -5,11 +5,14 @@ import Forms.Components.EffectComponents;
 import Main.Run;
 import Model.Staff;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author VIEN
+ */
 public class HomePage extends javax.swing.JFrame {
 
     private PanelManagerStaff panelManagerAccount;
@@ -21,27 +24,8 @@ public class HomePage extends javax.swing.JFrame {
     private PanelManagerClient panelManagerClient;
     private PanelRevenue panelRevenue;
 
-    private Staff currentAccount;
-
-    private int quantityAvailableBill;
-    private File selectedFile;
-    private Icon icon;
-
-    private String nameText;
-    private String colorText;
-    private String passwordText;
-    private String gmailText;
-    private float priceText;
-    private int idProductText;
-    private int sizeProductText;
-    private int quantityText;
-    private int selectedRow;
-    private byte[] imageProduct = null;
-
-    private byte[] imageUser = null;
-    private int idUserText;
-
-    private int status = 0;
+    private Staff currentStaff;
+  
 
     public HomePage() {
         initComponents();
@@ -51,15 +35,15 @@ public class HomePage extends javax.swing.JFrame {
         initComponents();
         PhoneController.init();
         EffectComponents.init();
-        this.currentAccount = staff;
+        this.currentStaff = staff;
 
         panelManagerAccount = new PanelManagerStaff();
-        panelPhone = new PanelPhone(currentAccount);
+        panelPhone = new PanelPhone(currentStaff);
 
         // TẠM thời gán null
         panelManagerBill = new PanelManagerBill(panelPhone, staff, null);
         panelManagerClient = new PanelManagerClient();
-        panelHome = new PanelHome(currentAccount, panelManagerBill, null, panelManagerClient);
+        panelHome = new PanelHome(currentStaff, panelManagerBill, null, panelManagerClient);
 
         // GÁN lại panelHome cho panelManagerBill
         panelManagerBill.setPanelHome(panelHome);
@@ -122,8 +106,8 @@ public class HomePage extends javax.swing.JFrame {
     private void setupWindow() {
         setLocationRelativeTo(null);
         setTitle("PRIMA MOBILES ,  SHOP FOR YOU ");
-        String iconPath = "E:\\Image\\LogoShopIcon.png";
-        setIconImage(Toolkit.getDefaultToolkit().getImage(new File(iconPath).getAbsolutePath()));
+        Image iconApp = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Image/LogoShopIcon.png"));
+        setIconImage(iconApp);
     }
 
     @SuppressWarnings("unchecked")
@@ -193,11 +177,6 @@ public class HomePage extends javax.swing.JFrame {
         btnProfle.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProfleMouseClicked(evt);
-            }
-        });
-        btnProfle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProfleActionPerformed(evt);
             }
         });
 
@@ -376,14 +355,6 @@ public class HomePage extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnProfleMouseClicked
-
-    private void btnProfleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfleActionPerformed
-
-//        if (!PanelProfile.isVisible()) {
-//            txtPasswordProfile.setEchoChar('*');
-//            CheckPassword.setSelected(false);
-//        }
-    }//GEN-LAST:event_btnProfleActionPerformed
 
     private void btnHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomePageMouseClicked
 

@@ -1,5 +1,10 @@
 package Controllers;
 
+/**
+ *
+ * @author VIEN
+ */
+
 import Model.Staff;
 import DatabaseConnection.SQLConnector;
 import Forms.Components.EffectComponents;
@@ -38,23 +43,23 @@ public class StafftController {
         isInitiallized = true;
     }
     
-    private final String loadDataAccount_SQL = "select * from Staffs";
+    private final String loadDataStaff_SQL = "select * from Staffs";
     
-    private final String insertAccountWithAvatarSql = "INSERT INTO Staffs (nameStaff, passwordStaff "
+    private final String insertStaffWithAvatarSQL = "INSERT INTO Staffs (nameStaff, passwordStaff "
             + ", emailStaff , positionStaff ,avatarStaff) VALUES (?,?,?,?,?)";
     
-    private final String insertAccountSql = "INSERT INTO Staffs (nameStaff, passwordStaff, positionStaff , "
+    private final String insertStaffSQL = "INSERT INTO Staffs (nameStaff, passwordStaff, positionStaff , "
             + " emailStaff ) VALUES (?,?,?,?)";
     
-    private final String deleteAccountByIdSql = "Delete From Staffs where idStaff =?";
+    private final String deleteStaffByIdSQL = "Delete From Staffs where idStaff =?";
     
-    private final String updateAccountByNameSql = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  ,"
+    private final String updateStaffByNameSQL = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  ,"
             + " emailStaff = ?   WHERE nameStaff = ?";
     
-    private final String updateAccountByIdSql = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , "
+    private final String updateStaffByIdSQL = "UPDATE Staffs SET nameStaff = ? , passwordStaff = ?  , "
             + "emailStaff = ? , positionStaff =? , statusStaff =?   WHERE idStaff = ?";
     
-    private final String updateAvatarByUsernameSql = "UPDATE Staffs SET avatarStaff = ? WHERE nameStaff = ?";
+    private final String updateAvatarByUsernameSQL = "UPDATE Staffs SET avatarStaff = ? WHERE nameStaff = ?";
     
     private void setupDatabaseCommand(String sql) throws SQLException {
         try {
@@ -67,10 +72,10 @@ public class StafftController {
         
     }
     
-    public void loadDataAccounts() {
+    public void loadDataStaffs() {
         listStaff.clear();
         try {
-            setupDatabaseCommand(loadDataAccount_SQL);
+            setupDatabaseCommand(loadDataStaff_SQL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("idStaff");
@@ -95,12 +100,12 @@ public class StafftController {
         }
     }
     
-    public void loadTableAccount(JTable table) {
+    public void loadTableStaff(JTable table) {
         
         viewTabel.view(table);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setNumRows(0);
-        loadDataAccounts();
+        loadDataStaffs();
         int n = 0;
         String status = "";
         for (Staff staff : listStaff) {
@@ -140,17 +145,17 @@ public class StafftController {
         return false;
     }
     
-    public boolean addAccount(String name, String pass, String gmail, String position, byte[] image) {
+    public boolean addStaff(String name, String pass, String gmail, String position, byte[] image) {
         try {
             if (image != null) {
-                setupDatabaseCommand(insertAccountWithAvatarSql);
+                setupDatabaseCommand(insertStaffWithAvatarSQL);
                 ps.setString(1, name);
                 ps.setString(2, pass);
                 ps.setString(3, gmail);
                 ps.setString(4, position);
                 ps.setBytes(5, image);
             } else {
-                setupDatabaseCommand(insertAccountSql);
+                setupDatabaseCommand(insertStaffSQL);
                 ps.setString(1, name);
                 ps.setString(2, pass);
                 ps.setString(3, position);
@@ -175,10 +180,10 @@ public class StafftController {
         return false;
     }
     
-    public boolean deleteAccount(int id) {
+    public boolean deleteStaff(int id) {
         
         try {
-            setupDatabaseCommand(deleteAccountByIdSql);
+            setupDatabaseCommand(deleteStaffByIdSQL);
             ps.setInt(1, id);
             int n = ps.executeUpdate();
             if (n > 0) {
@@ -196,11 +201,11 @@ public class StafftController {
         return false;
     }
 
-    //update cho panel profile 
-    public Staff updateAccount(String name, String pass, String gmail, String nameStaff) {
+    //update cho panel profile trả kiểu staff
+    public Staff updateStaff(String name, String pass, String gmail, String nameStaff) {
         
         try {
-            setupDatabaseCommand(updateAccountByNameSql);
+            setupDatabaseCommand(updateStaffByNameSQL);
             ps.setString(1, name);
             ps.setString(2, pass);
             ps.setString(3, gmail);
@@ -222,10 +227,10 @@ public class StafftController {
         return null;
     }
     
-    public boolean updateAccountManager(String name, String pass, String gmail, String position, boolean status, int id) {
+    public boolean updateStaffManager(String name, String pass, String gmail, String position, boolean status, int id) {
         
         try {
-            setupDatabaseCommand(updateAccountByIdSql);
+            setupDatabaseCommand(updateStaffByIdSQL);
             ps.setString(1, name);
             ps.setString(2, pass);
             ps.setString(3, gmail);
@@ -249,7 +254,7 @@ public class StafftController {
         return false;
     }
     
-    public boolean checkAccount(String name, String password, String gmail) {
+    public boolean checkStaffLogin(String name, String password, String gmail) {
         
         if (password.length() < 5 || name.length() < 4 ) {
             JOptionPane.showMessageDialog(null, "error: LENGTH PASSWORD >= 7 AND NAME >=4");
@@ -273,7 +278,7 @@ public class StafftController {
         return true;
     }
     
-    public boolean checkAccountIsAdmin(String name, String password, String gmail, int status) {
+    public boolean checkLoginIsAdmin(String name, String password, String gmail, int status) {
         
         if (EffectComponents.instance.containsVietnameseCharacters(name)) {
             JOptionPane.showMessageDialog(null, "error: NAME WRONG!");
@@ -303,7 +308,7 @@ public class StafftController {
     public void saveAvatarToDatabase(File selectedFile, String nameUser) {
         
         try (FileInputStream fis = new FileInputStream(selectedFile)) {
-            setupDatabaseCommand(updateAvatarByUsernameSql);
+            setupDatabaseCommand(updateAvatarByUsernameSQL);
             ps.setBinaryStream(1, fis, (int) selectedFile.length());
             ps.setString(2, nameUser);
             int n = ps.executeUpdate();
@@ -313,7 +318,7 @@ public class StafftController {
         
     }
     
-    public Staff getAccountByUsername(String username) {
+    public Staff getStaffByUsername(String username) {
         for (Staff staff : listStaff) {
             if (staff.getName().equalsIgnoreCase(username)) {
                 return staff;
@@ -322,7 +327,7 @@ public class StafftController {
         return null;
     }
     
-    public ArrayList<Staff> getDataAccount() {
+    public ArrayList<Staff> getDataStaff() {
         return listStaff;
     }
 }

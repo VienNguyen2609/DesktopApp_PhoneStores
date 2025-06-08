@@ -141,7 +141,6 @@ public class ClientController {
             ps.setString(1, telephone);
 
             int rss = ps.executeUpdate();
-            System.out.println(rss);
 
         } catch (SQLException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
@@ -156,7 +155,6 @@ public class ClientController {
             ps.setString(2, phone);
 
             int rss = ps.executeUpdate();
-            System.out.println(rss);
 
         } catch (SQLException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
@@ -171,7 +169,6 @@ public class ClientController {
             ps.setInt(2, id);
             ps.setString(3, phone);
             int rss = ps.executeUpdate();
-            System.out.println(rss);
 
         } catch (SQLException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
@@ -209,7 +206,6 @@ public class ClientController {
             ps.setInt(5, cl.getIdClient());
 
             int rss = ps.executeUpdate();
-            System.out.println(rss);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "CAN NOT UPDATE THIS CLIENT");

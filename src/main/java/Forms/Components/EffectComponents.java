@@ -3,6 +3,7 @@ package Forms.Components;
 import Forms.CreateAccount;
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.FocusEvent;
@@ -18,6 +19,10 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ *
+ * @author VIEN
+ */
 public class EffectComponents {
 
     private JTextField textField;
@@ -35,22 +40,20 @@ public class EffectComponents {
 
     }
 
-    public static BufferedImage makeTransparent(BufferedImage img, float alpha, JLabel label) {
-        int width = img.getWidth();
-        int height = img.getHeight();
-        BufferedImage transparentImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = transparentImage.createGraphics();
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        g2d.drawImage(img, 0, 0, null);
-        g2d.dispose();
-        label.setIcon(new ImageIcon(transparentImage));
-        return transparentImage;
+    public void removePlaceHolderStyle(JTextField textField) {
+        Font font = textField.getFont();
+        font = font.deriveFont(Font.PLAIN | Font.BOLD);
+        textField.setFont(font);
+        textField.setForeground(Color.WHITE);
     }
 
-    public void bufferedImage(String c, JLabel label, float alpha) throws IOException {
-        BufferedImage image = ImageIO.read(new File(c));
-        EffectComponents.instance.makeTransparent(image, alpha, label);
+    public void addPlaceHolderStyle(JTextField textField) {
+        Font font = textField.getFont();
+        font = font.deriveFont(Font.ITALIC);
+        textField.setFont(font);
+        textField.setForeground(Color.WHITE);
     }
+
 
     public void focusPointer(JTextField textField, JComponent componentToColor, JLabel animationLabel, Color colorFirst, Color colorLast) {
         textField.addFocusListener(new FocusListener() {

@@ -17,14 +17,14 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
     private int selectedRow;
     private PanelPhone panelPhone;
-    private Staff account;
+    private Staff staff;
     private PanelHome panelHome;
 
     public PanelManagerBill(PanelPhone panelPhone, Staff account, PanelHome panelHome) {
         initComponents();
         BillController.init();
         this.panelPhone = panelPhone;
-        this.account = account;
+        this.staff = account;
         this.panelHome = panelHome;
 
         list = BillController.instance.getDisplayBills();
@@ -190,7 +190,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
 
         LabelNameProduct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelNameProduct.setForeground(new java.awt.Color(255, 255, 255));
-        LabelNameProduct.setText("User Name(Can't Update)");
+        LabelNameProduct.setText("User Name");
 
         txtBillNameUser.setEditable(false);
         txtBillNameUser.setForeground(new java.awt.Color(255, 255, 255));
@@ -226,30 +226,33 @@ public class PanelManagerBill extends javax.swing.JPanel {
         LabelNameProduct2.setForeground(new java.awt.Color(255, 255, 255));
         LabelNameProduct2.setText("Quantity");
 
+        txtBillQuantity.setEditable(false);
         txtBillQuantity.setForeground(new java.awt.Color(255, 255, 255));
         txtBillQuantity.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtBillQuantity.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/QuantityIcon.png"))); // NOI18N
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("____________________________________");
+        jLabel20.setText("_______________________________");
 
         LabelNameProduct3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelNameProduct3.setForeground(new java.awt.Color(255, 255, 255));
         LabelNameProduct3.setText("Price");
 
+        txtBillPrice.setEditable(false);
         txtBillPrice.setForeground(new java.awt.Color(255, 255, 255));
         txtBillPrice.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtBillPrice.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/PriceIcon.png"))); // NOI18N
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("____________________________________");
+        jLabel21.setText("_________________________________________");
 
         LabelNameProduct4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelNameProduct4.setForeground(new java.awt.Color(255, 255, 255));
         LabelNameProduct4.setText("Total");
 
+        txtBillTotal.setEditable(false);
         txtBillTotal.setForeground(new java.awt.Color(255, 255, 255));
         txtBillTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtBillTotal.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/TotalIcon.png"))); // NOI18N
@@ -262,6 +265,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
         LabelNameProduct5.setForeground(new java.awt.Color(255, 255, 255));
         LabelNameProduct5.setText("Date");
 
+        txtBillDate.setEditable(false);
         txtBillDate.setForeground(new java.awt.Color(255, 255, 255));
         txtBillDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtBillDate.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/DateIcon.png"))); // NOI18N
@@ -278,6 +282,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
         LabelNameProduct6.setForeground(new java.awt.Color(255, 255, 255));
         LabelNameProduct6.setText("Status(0: Unpaid , 1: Paid)");
 
+        txtBillStatus.setEditable(false);
         txtBillStatus.setForeground(new java.awt.Color(255, 255, 255));
         txtBillStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtBillStatus.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/StatusIcon.png"))); // NOI18N
@@ -309,26 +314,21 @@ public class PanelManagerBill extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                                .addGap(2, 2, 2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBillNameUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(40, 40, 40)))
-                        .addGap(40, 40, 40))
+                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                        .addGap(42, 42, 42))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBillTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(40, 40, 40))
                             .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelNameProduct4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LabelNameProduct4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtBillTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(28, 28, 28))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(LabelNameProduct)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LabelNameProduct)
+                            .addComponent(txtBillNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -337,17 +337,14 @@ public class PanelManagerBill extends javax.swing.JPanel {
                                 .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                                 .addGap(35, 35, 35))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBillPhoneName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(72, 72, 72))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelNameProduct1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LabelNameProduct1)
+                                    .addComponent(txtBillPhoneName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtBillQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(40, 40, 40))
+                                    .addComponent(txtBillQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
                                 .addGap(378, 378, 378))
                             .addGroup(layout.createSequentialGroup()
@@ -355,31 +352,29 @@ public class PanelManagerBill extends javax.swing.JPanel {
                                 .addGap(512, 512, 512))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBillDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(40, 40, 40))
                             .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelNameProduct5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LabelNameProduct5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtBillDate, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(LabelNameProduct6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtBillStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(40, 40, 40)))
+                                .addComponent(LabelNameProduct6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(40, 40, 40))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBillStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LabelNameProduct3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(168, 168, 168))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtBillPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(37, 37, 37))))
+                                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                                .addComponent(txtBillPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(81, 81, 81)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
@@ -505,7 +500,7 @@ public class PanelManagerBill extends javax.swing.JPanel {
         if (check == JOptionPane.YES_OPTION) {
             loadBillInTbale();
         }
-       
+
     }//GEN-LAST:event_btnRefreshMouseClicked
 
 

@@ -9,6 +9,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
 import javax.swing.border.Border;
 
+/**
+ *
+ * @author VIEN
+ */
+
 public class PasswordField extends JPasswordField {
 
     private Icon prefixIcon;

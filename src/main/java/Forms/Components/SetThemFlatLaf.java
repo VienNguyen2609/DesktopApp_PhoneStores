@@ -13,6 +13,11 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
+/**
+ *
+ * @author VIEN
+ */
+
 public final class SetThemFlatLaf {
 
     public static void setThem(ThemeFlatLaf themeFlatLaf) {
