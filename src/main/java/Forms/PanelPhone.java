@@ -42,8 +42,10 @@ public class PanelPhone extends javax.swing.JPanel {
     }
 
     public PanelPhone(Phone phone, PanelHome panelHome, Staff staff, PanelManagerBill panelManagerBill) {
+        
         initComponents();
         BillController.init();
+        
         this.panelHome = panelHome;
         this.currentStaff = staff;
         this.panelManagerBill = panelManagerBill;
@@ -93,11 +95,9 @@ public class PanelPhone extends javax.swing.JPanel {
                     Image scaledImage = bufferedImage.getScaledInstance(defaultWidth, defaultHeight, Image.SCALE_SMOOTH);
                     icon = new ImageIcon(scaledImage);
                     LabelImage.setIcon(icon);
-                    //  LabelImage.setBorder(new RoundedBorder(30));
 
                 } else {
                     System.out.println("CAN NOT UPLOAD IMAGE PRODUCTS");
-
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

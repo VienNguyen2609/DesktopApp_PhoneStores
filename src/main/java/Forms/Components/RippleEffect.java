@@ -21,9 +21,9 @@ import java.util.List;
 
 public class RippleEffect {
 
-    private final Component component;
-    private Color rippleColor = new Color(0, 0, 0);
-    private List<Effect> effects;
+    private final Component component; //Thành phần Swing như button, panel, muốn gắn hiệu ứng ripple vào.
+    private Color rippleColor = new Color(0, 0, 0); // màu hiệu ứng sóng là đen 
+    private List<Effect> effects;// là danh sách nhiều hiệu ứng khi nhấn nhiều lần 
      
     public Color getBackgroundColor() {
         return rippleColor;
@@ -45,14 +45,14 @@ public class RippleEffect {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    addEffect(e.getPoint());
+                    addEffect(e.getPoint()); //Khởi tạo danh sách hiệu ứng và thêm MouseListener.
                 }
             }
         });
     }
 
     public void addEffect(Point location) {
-        effects.add(new Effect(component, location));
+        effects.add(new Effect(component, location)); // Tạo một đối tượng Effect mới rồi thêm vào danh sách để được vẽ.
     }
 
     public void reder(Graphics g, Shape contain) {
@@ -66,7 +66,7 @@ public class RippleEffect {
         }
     }
 
-    private class Effect {
+    private class Effect { // lớp nội Effect , Class này mô phỏng một lần sóng ripple duy nhất.
 
         private final Component component;
         private final Point location;
@@ -84,12 +84,12 @@ public class RippleEffect {
                 @Override
                 public void timingEvent(float fraction) {
                     animate = fraction;
-                    component.repaint();
+                    component.repaint(); // cập nhật animate theo thời gian gọi repaint() để vẽ lại.
                 }
 
                 @Override
                 public void end() {
-                    effects.remove(Effect.this);
+                    effects.remove(Effect.this); // xóa bỏ ripple khỏi danh sách 
                 }
             });
             animator.start();
@@ -98,8 +98,10 @@ public class RippleEffect {
         public void render(Graphics2D g2, Shape contain) {
             Area area = new Area(contain);
             area.intersect(new Area(getShape(getSize(contain.getBounds2D()))));
+             //Vẽ hình tròn mờ dần theo thời gian. 
             g2.setColor(rippleColor);
-            float alpha = 0.3f;
+            float alpha = 0.3f; 
+            // độ mờ giãm dần khi dần tới 1 
             if (animate >= 0.7f) {
                 double t = animate - 0.7f;
                 alpha = (float) (alpha - (alpha * (t / 0.3f)));

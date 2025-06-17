@@ -1,6 +1,6 @@
 package Forms;
 
-import Controllers.StafftController;
+import Controllers.StaffController;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
@@ -29,8 +29,8 @@ public class PanelManagerStaff extends javax.swing.JPanel {
 
     public PanelManagerStaff() {
         initComponents();
-        StafftController.init();
-        StafftController.instance.loadTableStaff(tbStaff);
+        StaffController.init();
+        StaffController.instance.loadTableStaff(tbStaff);
         styleButton();
     }
 
@@ -153,9 +153,11 @@ public class PanelManagerStaff extends javax.swing.JPanel {
             tbStaff.getColumnModel().getColumn(0).setMaxWidth(40);
             tbStaff.getColumnModel().getColumn(1).setMinWidth(40);
             tbStaff.getColumnModel().getColumn(1).setMaxWidth(40);
-            tbStaff.getColumnModel().getColumn(2).setResizable(false);
+            tbStaff.getColumnModel().getColumn(2).setMinWidth(100);
+            tbStaff.getColumnModel().getColumn(2).setMaxWidth(100);
             tbStaff.getColumnModel().getColumn(3).setResizable(false);
-            tbStaff.getColumnModel().getColumn(4).setResizable(false);
+            tbStaff.getColumnModel().getColumn(4).setMinWidth(200);
+            tbStaff.getColumnModel().getColumn(4).setMaxWidth(200);
             tbStaff.getColumnModel().getColumn(5).setResizable(false);
             tbStaff.getColumnModel().getColumn(6).setResizable(false);
             tbStaff.getColumnModel().getColumn(7).setResizable(false);
@@ -175,7 +177,7 @@ public class PanelManagerStaff extends javax.swing.JPanel {
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("____________________________________");
+        jLabel20.setText("_______________________________________________");
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
@@ -326,11 +328,11 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtGmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                                        .addComponent(txtGmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(154, 154, 154))
+                        .addGap(53, 53, 53))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -345,7 +347,7 @@ public class PanelManagerStaff extends javax.swing.JPanel {
                                     .addComponent(btnCancelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,11 +420,11 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         idUserText = Integer.parseInt(tbStaff.getValueAt(selectedRow, 1).toString().trim());
         int check = JOptionPane.showConfirmDialog(this, "Do you want delete this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
         if (check == JOptionPane.YES_OPTION) {
-            if (StafftController.instance.deleteStaff(idUserText)) {
+            if (StaffController.instance.deleteStaff(idUserText)) {
                 JOptionPane.showMessageDialog(this, "DELETED SUCCESSFULLY ID:" + idUserText);
                 viewTabelStaff();
                 txtName.requestFocus();
-                StafftController.instance.loadTableStaff(tbStaff);
+                StaffController.instance.loadTableStaff(tbStaff);
             }
         }
     }//GEN-LAST:event_btnDeleteUserMouseClicked
@@ -456,7 +458,7 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         String gamil = txtGmail.getText().trim();
         String position = txtPosition.getText().trim();
 
-        if (!StafftController.instance.checkStaffLogin(name, pass, gamil)) {
+        if (!StaffController.instance.checkStaffLogin(name, pass, gamil)) {
             return;
         }
         if (selectedFile == null) {
@@ -466,24 +468,24 @@ public class PanelManagerStaff extends javax.swing.JPanel {
             try {
                 imageUser = Files.readAllBytes(selectedFile.toPath());
             } catch (IOException ex) {
-                Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "ERROR IMAGE");
             }
         }
         int check = JOptionPane.showConfirmDialog(this, "Do you want add this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
         if (check == JOptionPane.YES_OPTION) {
             if (position.length() != 0) {
-                if (StafftController.instance.addStaff(name, pass, gamil, position, imageUser)) {
+                if (StaffController.instance.addStaff(name, pass, gamil, position, imageUser)) {
                     JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
                     viewTabelStaff();
                     txtName.requestFocus();
-                    StafftController.instance.loadTableStaff(tbStaff);
+                    StaffController.instance.loadTableStaff(tbStaff);
                 }
             } else {
-                if (StafftController.instance.addStaff(name, pass, gamil, "No position", imageUser)) {
+                if (StaffController.instance.addStaff(name, pass, gamil, "No position", imageUser)) {
                     JOptionPane.showMessageDialog(this, "ADDED ACCOUNT SUCCESSFULLY!");
                     viewTabelStaff();
                     txtName.requestFocus();
-                    StafftController.instance.loadTableStaff(tbStaff);
+                    StaffController.instance.loadTableStaff(tbStaff);
                 }
             }
         }
@@ -504,16 +506,26 @@ public class PanelManagerStaff extends javax.swing.JPanel {
         String pass = txtPassword.getText().trim();
         String gamil = txtGmail.getText().trim();
         String position = txtPosition.getText().trim();
-        if (!StafftController.instance.checkStaffLogin(name, pass, gamil)) {
+        if (!StaffController.instance.checkStaffLogin(name, pass, gamil)) {
             return;
+        }
+        if (selectedFile == null) {
+            JOptionPane.showMessageDialog(this, "PLEASE CAN NOT EMPTY AVATAR");
+            return;
+        } else {
+            try {
+                imageUser = Files.readAllBytes(selectedFile.toPath());
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "ERROR IMAGE");
+            }
         }
         int check = JOptionPane.showConfirmDialog(this, "Do you want update this account!", "CONFIRM", JOptionPane.YES_NO_CANCEL_OPTION);
         if (check == JOptionPane.YES_OPTION) {
-            if (StafftController.instance.updateStaffManager(name, pass, gamil, position, statusStaff, idUserText)) {
+            if (StaffController.instance.updateStaffManager(name, pass, gamil, position, statusStaff, imageUser , idUserText)) {
                 JOptionPane.showMessageDialog(this, "UPDATE SUCCESSFULLY ID USER:" + idUserText);
                 viewTabelStaff();
                 txtName.requestFocus();
-                StafftController.instance.loadTableStaff(tbStaff);
+                StaffController.instance.loadTableStaff(tbStaff);
 
             } else {
                 viewTabelStaff();

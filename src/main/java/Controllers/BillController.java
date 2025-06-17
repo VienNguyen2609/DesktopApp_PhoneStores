@@ -29,9 +29,11 @@ public class BillController {
     private ArrayList<Order> listBill = new ArrayList<>();
     private ViewTabel viewTabel = new ViewTabel();
     
-    private static Connection conn;
-    private static PreparedStatement ps;
-    private static ResultSet rs;
+    
+    
+    private static Connection conn; /// kết nối với SQL 
+    private static PreparedStatement ps; // Dùng để thực hiện câu lệnh SQL 
+    private static ResultSet rs; // duyệt kết quả truy vấn 
     public DefaultTableModel model;
 
     private static boolean isInitiallized = false;
@@ -89,7 +91,7 @@ public class BillController {
             String checkStatusSQL = "SELECT statusOrder FROM Orders WHERE idOrder = ?";
             setupDatabaseCommand(checkStatusSQL);
             ps.setInt(1, billId);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             boolean needRestoreQuantity = false;
             if (rs.next()) {
@@ -113,6 +115,7 @@ public class BillController {
                 ps.setInt(1, billId);
                 rs = ps.executeQuery();
 
+                // lưu trữ danh sách các điện thoại trong đơn hàng và tổng số lượng cần phục hồi vào kho.
                 Map<Integer, Integer> phoneUpdateMap = new HashMap<>();
                 while (rs.next()) {
                     int idPhone = rs.getInt("idPhone");
@@ -122,7 +125,7 @@ public class BillController {
                 rs.close();
                 ps.close();
 
-                for (Map.Entry<Integer, Integer> entry : phoneUpdateMap.entrySet()) {
+                for (var entry : phoneUpdateMap.entrySet()) {
                     String updatePhoneQty = "UPDATE Phones SET quantityPhone = quantityPhone + ? WHERE idPhone = ?";
                     setupDatabaseCommand(updatePhoneQty);
                     ps.setInt(1, entry.getValue());
@@ -276,7 +279,7 @@ public class BillController {
         model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
 
-        viewTabel.view(table);
+        viewTabel.displayCenter(table);
 
         int n = 1;
         String status = "";

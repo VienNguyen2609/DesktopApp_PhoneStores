@@ -13,11 +13,11 @@ import javax.swing.border.Border;
  *
  * @author VIEN
  */
-// Class RoundedBorder: giữ nguyên hoặc sửa nhẹ như sau
+
 public class RoundedBorder implements Border {
 
-    private final int radius;
-    private Color color ; 
+    private final int radius; // bán kính bo góc
+    private Color color ; // màu 
     
     public RoundedBorder(int radius , Color color) {
         this.radius = radius;
@@ -37,7 +37,7 @@ public class RoundedBorder implements Border {
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // viền mượt mà kh răng cưa 
         g2d.setColor(color); // Màu viền
         g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         g2d.dispose();

@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author VIEN
  */
-
 public class PanelRevenue extends javax.swing.JPanel {
 
     private double totalPrice = 0;
@@ -28,10 +27,13 @@ public class PanelRevenue extends javax.swing.JPanel {
         txtPrice.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         txtQuantity.setCustomBorder(new RoundedBorder(20, Color.WHITE));
         btnCofirm.setForeground(new Color(0, 0, 0));
+        btnCancel.setForeground(new Color(0, 0, 0));
         revenueController = new RevenueController();
 
         viewTabel = new ViewTabel();
-        viewTabel.view(tbRevenue);
+        viewTabel.displayCenter(tbRevenue);
+        txtPrice.setText("" + totalQuantity);
+        txtQuantity.setText("" + totalPrice);
     }
 
     @SuppressWarnings("unchecked")
@@ -49,6 +51,7 @@ public class PanelRevenue extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        btnCancel = new Forms.Components.HeaderButton();
 
         tbRevenue.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tbRevenue.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,6 +130,14 @@ public class PanelRevenue extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Select Month");
 
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/CancelIcon.png"))); // NOI18N
+        btnCancel.setText("Cancel");
+        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,15 +154,17 @@ public class PanelRevenue extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addGap(48, 48, 48)
                         .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnCofirm, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -170,7 +183,8 @@ public class PanelRevenue extends javax.swing.JPanel {
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE))
         );
@@ -187,7 +201,10 @@ public class PanelRevenue extends javax.swing.JPanel {
         model.setRowCount(0);
 
         if (list.isEmpty()) {
+            txtPrice.setText("");
+            txtQuantity.setText("");
             JOptionPane.showMessageDialog(this, "No Revenue " + selectedMonth + "/" + selectedYear);
+            return;
         }
 
         for (Object[] row : list) {
@@ -198,10 +215,23 @@ public class PanelRevenue extends javax.swing.JPanel {
 
         txtPrice.setText("" + totalPrice);
         txtQuantity.setText("" + totalQuantity);
+
     }//GEN-LAST:event_btnCofirmMouseClicked
+
+    private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
+
+        totalPrice = 0;
+        totalQuantity = 0;
+        txtPrice.setText("");
+        txtQuantity.setText("");
+        cbMonth.setSelectedIndex(0);
+        cbYear.setSelectedIndex(0);
+        model.setNumRows(0);
+    }//GEN-LAST:event_btnCancelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Forms.Components.HeaderButton btnCancel;
     private Forms.Components.HeaderButton btnCofirm;
     private javax.swing.JComboBox<String> cbMonth;
     private javax.swing.JComboBox<String> cbYear;

@@ -53,7 +53,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         btnUpdatePhone.setBackgroundColor(Color.RED);
     }
 
-    private void viewTextProduct() {
+    private void viewTextPhone() {
         txtNamePhone.setText("");
         txtBrandPhone.setText("");
         txtPricePhone.setText("");
@@ -81,7 +81,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
             txtPricePhone.setText("" + price); // hoặc setValue nếu là JSpinner
             txtQuantityPhone.setValue(quantity); // JSpinner
             txtOSPhone.setText(OS);
-            if (_status.equalsIgnoreCase("Availabel")) {
+            if (_status.equalsIgnoreCase("Available")) {
                 cbStatusPhone.setSelectedIndex(0);
             } else {
                 cbStatusPhone.setSelectedIndex(1);
@@ -239,9 +239,6 @@ public class PanelManagerPhone extends javax.swing.JPanel {
         btnAddPhone.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAddPhoneMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAddPhoneMouseEntered(evt);
             }
         });
 
@@ -512,7 +509,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
             if (check == JOptionPane.YES_OPTION) {
                 if (PhoneController.instance.deletePhone(idProductText)) {
                     PhoneController.instance.loadTablePhone(tbProduct);
-                    viewTextProduct();
+                    viewTextPhone();
                     JOptionPane.showMessageDialog(this, "DELETED SUCCESSFULLY");
                 } else {
                     JOptionPane.showMessageDialog(this, "DELETE FAILURE");
@@ -528,13 +525,14 @@ public class PanelManagerPhone extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeletePhoneMouseClicked
 
     private void btnCancelPhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelPhoneMouseClicked
-        viewTextProduct();
+        viewTextPhone();
     }//GEN-LAST:event_btnCancelPhoneMouseClicked
 
     private void btnUploadImagePhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadImagePhoneMouseClicked
 
         JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // chỉ có cho chọn file kh cho chọn founder 
+        
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             selectedFile = chooser.getSelectedFile();
             icon = new ImageIcon(new ImageIcon(selectedFile.getAbsolutePath())
@@ -542,10 +540,12 @@ public class PanelManagerPhone extends javax.swing.JPanel {
             LabelImagePhone.setIcon(icon);
             LabelImagePhone.setBorder(null);
         }
+        
         if (selectedFile == null) {
             JOptionPane.showMessageDialog(this, "PHOTO NOT UPDATE YET!");
             return;
         }
+        
     }//GEN-LAST:event_btnUploadImagePhoneMouseClicked
 
     private void btnAddPhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddPhoneMouseClicked
@@ -583,7 +583,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
                         pricePhoneText, quantityPhoneText, oSPhoneText, imagePhone, descriptionPhoneText, statusPhone)) {
                     PhoneController.instance.loadDataPhones();
                     PhoneController.instance.loadTablePhone(tbProduct);
-                    viewTextProduct();
+                    viewTextPhone();
                     txtNamePhone.requestFocus();
                     LabelImagePhone.setIcon(null);
                     // LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
@@ -591,7 +591,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
                 }
             } else {
-                viewTextProduct();
+                viewTextPhone();
                 txtNamePhone.requestFocus();
                 JOptionPane.showMessageDialog(this, "PRODUCT ADDED FAILURE");
             }
@@ -604,10 +604,6 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_btnAddPhoneMouseClicked
-
-    private void btnAddPhoneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddPhoneMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddPhoneMouseEntered
 
     private void btnUpdatePhoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdatePhoneMouseClicked
 
@@ -650,14 +646,14 @@ public class PanelManagerPhone extends javax.swing.JPanel {
                         quantityPhoneText, oSPhoneText, imagePhone, descriptionPhoneText, statusPhone, idProductText)) {
                     JOptionPane.showMessageDialog(this, "UPDATED THIS PRODUCT ID: " + idProductText + " SUCCESSFULLY");
                     PhoneController.instance.loadTablePhone(tbProduct);
-                    viewTextProduct();
+                    viewTextPhone();
                     txtNamePhone.requestFocus();
                     LabelImagePhone.setIcon(null);
                     //   LabelImageProduct.setBorder(new MatteBorder(1, 1, 1, 1, Color.YELLOW));
                     return;
                 }
             } else {
-                viewTextProduct();
+                viewTextPhone();
                 txtNamePhone.requestFocus();
                 JOptionPane.showMessageDialog(this, "UPDATED FAILURE THIS PRODUCT ID: " + idProductText);
                 return;
@@ -676,7 +672,7 @@ public class PanelManagerPhone extends javax.swing.JPanel {
 
         int check = JOptionPane.showConfirmDialog(this, "UPLOAD ALL PRODUCT TO HOMEPAGE!", "CONFIRM", JOptionPane.YES_NO_OPTION);
         if (check == JOptionPane.YES_OPTION) {
-            panelHome.addPanelProducts();
+            panelHome.addPanelPhone();
             JOptionPane.showMessageDialog(this, "UPLOAD TO HOMEPAGE SUCCESSFULLY!");
         } else {
             return;

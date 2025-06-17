@@ -1,6 +1,6 @@
 package Forms;
 
-import Controllers.StafftController;
+import Controllers.StaffController;
 import Forms.Components.EffectComponents;
 import Main.Run;
 import java.awt.Color;
@@ -17,7 +17,7 @@ public class CreateAccount extends javax.swing.JFrame {
 
     public CreateAccount() {
         initComponents();
-        StafftController.init();
+        StaffController.init();
         EffectComponents.init();
 
         setLocationRelativeTo(null);
@@ -186,7 +186,7 @@ public class CreateAccount extends javax.swing.JFrame {
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
 
-        StafftController.instance.loadDataStaffs();
+        StaffController.instance.loadDataStaffs();
         try {
             String name = this.txtName.getText().trim();
             String pass = this.txtPassword.getText().trim();
@@ -202,10 +202,10 @@ public class CreateAccount extends javax.swing.JFrame {
 
                 return;
             }
-            if (!StafftController.instance.checkStaffLogin(name, pass, gmail)) {
+            if (!StaffController.instance.checkStaffLogin(name, pass, gmail)) {
                 return;
 
-            } else if (StafftController.instance.addStaff(name, pass, gmail, "No position", null)) {
+            } else if (StaffController.instance.addStaff(name, pass, gmail, "No position", null)) {
                 LabelMessage.setText("CREATED ACCOUNT SUCCESSFULLY");
                 System.out.println("CREATED SUCCESSFULLY");
                 int check = JOptionPane.showConfirmDialog(this, "GO TO SIGN IN , NOW !", "CONFIRM", JOptionPane.YES_NO_OPTION);

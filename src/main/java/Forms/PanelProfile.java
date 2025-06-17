@@ -1,6 +1,6 @@
 package Forms;
 
-import Controllers.StafftController;
+import Controllers.StaffController;
 import Forms.Components.RoundedBorder;
 import Forms.Components.RoundedPanel;
 import Model.Staff;
@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author VIEN
  */
+
 public class PanelProfile extends javax.swing.JPanel {
 
     private JLabel label;
@@ -398,7 +399,7 @@ public class PanelProfile extends javax.swing.JPanel {
             return;
         }
         else{
-            StafftController.instance.saveAvatarToDatabase(selectedFile, currentStaff.getName());
+            StaffController.instance.saveAvatarToDatabase(selectedFile, currentStaff.getName());
             JOptionPane.showMessageDialog(this, "PHOTO UPDATE SUCCESSFULLY!");
         }
         
@@ -428,14 +429,20 @@ public class PanelProfile extends javax.swing.JPanel {
         String password = txtPass1.getText().trim();
         String gmail = txtGmail1.getText().trim();
 
-        StafftController.instance.loadDataStaffs();
+        StaffController.instance.loadDataStaffs();
         try {
 
-            if (!StafftController.instance.checkLoginIsAdmin(_nameCurrently, password, gmail, statusStaff)) {
+            if (!StaffController.instance.checkLoginIsAdmin(_nameCurrently, password, gmail, statusStaff)) {
                 return;
             }
+            if(!currentStaff.getPosition().equalsIgnoreCase("admin") || name.contains("admin")){
+                JOptionPane.showMessageDialog(this, "Update name failure!");
+                txtName1.setText("");
+                txtName1.requestFocus();
+                return ;
+            }
 
-            Staff UpdateStaff = StafftController.instance.updateStaff(name, password, gmail, currentStaff.getName());
+            Staff UpdateStaff = StaffController.instance.updateStaff(name, password, gmail, currentStaff.getName());
             if (UpdateStaff != null) {
                 currentStaff = UpdateStaff;
                 txtName.setText(currentStaff.getName());

@@ -399,7 +399,6 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAddPhoneMouseClicked"/>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAddPhoneMouseEntered"/>
           </Events>
         </Component>
         <Component class="Forms.Components.HeaderButton" name="btnUpdatePhone">

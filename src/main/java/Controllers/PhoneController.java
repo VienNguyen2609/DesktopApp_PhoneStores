@@ -130,7 +130,7 @@ public class PhoneController {
 
     public void loadTablePhone(JTable table) {
 
-        viewTabel.view(table);
+        viewTabel.displayCenter(table);
         
         model = (DefaultTableModel) table.getModel();
         model.setNumRows(0);
@@ -145,7 +145,7 @@ public class PhoneController {
                     phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),
                     phone.getImagePhone(), phone.getDescription(), status});
             } else {
-                status = "Availabel";
+                status = "Available";
                 model.addRow(new Object[]{n++,
                     phone.getPhoneId(), phone.getNamePhone(), phone.getBrandPhone(),
                     phone.getPricePhone(), phone.getQuantityPhone(), phone.getOperatingSystem(),

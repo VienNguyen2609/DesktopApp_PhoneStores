@@ -9,6 +9,7 @@ Forms\Components\SetThemFlatLaf$1.class
 Controllers\RevenueController.class
 Forms\PanelHome$4.class
 Forms\PanelHome$1.class
+Controllers\StaffController.class
 Controllers\BillController.class
 Forms\Components\HeaderButton.class
 Forms\CreateAccount.class
@@ -79,6 +80,7 @@ Forms\HomePage$8.class
 Forms\PanelManagerStaff$1.class
 Forms\PanelHome.class
 Controllers\PhoneController.class
+Forms\PanelRevenue$3.class
 Forms\HomePage$1.class
 Controllers\ClientController.class
 Forms\PanelProfile$3.class
@@ -94,7 +96,6 @@ Model\Phone.class
 Forms\PanelManagerPhone$1.class
 Forms\PanelManagerStaff$2.class
 Forms\PanelManagerBill$2.class
-Controllers\StafftController.class
 Forms\PanelManagerClient$6.class
 Model\Staff.class
 Forms\Components\RippleEffect$Effect$1.class

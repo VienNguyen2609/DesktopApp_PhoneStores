@@ -25,7 +25,7 @@ public class PasswordField extends JPasswordField {
     }
 
     public void setPrefixIcon(Icon prefixIcon) {
-        this.prefixIcon = prefixIcon;
+        this.prefixIcon = prefixIcon; // Cập nhật lại border để chừa chỗ cho icon 
         initBorder();
     }
 
@@ -35,17 +35,17 @@ public class PasswordField extends JPasswordField {
 
     public void setSuffixIcon(Icon suffixIcon) {
         this.suffixIcon = suffixIcon;
-        initBorder();
+        initBorder(); 
         // setOpaque(false);
     }
 
     public PasswordField() {
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); // padding 5 mổi cạnh 
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        super.paintComponent(g); // Vẽ component gốc trước 
         paintIcon(g);
     }
 

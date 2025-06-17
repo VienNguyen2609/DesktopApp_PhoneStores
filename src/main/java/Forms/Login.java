@@ -1,6 +1,6 @@
 package Forms;
 
-import Controllers.StafftController;
+import Controllers.StaffController;
 import Forms.Components.EffectComponents;
 import Forms.Components.SetThemFlatLaf;
 import Forms.Components.ThemeFlatLaf;
@@ -17,7 +17,7 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-        StafftController.init();
+        StaffController.init();
         EffectComponents.init();
 
         setTitle("PRIMA MOBILES , LOGIN");
@@ -213,6 +213,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
 
+        SetThemFlatLaf.setThem(ThemeFlatLaf.Light);
         new CreateAccount().setVisible(true);
         dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
@@ -227,14 +228,14 @@ public class Login extends javax.swing.JFrame {
 
     private void headerButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerButton1MouseClicked
 
-        StafftController.instance.loadDataStaffs();
+        StaffController.instance.loadDataStaffs();
         String username = txtName.getText().trim();
         String password = String.valueOf(txtPassword.getPassword()).trim();
 
         SetThemFlatLaf.setThem(ThemeFlatLaf.Dark);
 
-        if (StafftController.instance.checkLogin(username, password)) {
-            Staff user = StafftController.instance.getStaffByUsername(username);
+        if (StaffController.instance.checkLogin(username, password)) {
+            Staff user = StaffController.instance.getStaffByUsername(username);
             System.out.println("Login");
             new HomePage(user).setVisible(true);
             dispose();

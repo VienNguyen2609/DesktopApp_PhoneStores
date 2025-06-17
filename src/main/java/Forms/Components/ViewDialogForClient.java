@@ -38,7 +38,7 @@ public class ViewDialogForClient extends JDialog {
         table.setFont(new Font("Bold", Font.BOLD, 13));
         table.setShowHorizontalLines(true);
         table.setShowVerticalLines(true);
-        viewTabel.view(table);
+        viewTabel.displayCenter(table);
         JScrollPane scrollPane = new JScrollPane(table);
         table.getTableHeader().setResizingAllowed(false);   // Cho phép thay đổi kích thước cột
         table.getTableHeader().setReorderingAllowed(false);

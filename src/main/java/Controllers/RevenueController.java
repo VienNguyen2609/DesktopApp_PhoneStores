@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
  * @author VIEN
  */
 public class RevenueController {
-    
+
     public List<Object[]> getRevenueByMonthAndYear(int month, int year) {
         List<Object[]> result = new ArrayList<>();
-        
+
         try (Connection con = SQLConnector.getConnection()) {
             String sql = """
-                         select namePhone, brandPhone, pricePhone, quantity, sum(pricePhone*quantity)
+                         select namePhone, brandPhone, quantity , pricePhone , sum(pricePhone*quantity)
                          as [total]from Phones inner join OrderDetails on Phones.idPhone=OrderDetails.idPhone
                          \tinner join Orders on OrderDetails.idOrder=Orders.idOrder
                          WHERE month(timeOfBookingOrder)= ? AND year(timeOfBookingOrder)= ?
@@ -27,7 +27,7 @@ public class RevenueController {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, month);
             ps.setInt(2, year);
-            
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Object[] row = new Object[5];
@@ -38,12 +38,12 @@ public class RevenueController {
                 row[4] = rs.getDouble(5); // Total
                 result.add(row);
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR");
         }
-        
+
         return result;
     }
-    
+
 }

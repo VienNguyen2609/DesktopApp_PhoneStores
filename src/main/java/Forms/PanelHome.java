@@ -22,32 +22,32 @@ import javax.swing.table.DefaultTableModel;
  * @author VIEN
  */
 public class PanelHome extends javax.swing.JPanel {
-    
+
     private int quantityAvailableBill;
-    
+
     private Staff currentStaff;
     private PanelManagerBill panelManagerBill;
     private PanelManagerPhone panelManagerPhone;
     private PanelManagerClient panelManagerClient;
     private DefaultTableModel model;
-    
+
     private double totalAmount = 0;
-    
+
     public PanelHome(Staff staff, PanelManagerBill panelManagerBill,
             PanelManagerPhone panelManagerPhone, PanelManagerClient panelManagerClient) {
         initComponents();
-        
+
         PhoneController.init();
         BillController.init();
         EffectComponents.init();
-        
+
         this.currentStaff = staff;
         this.panelManagerBill = panelManagerBill;
         this.panelManagerPhone = panelManagerPhone;
         this.panelManagerClient = panelManagerClient;
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(15);
-        
-        addPanelProducts();
+
+        addPanelPhone();
         model = (DefaultTableModel) tbPhone.getModel();
         model.setNumRows(0);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -57,7 +57,7 @@ public class PanelHome extends javax.swing.JPanel {
         }
         txtSearch.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         txtSearch.setPrefixIcon(new ImageIcon(getClass().getResource("/Image/SearchIcon.png")));
-        
+
         txtName.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         txtAdress.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
         txtNumberPhone.setCustomBorder(new RoundedBorder(20, Color.LIGHT_GRAY));
@@ -65,70 +65,70 @@ public class PanelHome extends javax.swing.JPanel {
         btnCofirmBill.setForeground(new Color(0, 0, 0));
         btnDeleleBill.setForeground(new Color(0, 0, 0));
     }
-    
-    public void addPanelProducts() {
-        
-        this.PanelContainProduct.setLayout(new GridBagLayout());
-        this.PanelContainProduct.removeAll();
+
+    public void addPanelPhone() {
+
+        this.PanelContainPhone.setLayout(new GridBagLayout());
+        this.PanelContainPhone.removeAll();
         PhoneController.instance.loadDataPhones();
-        
-        GridBagConstraints gbc = new GridBagConstraints();
+
+        GridBagConstraints gbc = new GridBagConstraints(); // để điều chỉnh vị trí cho các components muốn thêm 
         gbc.insets = new Insets(20, 40, 20, 40); // Khoảng cách giữa các item
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.HORIZONTAL; // giãn ngang
         // gbc.weightx = 1; // Giãn ngang
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
-        
+
         gbc.gridwidth = 1;
         int cols = 2; // Số cột
         for (int i = 0; i < PhoneController.instance.getDataPhone().size(); i++) {
             Phone phone = PhoneController.instance.getDataPhone().get(i);
             var newJpanel = new PanelPhone(phone, this, currentStaff, panelManagerBill);
-            gbc.gridx = i % cols;
-            gbc.gridy = (i / cols) + 1;
-            this.PanelContainProduct.add(newJpanel, gbc);
+            gbc.gridx = i % cols;  // chia lấy dư 
+            gbc.gridy = (i / cols) + 1; // +1 có thể để chừa dòng tiêu đề hoặc padding trên
+            this.PanelContainPhone.add(newJpanel, gbc);
         }
-        this.PanelContainProduct.revalidate();
-        this.PanelContainProduct.repaint();
+        this.PanelContainPhone.revalidate();
+        this.PanelContainPhone.repaint();
     }
-    
+
     public void fetchPhonesByNameOrBrand(String name, String brand) {
-        
-        this.PanelContainProduct.setLayout(new GridBagLayout());
-        this.PanelContainProduct.removeAll();
+
+        this.PanelContainPhone.setLayout(new GridBagLayout());
+        this.PanelContainPhone.removeAll();
         PhoneController.instance.fetchPhonesByNameOrBrand(name, brand);
-        
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(30, 50, 30, 50);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        
+
+        GridBagConstraints gbc = new GridBagConstraints(); 
+        gbc.insets = new Insets(20, 40, 20, 40);
+        gbc.fill = GridBagConstraints.HORIZONTAL; 
+
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
-        
+
         gbc.gridwidth = 1;
-        int cols = 3; // Số cột
+        int cols = 2; 
         for (int i = 0; i < PhoneController.instance.getDataPhone().size(); i++) {
             Phone phone = PhoneController.instance.getDataPhone().get(i);
             var newJpanel = new PanelPhone(phone, this, currentStaff, panelManagerBill);
             gbc.gridx = i % cols;
-            gbc.gridy = (i / cols) + 1;
-            this.PanelContainProduct.add(newJpanel, gbc);
+            gbc.gridy = (i / cols) + 1; 
+            this.PanelContainPhone.add(newJpanel, gbc);
         }
-        this.PanelContainProduct.revalidate();
-        this.PanelContainProduct.repaint();
+        this.PanelContainPhone.revalidate();
+        this.PanelContainPhone.repaint();
     }
-    
+
     public void setPanelManagerPhone(PanelManagerPhone panelManagerPhone) {
         this.panelManagerPhone = panelManagerPhone;
     }
-    
+
     public void getTextPhone(JTextField txtID, JTextField txtName, JTextField txtBrand,
             JTextField txtOS, JTextField txtDescription,
             JTextField txtQuantity, JTextField txtPrice) {
-        
+
         int id = Integer.parseInt(txtID.getText());
         String name = txtName.getText();
         String brand = txtBrand.getText();
@@ -137,11 +137,11 @@ public class PanelHome extends javax.swing.JPanel {
         int quantity = Integer.parseInt(txtQuantity.getText());
         double price = Double.parseDouble(txtPrice.getText());
         double total = quantity * price;
-        
+
         totalAmount += total;
         // STT = số dòng hiện tại + 1
         int no = tbPhone.getRowCount() + 1;
-        
+
         for (int i = 0; i < tbPhone.getRowCount(); i++) {
             int existingId = Integer.parseInt(tbPhone.getValueAt(i, 1).toString()); // cột 1 là ID
             if (existingId == id) {
@@ -149,28 +149,28 @@ public class PanelHome extends javax.swing.JPanel {
                 return;
             }
         }
-        
+
         model.addRow(new Object[]{
             no, id, name, brand, os, quantity, price, description, total
         });
         txtTotal.setText("" + totalAmount);
         txtQuantity.setText("");
     }
-    
+
     private void viewClient() {
         txtName.setText("");
         txtEmail.setText("");
         txtNumberPhone.setText("");
         txtAdress.setText("");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         PanelHomePage = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        PanelContainProduct = new javax.swing.JPanel();
+        PanelContainPhone = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         txtSearch = new Forms.Components.TextFieldController();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -194,18 +194,18 @@ public class PanelHome extends javax.swing.JPanel {
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        javax.swing.GroupLayout PanelContainProductLayout = new javax.swing.GroupLayout(PanelContainProduct);
-        PanelContainProduct.setLayout(PanelContainProductLayout);
-        PanelContainProductLayout.setHorizontalGroup(
-            PanelContainProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PanelContainPhoneLayout = new javax.swing.GroupLayout(PanelContainPhone);
+        PanelContainPhone.setLayout(PanelContainPhoneLayout);
+        PanelContainPhoneLayout.setHorizontalGroup(
+            PanelContainPhoneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1669, Short.MAX_VALUE)
         );
-        PanelContainProductLayout.setVerticalGroup(
-            PanelContainProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PanelContainPhoneLayout.setVerticalGroup(
+            PanelContainPhoneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1115, Short.MAX_VALUE)
         );
 
-        jScrollPane2.setViewportView(PanelContainProduct);
+        jScrollPane2.setViewportView(PanelContainPhone);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -257,6 +257,8 @@ public class PanelHome extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbPhone.getTableHeader().setResizingAllowed(false);
+        tbPhone.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tbPhone);
         if (tbPhone.getColumnModel().getColumnCount() > 0) {
             tbPhone.getColumnModel().getColumn(0).setMinWidth(40);
@@ -448,17 +450,17 @@ public class PanelHome extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchFocusLost
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        
+
         String name = txtSearch.getText().trim();
         if (name.isEmpty()) {
-            addPanelProducts();
+            addPanelPhone();
         } else {
             fetchPhonesByNameOrBrand(name, name);
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnCofirmBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCofirmBillMouseClicked
-        
+
         String name = txtName.getText().trim();
         String phone = txtNumberPhone.getText().trim();
         String address = txtAdress.getText().trim();
@@ -468,7 +470,7 @@ public class PanelHome extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "empty transaction!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         double _totalAmount;
         try {
             _totalAmount = Double.parseDouble(totalText);
@@ -476,7 +478,7 @@ public class PanelHome extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "empty transaction!!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (currentStaff.isStatus() == false) {
             JOptionPane.showMessageDialog(this, "This account is currently inactive!");
             return;
@@ -489,7 +491,7 @@ public class PanelHome extends javax.swing.JPanel {
                 panelManagerBill.loadBillInTbale();
                 panelManagerPhone.loadTabelPhone();
                 panelManagerClient.loadTbaleClient();
-                addPanelProducts();
+                addPanelPhone();
                 viewClient();
                 model.setNumRows(0);
                 txtTotal.setText("");
@@ -501,7 +503,7 @@ public class PanelHome extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCofirmBillMouseClicked
 
     private void btnDeleleBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleleBillMouseClicked
-        
+
         int check = JOptionPane.showConfirmDialog(this, "Do you want delete all bill in tabel !", "Confirm", JOptionPane.YES_NO_OPTION);
         if (check == JOptionPane.YES_OPTION) {
             model.setNumRows(0);
@@ -513,7 +515,7 @@ public class PanelHome extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelContainProduct;
+    private javax.swing.JPanel PanelContainPhone;
     private javax.swing.JPanel PanelHomePage;
     private Forms.Components.HeaderButton btnCofirmBill;
     private Forms.Components.HeaderButton btnDeleleBill;

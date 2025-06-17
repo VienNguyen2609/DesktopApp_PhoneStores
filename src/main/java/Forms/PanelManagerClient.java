@@ -34,15 +34,18 @@ public class PanelManagerClient extends javax.swing.JPanel {
     ClientController clientController;
     DefaultTableModel model;
 
-    public PanelManagerClient() {
+    private PanelManagerBill panelManagerBill;
+
+    public PanelManagerClient(PanelManagerBill panelManagerBill) {
         initComponents();
 
+        this.panelManagerBill = panelManagerBill;
         client = new Client();
         clientController = new ClientController();
         model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+                return false; 
             }
         };
 
@@ -62,9 +65,9 @@ public class PanelManagerClient extends javax.swing.JPanel {
 //        JScrollPane jScrollPane=new JScrollPane(tbClient);
         //tạo popup menu
         JPopupMenu jPopupMenu = new JPopupMenu();
-        JMenuItem jMenuItem1 = new JMenuItem("Xem đơn hàng");
-        JMenuItem jMenuItem2 = new JMenuItem("Xóa");
-        JMenuItem jMenuItem3 = new JMenuItem("Hủy");
+        JMenuItem jMenuItem1 = new JMenuItem("View Order This Client");
+        JMenuItem jMenuItem2 = new JMenuItem("Delete This Clietn And Bill");
+        JMenuItem jMenuItem3 = new JMenuItem("Cancel");
 
         jPopupMenu.add(jMenuItem1);
         jPopupMenu.add(jMenuItem2);
@@ -93,7 +96,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
             }
         });
 
-        // Ví dụ xử lý khi chọn "Xóa"
+        //xử lý khi chọn "Xóa"
         jMenuItem2.addActionListener(e -> {
             selectedRow = tbClient.getSelectedRow();
             if (selectedRow == -1) {
@@ -116,7 +119,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
                         String phone = txtTelClient.getText().trim();
                         int idOrder = clientController.findIdOrder();
                         int idOrderOfOrder = clientController.findIdOrderOfOrder();
-                        if (idOrder == -1 || idOrderOfOrder == -1) {
+                        if (idOrder == -1 && idOrderOfOrder == -1) {
                             clientController.delClient(phone);
                         } else if (idOrder == -1 && idOrderOfOrder != -1) {
                             clientController.delClientOnOrder(id, phone);
@@ -124,6 +127,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
                             clientController.delClientOnBill(idOrder, id, phone);
                         }
                         listClient = clientController.loadDataAccounts();
+                        panelManagerBill.loadBillInTbale();
                         viewTabelClient();
                         txtNameUser.setText("");
                         txtTelClient.setText("");
@@ -158,16 +162,15 @@ public class PanelManagerClient extends javax.swing.JPanel {
         });
     }
 
-    public void loadTabelClient() {
-        listClient = clientController.loadDataAccounts();
-    }
+   
 
     private void viewTabelClient() {
         model.setNumRows(0);
-        viewTabel.view(tbClient);
+        viewTabel.displayCenter(tbClient);
         int n = 1;
         for (Client client1 : listClient) {
-            model.addRow(new Object[]{n++, client1.getIdClient(), client1.getNameClient(), client1.getTelClient(), client1.getAddressClient(), client1.getGmailClient()});
+            model.addRow(new Object[]{n++, client1.getIdClient(), client1.getNameClient(),
+                client1.getTelClient(), client1.getAddressClient(), client1.getGmailClient()});
         }
     }
 
@@ -179,7 +182,6 @@ public class PanelManagerClient extends javax.swing.JPanel {
     }
 
     public void loadTbaleClient() {
-
         listClient = clientController.loadDataAccounts();
         viewTabelClient();
     }
@@ -584,6 +586,7 @@ public class PanelManagerClient extends javax.swing.JPanel {
                         clientController.delClientOnBill(idOrder, id, phone);
                     }
                     listClient = clientController.loadDataAccounts();
+                    panelManagerBill.loadBillInTbale();
                     viewTabelClient();
                     viewTextField();
                     txtNameUser.requestFocus();

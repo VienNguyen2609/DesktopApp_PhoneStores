@@ -137,14 +137,14 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnMenuBill" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
-                          <Component id="btnProfle" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
+                          <Component id="btnMenuProfle" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
                           <Component id="btnMenuPhone" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
-                          <Component id="btnMenuAccount" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
+                          <Component id="btnMenuStaff" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
                           <Component id="btnMenuClient" alignment="1" min="-2" pref="126" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnLogOut" min="-2" pref="126" max="-2" attributes="0"/>
-                                  <Component id="btnHomePage" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                                  <Component id="btnMenuLogOut" min="-2" pref="126" max="-2" attributes="0"/>
+                                  <Component id="btnMenuHomePage" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
                                   <Component id="btnMenuRevenue" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -158,7 +158,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Component id="btnHomePage" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnMenuHomePage" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="btnMenuBill" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
@@ -166,19 +166,19 @@
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="btnMenuClient" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="btnMenuAccount" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <Component id="btnMenuStaff" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="btnMenuRevenue" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace pref="140" max="32767" attributes="0"/>
-                      <Component id="btnProfle" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace pref="159" max="32767" attributes="0"/>
+                      <Component id="btnMenuProfle" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnLogOut" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnMenuLogOut" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="Forms.Components.HeaderButton" name="btnProfle">
+            <Component class="Forms.Components.HeaderButton" name="btnMenuProfle">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -189,10 +189,10 @@
                 <Property name="text" type="java.lang.String" value="Profile"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProfleMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuProfleMouseClicked"/>
               </Events>
             </Component>
-            <Component class="Forms.Components.HeaderButton" name="btnHomePage">
+            <Component class="Forms.Components.HeaderButton" name="btnMenuHomePage">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Image/HomeIcon.png"/>
@@ -201,10 +201,10 @@
                 <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnHomePageMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuHomePageMouseClicked"/>
               </Events>
             </Component>
-            <Component class="Forms.Components.HeaderButton" name="btnLogOut">
+            <Component class="Forms.Components.HeaderButton" name="btnMenuLogOut">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -218,7 +218,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLogOutMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuLogOutMouseClicked"/>
               </Events>
             </Component>
             <Component class="Forms.Components.HeaderButton" name="btnMenuBill">
@@ -255,7 +255,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuPhoneMouseClicked"/>
               </Events>
             </Component>
-            <Component class="Forms.Components.HeaderButton" name="btnMenuAccount">
+            <Component class="Forms.Components.HeaderButton" name="btnMenuStaff">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -263,13 +263,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Image/AccountManagerIcon.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Accounts"/>
+                <Property name="text" type="java.lang.String" value="Staffs"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuAccountMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuStaffMouseClicked"/>
               </Events>
             </Component>
             <Component class="Forms.Components.HeaderButton" name="btnMenuClient">

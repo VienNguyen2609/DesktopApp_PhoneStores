@@ -51,9 +51,8 @@ public class ClientController {
     private final String delOrderOfOrder = "DELETE FROM Orders WHERE idOrder=?"
             + "DELETE FROM Clients WHERE telClient=?";
 
-    
     private ViewTabel viewTabel = new ViewTabel();
-    
+
     public static void init() {
         if (isInitiallized == true) {
             return;
@@ -143,7 +142,7 @@ public class ClientController {
             int rss = ps.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
+
             JOptionPane.showMessageDialog(null, "CAN NOT DELETE THIS CLIENT");
         }
     }
@@ -157,7 +156,7 @@ public class ClientController {
             int rss = ps.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
+
             JOptionPane.showMessageDialog(null, "CAN NOT DELETE THIS CLIENT");
         }
     }
@@ -171,7 +170,6 @@ public class ClientController {
             int rss = ps.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "CAN NOT DELETE THIS CLIENT");
         }
     }
@@ -209,7 +207,6 @@ public class ClientController {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "CAN NOT UPDATE THIS CLIENT");
-            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
