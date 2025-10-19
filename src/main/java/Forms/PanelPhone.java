@@ -231,7 +231,7 @@ public class PanelPhone extends javax.swing.JPanel {
         jLabel22.setToolTipText("");
         jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
-        ImageProductBill.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(51, 255, 255)));
+        ImageProductBill.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanel2.add(ImageProductBill, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 63, 210, 240));
 
         txtBillOS.setEditable(false);

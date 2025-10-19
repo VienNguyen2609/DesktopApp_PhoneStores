@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author VIEN
  */
+
 public class HomePage extends javax.swing.JFrame {
 
     private PanelManagerStaff panelManagerAccount;
@@ -39,12 +40,12 @@ public class HomePage extends javax.swing.JFrame {
         panelManagerAccount = new PanelManagerStaff();
         panelPhone = new PanelPhone(currentStaff);
 
-        // TẠM thời gán null
+        // tạm thời gán null
         panelManagerBill = new PanelManagerBill(panelPhone, staff, null);
         panelManagerClient = new PanelManagerClient(panelManagerBill);
         panelHome = new PanelHome(currentStaff, panelManagerBill, null, panelManagerClient);
 
-        // GÁN lại panelHome cho panelManagerBill
+        // gán lại panelHome cho panelManagerBill
         panelManagerBill.setPanelHome(panelHome);
         panelManagerPhone = new PanelManagerPhone(panelHome);
 
@@ -54,7 +55,6 @@ public class HomePage extends javax.swing.JFrame {
 
         panelRevenue = new PanelRevenue();
         if ("admin".equalsIgnoreCase(staff.getPosition())) {
-
             this.jPanel2.add(panelRevenue);
             this.jPanel2.add(panelManagerAccount);
             this.jPanel2.add(panelProfile);
@@ -76,8 +76,7 @@ public class HomePage extends javax.swing.JFrame {
             btnMenuRevenue.setVisible(false);
             btnMenuBill.setVisible(false);
             btnMenuPhone.setVisible(false);
-            btnMenuClient.setVisible(false);
-            
+            btnMenuClient.setVisible(false);       
         }
         panelRevenue.setVisible(false);
         panelProfile.setVisible(false);
@@ -86,14 +85,11 @@ public class HomePage extends javax.swing.JFrame {
         panelManagerAccount.setVisible(false);
         panelManagerClient.setVisible(false);
         panelHome.setVisible(true);
-
         this.jPanel2.revalidate();
         this.jPanel2.repaint();
-
         styleButton();
         setupWindow();
         EffectComponents.instance.scaleImage(jLabel2, "/Image/LogoShopIcon.png");
-
     }
 
     private void styleButton() {
@@ -220,7 +216,7 @@ public class HomePage extends javax.swing.JFrame {
 
         btnMenuPhone.setForeground(new java.awt.Color(204, 204, 204));
         btnMenuPhone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ProductManagerIcon.png"))); // NOI18N
-        btnMenuPhone.setText("Products");
+        btnMenuPhone.setText("Phones");
         btnMenuPhone.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnMenuPhone.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

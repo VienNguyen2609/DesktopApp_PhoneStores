@@ -48,6 +48,8 @@ public class BillController {
         }
     }
 
+
+
     private final String insertOrderSQL = "INSERT INTO Orders (timeOfBookingOrder, "
             + "statusOrder, totalOrder, addressOrder, idClient, idStaff) VALUES (?, ?, ?, ?, ?, ?)";
 
